@@ -1,0 +1,17 @@
+<launch>
+    <arg name="fcu_conn" default="usb"/>
+
+    <include file="$(find turtlebot_bringup)/launch/minimal.launch" />
+    <!-- <include file="$(find turtlebot_bringup)/launch/3dsensor.launch" /> -->
+    <include file="$(find rplidar_ros)/launch/rplidar.launch" />
+
+    <node pkg="turtle_express" type="bot.py" name="turtle_express" output="screen">
+        <param name="token" value="fwekpfjweqprhgoqwehghrwbhqihio"/>
+        <param name="chat_id" value="fgjrwpihrwqpgvhjpqirjpqpjkbv"/>
+        <param name="proxy" value="aklfhaelhgfwabgjwqbigbgbqw"/>
+        <param name="debug" value="True"/>
+        <!-- <param name="logs_directory" value="$(find turtle_express)/logs" /> -->
+    </node>
+
+    <node name="web_server" pkg="turtle_express" type="monkey" output="screen" if="$(arg web_server)" respawn="true" respawn_delay="5"/>
+</launch>

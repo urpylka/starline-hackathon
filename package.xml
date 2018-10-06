@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package>
+  <name>turtle_express</name>
+  <version>0.0.1</version>
+  <description>Turtle Express</description>
+
+  <maintainer email="urpylka@gmail.com">Artem Smirnov</maintainer>
+  <license>Apache v2.0</license>
+
+  <run_depend>rospy</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>std_msgs</run_depend>
+</package>

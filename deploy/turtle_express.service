@@ -1,0 +1,12 @@
+[Unit]
+Description=Turtle Express service
+Requires=roscore.service
+After=roscore.service
+
+[Service]
+EnvironmentFile=/root/roscore.env
+ExecStart=/opt/ros/kinetic/bin/roslaunch turlte_express turtle_express.launch --wait
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
