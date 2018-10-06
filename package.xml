@@ -8,6 +8,9 @@
   <license>Apache v2.0</license>
 
   <run_depend>rospy</run_depend>
-  <run_depend>geometry_msgs</run_depend>
   <run_depend>std_msgs</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>move_base_msgs</run_depend>
+  <run_depend>actionlib</run_depend>
+  <run_depend>actionlib_msgs</run_depend>
 </package>
