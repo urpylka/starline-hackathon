@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # vim:set ts=4 sw=4 et:
 
-import os.path, rospy, time, requests
+import os.path, rospy, time
 
 import telepot
 from telegrambot import TelegramBot
