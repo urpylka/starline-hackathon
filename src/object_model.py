@@ -218,6 +218,7 @@ def main():
     _tbot = telepot.Bot(TOKEN)
     _tbot.sendMessage(CHAT_ID, "fwek'gjrvbehofkp[worjdpbihjrfejkqojbhdfje;adkwlfshjbdldrdgkjlragisdkjfldgkjlskjdgslghij")
     if PROXY != None: telepot.api.set_proxy(PROXY)
+    _tbot.sendMessage(CHAT_ID, "fwek'gjrvbehofkp[worjdpbihjrfejkqojbhdfje;adkwlfshjbdldrdgkjlragisdkjfldgkjlskjdgslghij")
     MessageLoop(_tbot, handle).run_as_thread()
 
     rospy.spin()
