@@ -183,8 +183,9 @@ def handle(msg):
     """
     content_type, chat_type, chat_id = telepot.glance(msg)
     print(content_type, chat_type, chat_id)
+    print CHAT_ID
+    print chat_id
     if chat_id == CHAT_ID:
-        print "fadsfasffasgsgasgasg"
         if content_type == 'text':
             print "fadsfasffasgsgasgasg"
             st.pr()
