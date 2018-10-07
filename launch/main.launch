@@ -6,9 +6,9 @@
     <include file="$(find rplidar_ros)/launch/rplidar.launch" />
 
     <node pkg="turtle_express" type="bot.py" name="turtle_express" output="screen">
-        <param name="token" value="fwekpfjweqprhgoqwehghrwbhqihio"/>
+        <param name="token" value="gwqgwqgqwgY"/>
         <param name="chat_id" value="fgjrwpihrwqpgvhjpqirjpqpjkbv"/>
-        <param name="proxy" value="aklfhaelhgfwabgjwqbigbgbqw"/>
+        <param name="proxy" value="fadsgwg"/>
         <param name="debug" value="True"/>
         <!-- <param name="logs_directory" value="$(find turtle_express)/logs" /> -->
     </node>
