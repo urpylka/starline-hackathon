@@ -13,5 +13,5 @@
         <!-- <param name="logs_directory" value="$(find turtle_express)/logs" /> -->
     </node>
 
-    <node name="web_server" pkg="turtle_express" type="monkey" output="screen" if="$(arg web_server)" respawn="true" respawn_delay="5"/>
+    <!-- <node name="web_server" pkg="turtle_express" type="monkey" output="screen" if="$(arg web_server)" respawn="true" respawn_delay="5"/> -->
 </launch>
