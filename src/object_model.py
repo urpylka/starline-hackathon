@@ -57,17 +57,37 @@ class IDLE(AbstractState):
             # self.stop_state = True
         elif command == '/remind_beer1':
             _tbot.sendMessage(CHAT_ID, "Запомнить где находится дом №1")
+            my_pose = temp_pose
         else:
             _tbot.sendMessage(CHAT_ID, 'Ошибка 3! Некорректная команда: ' + command)
 
 class DELIVERY(AbstractState):
     def run(self, _sm):
-        while True:
-            if not self.stop_state:
-                time.sleep(1)
-            else:
-                _sm.new_state(IDLE(_sm))
-                break
+
+        # Customize the following values so they are appropriate for your location
+        # pos = {'x': 1.22, 'y' : 2.56}
+        # quat = {'r1' : 0.000, 'r2' : 0.000, 'r3' : 0.000, 'r4' : 1.000}
+        # my_pose = Pose(Point(pos['x'], pos['y'], 0.000), Quaternion(quat['r1'], quat['r2'], quat['r3'], quat['r4'])
+
+        success = navigator.goto(my_pose)
+
+        if success:
+            rospy.loginfo("Hooray, reached the desired pose")
+            _sm.new_state(IDLE(_sm))
+        else:
+            rospy.loginfo("The base failed to reach the desired pose")
+            _sm.new_state(IDLE(_sm))
+            # TODO: FAILSAFE
+
+        # goto = rospy.Publisher('/move_base/goal', _MoveBaseActionGoal)
+        # goto.publish()
+                
+        # while True:
+        #     if not self.stop_state:
+        #         time.sleep(1)
+        #     else:
+        #         _sm.new_state(IDLE(_sm))
+        #         break
     def exec_command(self, command):
         print command
         self.stop_state = True
@@ -132,6 +152,7 @@ class GoToPose():
         rospy.sleep(1)
 
 temp_pose = None
+my_pose = None
 st = None
 _tbot = None
 CHAT_ID = None
@@ -163,6 +184,7 @@ def main():
     rospy.Subscriber('/amcl_pose', PoseWithCovarianceStamped, get_cur_pose)
 
     st = StateMachine()
+    navigator = GoToPose()
 
     TOKEN = load_param('~token')
     CHAT_ID = load_param('~chat_id')
@@ -171,40 +193,7 @@ def main():
     if PROXY != None: telepot.api.set_proxy(PROXY)
     MessageLoop(_tbot, handle).run_as_thread()
 
-    navigator = GoToPose()
-
-    # Customize the following values so they are appropriate for your location
-    # pos = {'x': 1.22, 'y' : 2.56}
-    # quat = {'r1' : 0.000, 'r2' : 0.000, 'r3' : 0.000, 'r4' : 1.000}
-    # my_pose = Pose(Point(pos['x'], pos['y'], 0.000), Quaternion(quat['r1'], quat['r2'], quat['r3'], quat['r4'])
-
-    my_pose = temp_pose
-
-    time.sleep(10)
-
-    success = navigator.goto(my_pose)
-
-    if success:
-        rospy.loginfo("Hooray, reached the desired pose")
-    else:
-        rospy.loginfo("The base failed to reach the desired pose")
-
-    # goto = rospy.Publisher('/move_base/goal', _MoveBaseActionGoal)
-    # goto.publish()
-
     rospy.spin()
 
 if __name__ == '__main__':
     main()
-
-time.sleep(3)
-st.new_command("412423")
-time.sleep(3)
-st.new_command("412423")
-time.sleep(3)
-st.new_command("412423")
-time.sleep(3)
-st.new_command("412423")
-time.sleep(3)
-st.new_command("412423")
-time.sleep(3)
