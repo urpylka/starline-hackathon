@@ -247,7 +247,7 @@ def main():
         with open(file_points, 'r') as infile:
             my_poses = json.load(infile)
     except:
-        my_poses = dist()
+        my_poses = dict()
 
     st = StateMachine()
     navigator = GoToPose()
