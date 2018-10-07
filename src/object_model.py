@@ -85,7 +85,8 @@ class IDLE(AbstractState):
             global temp_pose
             my_poses[array_command[1]] = temp_pose
             global file_points
-            json.dump(my_poses, file_points)
+            with open(file_points, 'w') as outfile:
+                json.dump(my_poses, outfile)
         else:
             _tbot.sendMessage(CHAT_ID, 'Ошибка 3! Некорректная команда: ' + command)
 
@@ -241,7 +242,10 @@ def main():
 
     global file_points
     file_points = "./urpylka_points.json"
-    my_poses = dict() if not os.path.isfile(file_points) else dict(json.load(file_points))
+    # my_poses = dict() if not os.path.isfile(file_points) else dict(json.load(file_points))
+
+    with open(file_points, 'r') as infile:
+        my_poses = json.load(infile)
 
     st = StateMachine()
     navigator = GoToPose()
