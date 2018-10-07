@@ -216,15 +216,15 @@ def main():
     rospy.loginfo('Inited node turtle_express')
     rospy.Subscriber('/amcl_pose', PoseWithCovarianceStamped, get_cur_pose)
 
-    st = StateMachine()
-    navigator = GoToPose()
+    global st = StateMachine()
+    global navigator = GoToPose()
 
-    TOKEN = load_param('~token')
-    CHAT_ID = load_param('~chat_id')
-    PROXY = load_param('~proxy')
+    global TOKEN = load_param('~token')
+    global CHAT_ID = load_param('~chat_id')
+    global PROXY = load_param('~proxy')
     if PROXY != None: telepot.api.set_proxy(PROXY)
 
-    _tbot = telepot.Bot(TOKEN)
+    global _tbot = telepot.Bot(TOKEN)
     _tbot.sendMessage(CHAT_ID, "I am online")
     MessageLoop(_tbot, handle).run_as_thread()
 
