@@ -5,7 +5,7 @@
     <!-- <include file="$(find turtlebot_bringup)/launch/3dsensor.launch" /> -->
     <include file="$(find rplidar_ros)/launch/rplidar.launch" />
 
-    <node pkg="turtle_express" type="bot.py" name="turtle_express" output="screen">
+    <node pkg="turtle_express" type="object_model.py" name="turtle_express" output="screen">
         <param name="token" value="gwqgwqgqwgY"/>
         <param name="chat_id" value="fgjrwpihrwqpgvhjpqirjpqpjkbv"/>
         <param name="proxy" value="fadsgwg"/>
