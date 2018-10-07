@@ -74,6 +74,9 @@ class StateMachine(object):
     def new_command(self, command):
         self.state.exec_command(command)
 
+    def pr():
+        print "weqfqwefqw"
+
 class GoToPose():
     def __init__(self):
         self.goal_sent = False
@@ -120,7 +123,11 @@ class GoToPose():
         rospy.loginfo("Stop")
         rospy.sleep(1)
 
-temp_pose = null
+temp_pose = None
+st = None
+_tbot = None
+CHAT_ID = None
+navigator = None
 
 def get_cur_pose(data):
     temp_pose = data.pose.pose
@@ -132,16 +139,22 @@ def get_cur_pose(data):
         """
         content_type, chat_type, chat_id = telepot.glance(msg)
         print(content_type, chat_type, chat_id)
-        if chat_id == self.chat_id:
+        if chat_id == CHAT_ID:
             if content_type == 'text':
-                self.debug_message(self.new_command(msg['text']))
+                print "fadsfasffasgsgasgasg"
+                st.pr()
+                # self.debug_message(self.new_command(msg['text']))
             else:
-                self.debug_message("Ошибка 2! Неверный тип: только text и location")
+                _tbot.sendMessage(CHAT_ID, "Ошибка 2! Неверный тип: только text и location")
         else:
-            self.debug_message("Ошибка 1! Access error!")
+            _tbot.sendMessage(CHAT_ID, "Ошибка 1! Access error!")
 
 def main():
     rospy.init_node('turtle_express')
+    rospy.loginfo('Inited node turtle_express')
+    rospy.Subscriber('/amcl_pose', PoseWithCovarianceStamped, get_cur_pose)
+
+    st = StateMachine()
 
     TOKEN = load_param('~token')
     CHAT_ID = load_param('~chat_id')
@@ -149,13 +162,7 @@ def main():
     DEBUG = load_param('~debug')
     _tbot = telepot.Bot(TOKEN)
     if PROXY != None: telepot.api.set_proxy(PROXY)
-    MessageLoop(_bot, handle).run_as_thread()
-
-
-    rospy.loginfo('Inited node turtle_express')
-    rospy.Subscriber('/amcl_pose', PoseWithCovarianceStamped, get_cur_pose)
-
-    st = StateMachine()
+    MessageLoop(_tbot, handle).run_as_thread()
 
     navigator = GoToPose()
 
