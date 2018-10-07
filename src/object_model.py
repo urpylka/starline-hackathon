@@ -59,7 +59,7 @@ class INIT(AbstractState):
     def run(self, _sm):
         _sm.new_state(IDLE(_sm))
     def exec_command(self, array_command):
-        print "Не могу выполнить команду: " + command
+        print "Не могу выполнить команду: " + array_command[0]
 
 class IDLE(AbstractState):
     def run(self, _sm):
