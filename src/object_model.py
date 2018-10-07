@@ -117,9 +117,6 @@ class StateMachine(object):
     def new_command(self, command):
         self.state.exec_command(command)
 
-    def pr(self):
-        print "weqfqwefqw"
-
 class GoToPose():
     def __init__(self):
         self.goal_sent = False
@@ -188,13 +185,10 @@ def handle(msg):
     global CHAT_ID
     global _tbot
     global st
-    print CHAT_ID
-    print chat_id
+
     if chat_id == CHAT_ID:
         if content_type == 'text':
-            print "fadsfasffasgsgasgasg"
-            st.pr()
-            # st.new_command(msg['text'])
+            st.new_command(msg['text'])
         else:
             _tbot.sendMessage(CHAT_ID, "Ошибка 2! Неверный тип: только text и location")
     else:
