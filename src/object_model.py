@@ -201,7 +201,8 @@ def load_param(param, default=None):
         return rospy.get_param(param, default)
     else:
         print("Error: " + str(param) + " not set & have not default value")
-        raise SystemExit
+        return None
+        # raise SystemExit
 
 def main():
     rospy.init_node('turtle_express')
