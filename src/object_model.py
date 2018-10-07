@@ -3,8 +3,10 @@
 
 import time
 import threading
+import traceback
 
 import telepot
+from telepot.loop import MessageLoop
 
 import rospy
 # Header
