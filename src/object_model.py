@@ -9,6 +9,8 @@ import time
 import threading
 import traceback
 
+import os, json
+
 import telepot
 from telepot.loop import MessageLoop
 
@@ -82,6 +84,8 @@ class IDLE(AbstractState):
             global my_poses
             global temp_pose
             my_poses[array_command[1]] = temp_pose
+            global file_points
+            json.dump(my_poses, file_points)
         else:
             _tbot.sendMessage(CHAT_ID, 'Ошибка 3! Некорректная команда: ' + command)
 
@@ -219,6 +223,9 @@ def load_param(param, default=None):
         return None
         # raise SystemExit
 
+
+
+
 def main():
     rospy.init_node('turtle_express')
     rospy.loginfo('Inited node turtle_express')
@@ -232,7 +239,9 @@ def main():
     global my_poses
     global cur_pose
 
-    my_poses = dict()
+    global file_points
+    file_points = "./urpylka_points.json"
+    my_poses = dict() if not os.path.is_exist(file_points) else dict(json.load(file_points))
 
     st = StateMachine()
     navigator = GoToPose()
