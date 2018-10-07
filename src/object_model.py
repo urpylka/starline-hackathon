@@ -68,7 +68,8 @@ class IDLE(AbstractState):
                 _sm.new_state(DELIVERY(_sm))
                 break
     def exec_command(self, array_command):
-        print "Commend: " + array_command[0]
+        print "Command: " + array_command[0]
+        command = array_command[0]
         if command == '/status':
             _tbot.sendMessage(CHAT_ID, "Здесь должен быть статус (заряд батареи)")
         elif command == '/go':
