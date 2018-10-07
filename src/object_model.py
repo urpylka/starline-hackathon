@@ -95,9 +95,12 @@ class DELIVERY(AbstractState):
 
         if success:
             rospy.loginfo("Hooray, reached the desired pose")
+            print("Hooray, reached the desired pose")
             _sm.new_state(IDLE(_sm))
         else:
             rospy.loginfo("The base failed to reach the desired pose")
+            print("The base failed to reach the desired pose")
+
             _sm.new_state(IDLE(_sm))
             # TODO: FAILSAFE
 
