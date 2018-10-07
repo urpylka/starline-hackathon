@@ -184,6 +184,7 @@ def handle(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)
     print(content_type, chat_type, chat_id)
     if chat_id == CHAT_ID:
+        print "fadsfasffasgsgasgasg"
         if content_type == 'text':
             print "fadsfasffasgsgasgasg"
             st.pr()
@@ -215,11 +216,10 @@ def main():
     TOKEN = load_param('~token')
     CHAT_ID = load_param('~chat_id')
     PROXY = load_param('~proxy')
-    print PROXY
-    _tbot = telepot.Bot(TOKEN)
-    _tbot.sendMessage(CHAT_ID, "fwek'gjrvbehofkp[worjdpbihjrfejkqojbhdfje;adkwlfshjbdldrdgkjlragisdkjfldgkjlskjdgslghij")
     if PROXY != None: telepot.api.set_proxy(PROXY)
-    _tbot.sendMessage(CHAT_ID, "fwek'gjrvbehofkp[worjdpbihjrfejkqojbhdfje;adkwlfshjbdldrdgkjlragisdkjfldgkjlskjdgslghij")
+
+    _tbot = telepot.Bot(TOKEN)
+    _tbot.sendMessage(CHAT_ID, "I am online")
     MessageLoop(_tbot, handle).run_as_thread()
 
     rospy.spin()
