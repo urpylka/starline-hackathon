@@ -37,8 +37,6 @@ class AbstractState(object):
 
 class INIT(AbstractState):
     def run(self, _sm):
-        print("wait 2 sec")
-        time.sleep(2)
         _sm.new_state(IDLE())
     def exec_command(self, command):
         print "Не могу выполнить команду: " + command
@@ -55,6 +53,20 @@ class IDLE(AbstractState):
         print command
         self.stop_state = True
 
+class GOTO(AbstractState):
+    def run(self, _sm):
+        print "GOTOTOT"
+        self.stop_state = True
+        while True:
+            if not self.stop_state:
+                time.sleep(1)
+            else:
+                _sm.new_state(IDLE())
+                break
+    def exec_command(self, command):
+        print command
+        self.stop_state = True
+
 class StateMachine(object):
     def __init__(self):
         self.state = INIT()
@@ -67,7 +79,7 @@ class StateMachine(object):
         self.state.exec_command(command)
 
 st = StateMachine()
+time.sleep(1)
 st.new_command("wefaf")
-print "wait 3 sec for run commands"
 time.sleep(3)
 st.new_command("412423")
