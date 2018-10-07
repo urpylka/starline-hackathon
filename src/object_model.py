@@ -230,8 +230,10 @@ def main():
     global TOKEN
     global CHAT_ID
     global PROXY
-    global my_poses[]
+    global my_poses
     global cur_pose
+
+    my_poses[]
 
     st = StateMachine()
     navigator = GoToPose()
