@@ -241,7 +241,7 @@ def main():
 
     global file_points
     file_points = "./urpylka_points.json"
-    my_poses = dict() if not os.path.is_exist(file_points) else dict(json.load(file_points))
+    my_poses = dict() if not os.path.isfile(file_points) else dict(json.load(file_points))
 
     st = StateMachine()
     navigator = GoToPose()
