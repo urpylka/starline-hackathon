@@ -71,7 +71,7 @@ class IDLE(AbstractState):
         print "Commend: " + command
         if command == '/status':
             _tbot.sendMessage(CHAT_ID, "Здесь должен быть статус (заряд батареи)")
-        elif command == 'beer1':
+        elif command == '/beer1':
             _tbot.sendMessage(CHAT_ID, "Доставка пива в дом №1")
             self.stop_state = True
         elif command == '/remind_beer1':
@@ -91,6 +91,7 @@ class DELIVERY(AbstractState):
         # my_pose = Pose(Point(pos['x'], pos['y'], 0.000), Quaternion(quat['r1'], quat['r2'], quat['r3'], quat['r4'])
         global my_pose
         global navigator
+        print my_pose
         success = navigator.goto(my_pose)
 
         if success:
