@@ -4,6 +4,20 @@
 import time
 import threading
 
+import telepot
+from telegrambot import TelegramBot
+
+import rospy
+# Header
+from std_msgs.msg import *
+# PoseWithCovarianceStamped
+from geometry_msgs.msg import *
+# MoveBaseActionGoal MoveBaseGoal 
+from move_base_msgs.msg import *
+import actionlib
+# GoalID
+from actionlib_msgs.msg import *
+
 # https://dev.to/karn/building-a-simple-state-machine-in-python
 
 class AbstractState(object):
