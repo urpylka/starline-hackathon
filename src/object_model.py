@@ -192,6 +192,16 @@ def handle(msg):
     else:
         _tbot.sendMessage(CHAT_ID, "Ошибка 1! Access error!")
 
+def load_param(param, default=None):
+    if rospy.has_param(param):
+        return rospy.get_param(param)
+    elif not default is None:
+        print("Param: " + str(param) + " not set & use default value: " + str(default))
+        return rospy.get_param(param, default)
+    else:
+        print("Error: " + str(param) + " not set & have not default value")
+        raise SystemExit
+
 def main():
     rospy.init_node('turtle_express')
     rospy.loginfo('Inited node turtle_express')
