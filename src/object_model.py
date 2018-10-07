@@ -81,8 +81,7 @@ class IDLE(AbstractState):
             _tbot.sendMessage(CHAT_ID, "Запомнить где находится дом №1")
             global my_poses
             global temp_pose
-            obj = {array_command[1]:temp_pose}
-            my_poses.append(obj)
+            my_poses[array_command[1]] = temp_pose
         else:
             _tbot.sendMessage(CHAT_ID, 'Ошибка 3! Некорректная команда: ' + command)
 
@@ -233,7 +232,7 @@ def main():
     global my_poses
     global cur_pose
 
-    my_poses = []
+    my_poses = dict()
 
     st = StateMachine()
     navigator = GoToPose()
