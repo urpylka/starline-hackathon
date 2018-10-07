@@ -4,6 +4,9 @@
     <include file="$(find turtlebot_bringup)/launch/minimal.launch" />
     <!-- <include file="$(find turtlebot_bringup)/launch/3dsensor.launch" /> -->
     <include file="$(find rplidar_ros)/launch/rplidar.launch" />
+    <include file="$(find turtlebot_navigation)/launch/amcl_demo.launch">
+        <arg name="map_file" value="/home/robot/my_map.yaml" />
+    </include>
 
     <node pkg="turtle_express" type="object_model.py" name="turtle_express" output="screen">
         <param name="token" value="gwqgwqgqwgY"/>
