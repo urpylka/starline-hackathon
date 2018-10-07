@@ -161,22 +161,22 @@ navigator = None
 def get_cur_pose(data):
     temp_pose = data.pose.pose
 
- def handle(msg):
-        """
-        хендлер выполняется в отдельном потоке,
-        вызывается событием на подобие блокирующей очереди
-        """
-        content_type, chat_type, chat_id = telepot.glance(msg)
-        print(content_type, chat_type, chat_id)
-        if chat_id == CHAT_ID:
-            if content_type == 'text':
-                print "fadsfasffasgsgasgasg"
-                st.pr()
-                # st.new_command(msg['text'])
-            else:
-                _tbot.sendMessage(CHAT_ID, "Ошибка 2! Неверный тип: только text и location")
+def handle(msg):
+    """
+    хендлер выполняется в отдельном потоке,
+    вызывается событием на подобие блокирующей очереди
+    """
+    content_type, chat_type, chat_id = telepot.glance(msg)
+    print(content_type, chat_type, chat_id)
+    if chat_id == CHAT_ID:
+        if content_type == 'text':
+            print "fadsfasffasgsgasgasg"
+            st.pr()
+            # st.new_command(msg['text'])
         else:
-            _tbot.sendMessage(CHAT_ID, "Ошибка 1! Access error!")
+            _tbot.sendMessage(CHAT_ID, "Ошибка 2! Неверный тип: только text и location")
+    else:
+        _tbot.sendMessage(CHAT_ID, "Ошибка 1! Access error!")
 
 def main():
     rospy.init_node('turtle_express')
