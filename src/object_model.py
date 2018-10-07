@@ -5,7 +5,6 @@ import time
 import threading
 
 import telepot
-from telegrambot import TelegramBot
 
 import rospy
 # Header
