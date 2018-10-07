@@ -38,7 +38,7 @@ class AbstractState(object):
     def run(self, _sm):
         raise NotImplementedError()
 
-    def exec_command(self, command):
+    def exec_command(self, array_command):
         raise NotImplementedError()
 
     def __repr__(self):
@@ -56,7 +56,7 @@ class AbstractState(object):
 class INIT(AbstractState):
     def run(self, _sm):
         _sm.new_state(IDLE(_sm))
-    def exec_command(self, command):
+    def exec_command(self, array_command):
         print "Не могу выполнить команду: " + command
 
 class IDLE(AbstractState):
@@ -67,18 +67,21 @@ class IDLE(AbstractState):
             else:
                 _sm.new_state(DELIVERY(_sm))
                 break
-    def exec_command(self, command):
-        print "Commend: " + command
+    def exec_command(self, array_command):
+        print "Commend: " + array_command[0]
         if command == '/status':
             _tbot.sendMessage(CHAT_ID, "Здесь должен быть статус (заряд батареи)")
-        elif command == '/beer1':
+        elif command == '/go':
             _tbot.sendMessage(CHAT_ID, "Доставка пива в дом №1")
+            global cur_pose
+            cur_pose = array_command[1]
             self.stop_state = True
-        elif command == '/remind_beer1':
+        elif command == '/save':
             _tbot.sendMessage(CHAT_ID, "Запомнить где находится дом №1")
-            global my_pose
+            global my_poses
             global temp_pose
-            my_pose = temp_pose
+            obj = {array_command[1]:temp_pose}
+            my_poses.append(obj)
         else:
             _tbot.sendMessage(CHAT_ID, 'Ошибка 3! Некорректная команда: ' + command)
 
@@ -88,11 +91,12 @@ class DELIVERY(AbstractState):
         # Customize the following values so they are appropriate for your location
         # pos = {'x': 1.22, 'y' : 2.56}
         # quat = {'r1' : 0.000, 'r2' : 0.000, 'r3' : 0.000, 'r4' : 1.000}
-        # my_pose = Pose(Point(pos['x'], pos['y'], 0.000), Quaternion(quat['r1'], quat['r2'], quat['r3'], quat['r4'])
-        global my_pose
+        # my_poses = Pose(Point(pos['x'], pos['y'], 0.000), Quaternion(quat['r1'], quat['r2'], quat['r3'], quat['r4'])
+        global my_poses
+        global cur_pose
         global navigator
-        print my_pose
-        success = navigator.goto(my_pose)
+        # print my_poses
+        success = navigator.goto(my_poses[cur_pose])
 
         if success:
             rospy.loginfo("Hooray, reached the desired pose")
@@ -114,9 +118,8 @@ class DELIVERY(AbstractState):
         #     else:
         #         _sm.new_state(IDLE(_sm))
         #         break
-    def exec_command(self, command):
-        print command
-        self.stop_state = True
+    def exec_command(self, array_command):
+        print "Команда не будет выполнена: " + array_command[0]
 
 class StateMachine(object):
     def __init__(self):
@@ -126,7 +129,8 @@ class StateMachine(object):
         self.state = _state
 
     def new_command(self, command):
-        self.state.exec_command(command)
+        array = command.split(' ')
+        self.state.exec_command(array)
 
 class GoToPose():
     def __init__(self):
@@ -175,7 +179,7 @@ class GoToPose():
         rospy.sleep(1)
 
 temp_pose = None
-my_pose = None
+my_poses = None
 st = None
 _tbot = None
 CHAT_ID = None
@@ -184,8 +188,6 @@ navigator = None
 def get_cur_pose(data):
     global temp_pose
     temp_pose = data.pose.pose
-
-
 
 def handle(msg):
     """
@@ -227,6 +229,8 @@ def main():
     global TOKEN
     global CHAT_ID
     global PROXY
+    global my_poses[]
+    global cur_pose
 
     st = StateMachine()
     navigator = GoToPose()
