@@ -117,7 +117,7 @@ class StateMachine(object):
     def new_command(self, command):
         self.state.exec_command(command)
 
-    def pr():
+    def pr(self):
         print "weqfqwefqw"
 
 class GoToPose():
