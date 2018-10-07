@@ -216,6 +216,7 @@ def main():
     PROXY = load_param('~proxy')
     print PROXY
     _tbot = telepot.Bot(TOKEN)
+    _tbot.sendMessage(CHAT_ID, "fwek'gjrvbehofkp[worjdpbihjrfejkqojbhdfje;adkwlfshjbdldrdgkjlragisdkjfldgkjlskjdgslghij")
     if PROXY != None: telepot.api.set_proxy(PROXY)
     MessageLoop(_tbot, handle).run_as_thread()
 
