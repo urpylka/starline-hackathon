@@ -75,15 +75,17 @@ class IDLE(AbstractState):
         print "Command: " + array_command[0]
         command = array_command[0]
         if command == '/status':
+            say("Отвали человек, мой статус недоступен")
             _tbot.sendMessage(CHAT_ID, "Здесь должен быть статус (заряд батареи)")
         elif command == '/go':
-            
+            say("Опять эти кожаные уюлюдки нарезали мне задач")
             _tbot.sendMessage(CHAT_ID, "Доставка пива в дом" + array_command[1])
             global cur_pose
             cur_pose = array_command[1]
             self.stop_state = True
         elif command == '/save':
-            _tbot.sendMessage(CHAT_ID, "Запомнить где находится дом №1")
+            say("Я запомнил, где ты живешь")
+            _tbot.sendMessage(CHAT_ID, "Запомнить где находится дом " + array_command[1])
             global my_poses
             global temp_pose
             my_poses[array_command[1]] = temp_pose
@@ -235,9 +237,6 @@ def load_param(param, default=None):
         print("Error: " + str(param) + " not set & have not default value")
         return None
         # raise SystemExit
-
-
-
 
 def main():
     rospy.init_node('turtle_express')
