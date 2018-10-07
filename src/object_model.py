@@ -176,6 +176,8 @@ navigator = None
 def get_cur_pose(data):
     temp_pose = data.pose.pose
 
+
+
 def handle(msg):
     """
     хендлер выполняется в отдельном потоке,
@@ -183,6 +185,9 @@ def handle(msg):
     """
     content_type, chat_type, chat_id = telepot.glance(msg)
     print(content_type, chat_type, chat_id)
+    global CHAT_ID
+    global _tbot
+    global st
     print CHAT_ID
     print chat_id
     if chat_id == CHAT_ID:
