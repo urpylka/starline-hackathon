@@ -77,6 +77,7 @@ class IDLE(AbstractState):
         elif command == '/remind_beer1':
             _tbot.sendMessage(CHAT_ID, "Запомнить где находится дом №1")
             global my_pose
+            global temp_pose
             my_pose = temp_pose
         else:
             _tbot.sendMessage(CHAT_ID, 'Ошибка 3! Некорректная команда: ' + command)
@@ -177,6 +178,7 @@ CHAT_ID = None
 navigator = None
 
 def get_cur_pose(data):
+    global temp_pose
     temp_pose = data.pose.pose
 
 
