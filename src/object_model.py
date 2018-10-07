@@ -5,6 +5,8 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
 
+from espeak import espeak
+
 import time
 import threading
 import traceback
@@ -75,7 +77,8 @@ class IDLE(AbstractState):
         if command == '/status':
             _tbot.sendMessage(CHAT_ID, "Здесь должен быть статус (заряд батареи)")
         elif command == '/go':
-            _tbot.sendMessage(CHAT_ID, "Доставка пива в дом №1")
+            
+            _tbot.sendMessage(CHAT_ID, "Доставка пива в дом" + array_command[1])
             global cur_pose
             cur_pose = array_command[1]
             self.stop_state = True
@@ -136,6 +139,15 @@ class StateMachine(object):
     def new_command(self, command):
         array = command.split(' ')
         self.state.exec_command(array)
+
+def say(word):
+    espeak.set_voice("ru")
+    espeak.set_parameter(espeak.Parameter.Rate, 10, False)
+    espeak.rate = 40
+    espeak.synth(word)
+
+    time.sleep(3)
+
 
 class GoToPose():
     def __init__(self):
