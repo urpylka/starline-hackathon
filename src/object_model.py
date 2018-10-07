@@ -49,8 +49,16 @@ class IDLE(AbstractState):
                 _sm.new_state(DELIVERY(_sm))
                 break
     def exec_command(self, command):
-        print command
-        self.stop_state = True
+        print "Commend: " + command
+        if command == '/status':
+            _tbot.sendMessage(CHAT_ID, "Здесь должен быть статус (заряд батареи)")
+        elif command == 'beer1':
+            _tbot.sendMessage(CHAT_ID, "Доставка пива в дом №1")
+            # self.stop_state = True
+        elif command == '/remind_beer1':
+            _tbot.sendMessage(CHAT_ID, "Запомнить где находится дом №1")
+        else:
+            _tbot.sendMessage(CHAT_ID, 'Ошибка 3! Некорректная команда: ' + command)
 
 class DELIVERY(AbstractState):
     def run(self, _sm):
@@ -143,7 +151,7 @@ def get_cur_pose(data):
             if content_type == 'text':
                 print "fadsfasffasgsgasgasg"
                 st.pr()
-                # self.debug_message(self.new_command(msg['text']))
+                # st.new_command(msg['text'])
             else:
                 _tbot.sendMessage(CHAT_ID, "Ошибка 2! Неверный тип: только text и location")
         else:
@@ -159,7 +167,6 @@ def main():
     TOKEN = load_param('~token')
     CHAT_ID = load_param('~chat_id')
     PROXY = load_param('~proxy')
-    DEBUG = load_param('~debug')
     _tbot = telepot.Bot(TOKEN)
     if PROXY != None: telepot.api.set_proxy(PROXY)
     MessageLoop(_tbot, handle).run_as_thread()
@@ -189,8 +196,6 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
 
 time.sleep(3)
 st.new_command("412423")
