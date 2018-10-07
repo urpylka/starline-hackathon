@@ -2,20 +2,18 @@
 # -*- coding: utf-8 -*-
 # vim:set ts=4 sw=4 et:
 
-import os.path, rospy, time
+import os.path, time
 
 import telepot
 from telegrambot import TelegramBot
 
+import rospy
 # Header
 from std_msgs.msg import *
-
 # PoseWithCovarianceStamped
 from geometry_msgs.msg import *
-
 # MoveBaseActionGoal MoveBaseGoal 
 from move_base_msgs.msg import *
-
 import actionlib
 # GoalID
 from actionlib_msgs.msg import *

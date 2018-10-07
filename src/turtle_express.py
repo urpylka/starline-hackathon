@@ -97,9 +97,9 @@ class TurtleExpress(object):
 
     def do_IDLE(self):
         self.current_state = States.IDLE
+        self.next_state = States.IDLE
         self.debug_message("STATE = %s" % self.current_state)
         self.stop_state = False
-        self.next_state = States.IDLE
 
         while True:
             if not self.stop_state:
@@ -111,29 +111,21 @@ class TurtleExpress(object):
         return self.next_state
 
     def do_GOTO(self):
+        self.current_state = States.GOTO
         self.next_state = States.IDLE
+        self.stop_state = False
+        self.debug_message("STATE = %s" % self.current_state)
 
-        if self._mission_created:
-            self.current_state = States.GOTO
-            self.debug_message("STATE = %s" % self.current_state)
-            self.stop_state = False
-            self.next_state = States.HOVER
-            self._vehicle.mode = VehicleMode("GUIDED")
-            self._simple_goto_wrapper(self._goto_location.lat, self._goto_location.lon, self._goto_location.alt)
-            while self._is_arrived(self._goto_location.lat, self._goto_location.lon, self._goto_location.alt):
-                if not self.stop_state:
-                    #self.debug_message('I\'m in '+self.current_state)
-                    self.debug_message("До точки назначения: " + get_distance_metres(self._goto_location, self._vehicle.location.global_relative_frame) + "м")
-                    time.sleep(1)
-                else:
-                    self.debug_message("Прерывание состояния %s" % self.current_state + " переключение в состояние %s" % self.next_state)
-                    return self.next_state
-            self.debug_message("Успешное завершение состояния %s" % self.current_state + " переключение в состояние %s" % self.next_state)
-            self._need_hover = False
-            return self.next_state
-        else:
-            self.debug_message("Ошибка: Создайте миссию заранее! Сейчас %s" % self.current_state + " переключение в состояние %s" % self.next_state)
-            return self.next_state
+        while self._is_arrived(self._goto_location.lat, self._goto_location.lon, self._goto_location.alt):
+            if not self.stop_state:
+                self.debug_message("До точки назначения: " + get_distance_metres(self._goto_location, self._vehicle.location.global_relative_frame) + "м")
+                time.sleep(1)
+            else:
+                self.debug_message("Прерывание состояния %s" % self.current_state + " переключение в состояние %s" % self.next_state)
+                return self.next_state
+        self.debug_message("Успешное завершение состояния %s" % self.current_state + " переключение в состояние %s" % self.next_state)
+        self._need_hover = False
+        return self.next_state
 
     def do_RTL(self):
         self.current_state = States.RTL
