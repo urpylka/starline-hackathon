@@ -150,7 +150,6 @@ def say(word):
 
     time.sleep(3)
 
-
 class GoToPose():
     def __init__(self):
         self.goal_sent = False

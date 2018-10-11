@@ -1,0 +1,10 @@
+<launch>
+    <include file="$(find turtle_express)/launch/slam_navigation.launch" />
+    <node pkg="turtle_express" type="main.py" name="turtle_express" output="screen">
+        <param name="token" value="gwqgwqgqwgY"/>
+        <param name="chat_id" value="fgjrwpihrwqpgvhjpqirjpqpjkbv"/>
+        <param name="proxy" value="fadsgwg"/>
+        <param name="debug" value="True"/>
+        <!-- <param name="logs_directory" value="$(find turtle_express)/logs" /> -->
+    </node>
+</launch>
