@@ -71,6 +71,7 @@ class IDLE(AbstractState):
             else:
                 _sm.new_state(DELIVERY(_sm))
                 break
+
     def exec_command(self, array_command):
         print "Command: " + array_command[0]
         command = array_command[0]
@@ -128,8 +129,10 @@ class DELIVERY(AbstractState):
         #     else:
         #         _sm.new_state(IDLE(_sm))
         #         break
+
     def exec_command(self, array_command):
         print "Команда не будет выполнена: " + array_command[0]
+
 
 class StateMachine(object):
     def __init__(self):
@@ -142,6 +145,7 @@ class StateMachine(object):
         array = command.split(' ')
         self.state.exec_command(array)
 
+
 def say(word):
     espeak.set_voice("ru")
     espeak.set_parameter(espeak.Parameter.Rate, 10, False)
@@ -149,6 +153,7 @@ def say(word):
     espeak.synth(word)
 
     time.sleep(3)
+
 
 class GoToPose():
     def __init__(self):
