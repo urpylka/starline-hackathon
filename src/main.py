@@ -246,30 +246,27 @@ def main():
     rospy.init_node('turtle_express')
     rospy.loginfo('Inited node turtle_express')
     rospy.Subscriber('/amcl_pose', PoseWithCovarianceStamped, get_cur_pose)
-    global st
-    global navigator
 
-    global TOKEN
-    global CHAT_ID
-    global PROXY
     global my_poses
-    global cur_pose
-
     global file_points
     file_points = "./urpylka_points.json"
-    # my_poses = dict() if not os.path.isfile(file_points) else dict(json.load(file_points))
     try:
         with open(file_points, 'r') as infile:
             my_poses = json.load(infile)
     except:
         my_poses = dict()
 
+    global st
+    global navigator
     st = StateMachine()
     navigator = GoToPose()
 
+    global TOKEN
+    global CHAT_ID
+    global PROXY
     TOKEN = load_param('~token')
     CHAT_ID = load_param('~chat_id')
-    PROXY = load_param('~proxy')
+    PROXY = load_param('~proxy', None)
     if PROXY != None: telepot.api.set_proxy(PROXY)
 
     global _tbot
