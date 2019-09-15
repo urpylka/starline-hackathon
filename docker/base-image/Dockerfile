@@ -8,8 +8,6 @@ RUN apt-get update && \
                         libnss-mdns \
                         netatalk \
                         systemd &&\
-                        #ros-kinetic-image-view \
-                        #ros-kinetic-rgbd-launch ros-kinetic-libuvc ros-kinetic-libuvc-camera ros-kinetic-libuvc-ros && \
                         apt-get clean &&\
                         rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -65,4 +63,3 @@ RUN bash -c " git clone https://github.com/orbbec/ros_astra_camera.git && \
 # Add entrypoint
 ADD turtlebot_entrypoint.sh /turtlebot_entrypoint.sh
 ENTRYPOINT ["/turtlebot_entrypoint.sh"]
-CMD [
