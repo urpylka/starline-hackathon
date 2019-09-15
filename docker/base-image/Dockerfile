@@ -5,11 +5,11 @@ MAINTAINER Alexander Karavaev "karavaev.aa@starline.ru"
 # Modified instructions from https://github.com/dockerimages/docker-systemd
 RUN apt-get update && \
     apt-get install -y  wget \
-                        libnss-mdns \
-                        netatalk \
-                        systemd &&\
-                        apt-get clean &&\
-                        rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    libnss-mdns \
+    netatalk \
+    systemd &&\
+    apt-get clean &&\
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN mkdir -p /var/run/dbus
 RUN cd /lib/systemd/system/sysinit.target.wants/; ls | grep -v systemd-tmpfiles-setup | xargs rm -f $1 \
@@ -37,31 +37,36 @@ ENV catkin_ws /catkin_ws
 WORKDIR ${catkin_ws}
 RUN mkdir -p "${catkin_ws}/src" && \ 
     bash -c " source /opt/ros/${ROS_DISTRO}/setup.bash && \
-              cd ${catkin_ws}/src && \
-              catkin_init_workspace && \
-              cd .. && \
-              catkin_make"
+    cd ${catkin_ws}/src && \
+    catkin_init_workspace && \
+    cd .. && \
+    catkin_make"
 
 # Install package into workspace, install their deps and build whole workspace
 RUN apt-get update
 RUN bash -c "cd ${catkin_ws}/src && \
-             git clone https://github.com/yujinrobot/kobuki.git && cd kobuki && git checkout kinetic && cd .. && \
-             source /opt/ros/${ROS_DISTRO}/setup.bash &&\
-             rosdep install --from-paths /catkin_ws --ignore-src --rosdistro=kinetic -y &&\
-             cd ${catkin_ws} && catkin_make"
+    git clone https://github.com/yujinrobot/kobuki.git && cd kobuki && git checkout kinetic && cd .. && \
+    source /opt/ros/${ROS_DISTRO}/setup.bash &&\
+    rosdep install --from-paths /catkin_ws --ignore-src --rosdistro=kinetic -y &&\
+    cd ${catkin_ws} && catkin_make"
 
 RUN bash -c " cd ${catkin_ws}/src && \
-              git clone https://github.com/robopeak/rplidar_ros.git && \
-              source /catkin_ws/devel/setup.bash &&\
-              rosdep install --from-paths /catkin_ws --ignore-src --rosdistro=kinetic -y &&\
-              cd ${catkin_ws} && catkin_make"
+    git clone https://github.com/robopeak/rplidar_ros.git && \
+    source /catkin_ws/devel/setup.bash &&\
+    rosdep install --from-paths /catkin_ws --ignore-src --rosdistro=kinetic -y &&\
+    cd ${catkin_ws} && catkin_make"
 
 RUN bash -c " cd ${catkin_ws}/src && \
-              git clone https://github.com/orbbec/ros_astra_camera.git && \
-              source /catkin_ws/devel/setup.bash &&\
-              rosdep install --from-paths /catkin_ws --ignore-src --rosdistro=kinetic -y &&\
-              cd ${catkin_ws} && catkin_make"
+    git clone https://github.com/orbbec/ros_astra_camera.git && \
+    source /catkin_ws/devel/setup.bash &&\
+    rosdep install --from-paths /catkin_ws --ignore-src --rosdistro=kinetic -y &&\
+    cd ${catkin_ws} && catkin_make"
 
+# Install deps for astra-camera
+RUN apt install -y ros-kinetic-rgbd-launch \
+    ros-kinetic-libuvc \
+    ros-kinetic-libuvc-camera \
+    ros-kinetic-libuvc-ros
 # Add entrypoint
 ADD turtlebot_entrypoint.sh /turtlebot_entrypoint.sh
 
