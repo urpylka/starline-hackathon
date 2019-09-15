@@ -50,16 +50,18 @@ RUN bash -c "cd ${catkin_ws}/src && \
              rosdep install --from-paths /catkin_ws --ignore-src --rosdistro=kinetic -y &&\
              cd ${catkin_ws} && catkin_make"
 
-RUN bash -c "git clone https://github.com/robopeak/rplidar_ros.git && \
+RUN bash -c " cd ${catkin_ws}/src && \
+              git clone https://github.com/robopeak/rplidar_ros.git && \
               source /catkin_ws/devel/setup.bash &&\
               rosdep install --from-paths /catkin_ws --ignore-src --rosdistro=kinetic -y &&\
               cd ${catkin_ws} && catkin_make"
 
-RUN bash -c " git clone https://github.com/orbbec/ros_astra_camera.git && \
+RUN bash -c " cd ${catkin_ws}/src && \
+              git clone https://github.com/orbbec/ros_astra_camera.git && \
               source /catkin_ws/devel/setup.bash &&\
               rosdep install --from-paths /catkin_ws --ignore-src --rosdistro=kinetic -y &&\
               cd ${catkin_ws} && catkin_make"
 
 # Add entrypoint
 ADD turtlebot_entrypoint.sh /turtlebot_entrypoint.sh
-ENTRYPOINT ["/turtlebot_entrypoint.sh"]
+
