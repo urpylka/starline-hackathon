@@ -2,7 +2,7 @@ version: '2'
 
 services:
   ros-base: 
-    image: hackathon-viz
+    image: hackathon-base
     container_name: ros-base
     privileged: true
     volumes:
@@ -10,7 +10,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix 
       - /tmp/.docker.xauth:/tmp/.docker.xauth
     environment:
-       - DISPLAY=unix:0
+       - DISPLAY=:0
        - SSH_AUTH_SOCK=/tmp/ssh_auth_sock    DISPLAY \
         
     #entrypoint:
