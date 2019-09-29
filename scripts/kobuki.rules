@@ -1,0 +1,3 @@
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", ATTRS{serial}=="kobuki*", MODE:="0666", GROUP:="dialout", SYMLINK+="kobuki"
+# Bluetooth module (currently not supported and may have problems)
+# SUBSYSTEM=="tty", ATTRS{address}=="00:00:00:41:48:22", MODE:="0666", GROUP:="dialout", SYMLINK+="kobuki"
