@@ -25,10 +25,10 @@ RUN echo "deb http://packages.ros.org/ros/ubuntu bionic main" > /etc/apt/sources
 
 
 # Create and init catkin tools ws
-ENV  DRIVERS_WS /drivers_ws
+ENV  DRIVERS_WS /drivers_tws
 ENV  ROS_DISTRO kinetic
 RUN  mkdir -p "${DRIVERS_WS}/src" && cd "${DRIVERS_WS}" && catkin init
-COPY drivers_ws/src ./drivers_ws/src
+COPY drivers_tws/src ./drivers_tws/src
 
 # Checkout to ROS distro
 RUN cd ${DRIVERS_WS}/src/kobuki && git checkout ${ROS_DISTRO} && cd .. && cd kobuki_core && git checkout ${ROS_DISTRO}
