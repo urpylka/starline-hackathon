@@ -1,3 +1,11 @@
-# Запуск
-1. ```cd docker/rviz && docker build -t hackathon-viz . --network=host```
-2. ```cd ../run_rviz.sh```
+### Сборка контейнера
+
+    cd docker && bash build_docker.sh
+
+### Запуск контейнера
+
+    bash run_docker.sh
+
+### Запуск bash в контейнере
+
+    bash into_docker.sh

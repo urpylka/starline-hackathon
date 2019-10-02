@@ -15,4 +15,4 @@ fi
 
 xhost +"local:docker@"
 
-docker-compose run ros-base 
+docker-compose run kobuki-base 
