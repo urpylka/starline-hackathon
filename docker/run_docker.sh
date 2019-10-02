@@ -1,18 +1,14 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-XAUTH=/tmp/.docker.xauth
-if [ ! -f $XAUTH ]
-then
-    xauth_list=$(xauth nlist :0 | sed -e 's/^..../ffff/')
-    if [ ! -z "$xauth_list" ]
-    then
-        echo $xauth_list | xauth -f $XAUTH nmerge -
-    else
-        touch $XAUTH
-    fi
-    chmod a+r $XAUTH
-fi
+xhost +local:docker || true
 
-xhost +"local:docker@"
+ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 
-docker-compose run kobuki-base 
+sudo docker run -ti --rm \
+                --env="DISPLAY" \
+                -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
+                -v /dev:/dev \
+                -v $ROOT_DIR/drivers_tws:/drivers_tws \
+                --net=host \
+                --privileged \
+                --name kobuki-base kobuki-sl-hackathon-base

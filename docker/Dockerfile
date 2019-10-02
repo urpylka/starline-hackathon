@@ -27,11 +27,14 @@ RUN echo "deb http://packages.ros.org/ros/ubuntu bionic main" > /etc/apt/sources
 # Create and init catkin tools ws
 ENV  DRIVERS_WS /drivers_tws
 ENV  ROS_DISTRO kinetic
+ENV  ROS_INSTALL_PATH "/opt/ros/$ROS_DISTRO/"
+
+RUN echo "source ${ROS_INSTALL_PATH}/setup.bash" >> "/root/.bashrc"
+RUN echo "source ${DRIVERS_WS}/devel/setup.bash" >> "/root/.bashrc"
+
+
 RUN  mkdir -p "${DRIVERS_WS}/src" && cd "${DRIVERS_WS}" && catkin init
 COPY drivers_tws/src ./drivers_tws/src
-
-# Checkout to ROS distro
-RUN cd ${DRIVERS_WS}/src/kobuki && git checkout ${ROS_DISTRO} && cd .. && cd kobuki_core && git checkout ${ROS_DISTRO}
 
 ENV PATH              "$PATH:$ROS_INSTALL_PATH/bin"
 ENV PYTHONPATH        "$ROS_INSTALL_PATH/lib/python2.7/dist-packages"
@@ -48,9 +51,9 @@ RUN apt install -y ros-kinetic-rgbd-launch \
     rosdep update && \
     rosdep install --from-paths ${DRIVERS_WS} --ignore-src --rosdistro=kinetic -y
 
+RUN rm -R ${DRIVERS_WS}
 
-# Install package into workspace, install their deps and build whole workspace
-RUN apt-get update
-RUN bash -c "source /opt/ros/kinetic/setup.bash && cd ${DRIVERS_WS}/src/ && \
-             catkin build &&\
-             echo "${DRIVERS_WS}/devel/setup.bash" >> "/root/.bash.rc""
+# nvidia-docker hooks
+#LABEL com.nvidia.volumes.needed="nvidia_driver"
+#ENV PATH /usr/local/nvidia/bin:${PATH}
+#ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64:${LD_LIBRARY_PATH}
