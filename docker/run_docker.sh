@@ -9,6 +9,7 @@ sudo docker run -ti --rm \
                 -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
                 -v /dev:/dev \
                 -v $ROOT_DIR/drivers_tws:/drivers_tws \
+                -v $ROOT_DIR/catkin_tws:/catkin_tws \
                 --net=host \
                 --privileged \
                 --name kobuki-base kobuki-sl-hackathon-base
