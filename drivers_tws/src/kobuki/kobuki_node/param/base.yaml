@@ -2,7 +2,7 @@
 # Firmware Source
 ##############################################################################
 
-device_port: /dev/kobuki
+device_port: /dev/serial/by-id/usb-Yujin_Robot_iClebo_Kobuki_kobuki_A907BW3X-if00-port0
 
 # published joint states
 wheel_left_joint_name: wheel_left_joint
