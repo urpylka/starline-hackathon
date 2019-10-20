@@ -1,3 +1,0 @@
-[submodule "drivers_ws/src/kobuki_core"]
-	path = drivers_ws/src/kobuki_core
-	url = ./drivers_ws/src/kobuki
