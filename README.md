@@ -29,15 +29,29 @@
     cd /drivers_tws
     catkin init
     catkin build
+    
+### Использование
 
-### Список подготовленных роботов
+Для запуска драйверов следует использовать соответствующие launch файлы из пакета tb:
 
-| TurtleBot # | Hostname | Password|
-|:--|:--:|---:|
-| TurtleBot 1 | tb1@tb1 | tb |
-| TurtleBot 2 | tb2@tb2 | tb |
-| TurtleBot 5 | tb5@tb5 | tb |
-| TurtleBot 6 | tb6@tb6 | tb |
-| TurtleBot 7 | tb7@tb7 | tb |
-| TurtleBot 8 | tb8@tb8 | tb |
-| TurtleBot 13 | tb13@tb13 | tb |
+    roslaunch tb rplidar.launch
+    roslaunch tb base.launch
+    roslaunch tb astra.launch
+
+### Информация о роботах
+
+| TurtleBot # | Hostname | Password| Status |
+|:--|:--:|---:|---:|
+| TurtleBot 1 | tb1@tb1 | tb | ready |
+| TurtleBot 2 | tb2@tb2 | tb | only OS |
+| TurtleBot 3 | tb3@tb3 | tb | - |
+| TurtleBot 4 | tb4@tb4 | tb | - |
+| TurtleBot 5 | tb5@tb5 | tb | only OS |
+| TurtleBot 6 | tb6@tb6 | tb | only OS |
+| TurtleBot 7 | tb7@tb7 | tb | only OS |
+| TurtleBot 8 | tb8@tb8 | tb | only OS |
+| TurtleBot 9 | tb9@tb9 | tb | - |
+| TurtleBot 10 | tb10@tb10 | tb | - |
+| TurtleBot 11 | tb11@tb11 | tb | - |
+| TurtleBot 12 | tb12@tb12 | tb | - |
+| TurtleBot 13 | tb13@tb13 | tb | only OS |
