@@ -2,11 +2,11 @@
 echo "[INFO] Setting up udev rules..."
 
 # RPLidar
-sudo cp 99-rplidar.rules /etc/udev/rules.d
+sudo cp 20-rplidar.rules /etc/udev/rules.d
 # Kobuki
-#sudo cp 99-kobuki.rules /etc/udev/rules.d
+sudo cp 30-kobuki.rules /etc/udev/rules.d
 # Astra
-#sudo cp 99-astra.rules /etc/udev/rules.d
+sudo cp 10-astra.rules /etc/udev/rules.d
 
 echo "[INFO] Restarting udev service..."
 sudo service udev reload
