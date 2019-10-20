@@ -1,12 +1,6 @@
 FROM osrf/ros:kinetic-desktop-full
 MAINTAINER Alexander Karavaev "karavaev.aa@starline.ru"
 
-# Export the turtlebot variables
-ENV TURTLEBOT_BASE kobuki
-ENV TURTLEBOT_STACKS hexagons
-ENV TURTLEBOT_3D_SENSOR astra
-ENV TURTLEBOT_SERIAL_PORT /dev/ttyUSB0
-
 RUN apt-get update && apt-get install -y \
     apt-utils \
     gnupg2 \
@@ -47,7 +41,8 @@ ENV CMAKE_PREFIX_PATH "$ROS_INSTALL_PATH"
 RUN apt install -y ros-kinetic-rgbd-launch \
     ros-kinetic-libuvc \
     ros-kinetic-libuvc-camera \
-    ros-kinetic-libuvc-ros && \
+    ros-kinetic-libuvc-ros 
+    ros-kinetic-teleop-twist-keyboard && \
     rosdep update && \
     rosdep install --from-paths ${DRIVERS_WS} --ignore-src --rosdistro=kinetic -y
 
