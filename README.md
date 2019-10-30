@@ -8,6 +8,8 @@
 
     cd scripts && bash setup.bash
 
+После этой операции следует перезайти в систему для корректной работы с докером.
+
 ### Сборка контейнера
 
     bash docker/build_docker.sh
@@ -44,7 +46,7 @@
 |:--|:--:|---:|---:|
 | TurtleBot 1 | tb1@tb1 | tb | ready |
 | TurtleBot 2 | tb2@tb2 | tb | only OS |
-| TurtleBot 3 | tb3@tb3 | tb | - |
+| TurtleBot 3 | tb3@tb3 | tb | ready |
 | TurtleBot 4 | tb4@tb4 | tb | - |
 | TurtleBot 5 | tb5@tb5 | tb | only OS |
 | TurtleBot 6 | tb6@tb6 | tb | only OS |
