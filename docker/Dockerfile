@@ -41,7 +41,7 @@ ENV CMAKE_PREFIX_PATH "$ROS_INSTALL_PATH"
 RUN apt install -y ros-kinetic-rgbd-launch \
     ros-kinetic-libuvc \
     ros-kinetic-libuvc-camera \
-    ros-kinetic-libuvc-ros 
+    ros-kinetic-libuvc-ros \
     ros-kinetic-teleop-twist-keyboard && \
     rosdep update && \
     rosdep install --from-paths ${DRIVERS_WS} --ignore-src --rosdistro=kinetic -y
