@@ -45,7 +45,7 @@
 | TurtleBot # | Hostname | Password| Status |
 |:--|:--:|---:|---:|
 | TurtleBot 1 | tb1@tb1 | tb | ready |
-| TurtleBot 2 | tb2@tb2 | tb | only OS |
+| TurtleBot 2 | tb2@tb2 | tb | ready |
 | TurtleBot 3 | tb3@tb3 | tb | ready |
 | TurtleBot 4 | tb4@tb4 | tb | ready (broken lidar usb cabel) |
 | TurtleBot 5 | tb5@tb5 | tb | only OS |
