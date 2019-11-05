@@ -47,7 +47,7 @@
 | TurtleBot 1 | tb1@tb1 | tb | ready |
 | TurtleBot 2 | tb2@tb2 | tb | only OS |
 | TurtleBot 3 | tb3@tb3 | tb | ready |
-| TurtleBot 4 | tb4@tb4 | tb | ready (broken usb cabel) |
+| TurtleBot 4 | tb4@tb4 | tb | ready (broken lidar usb cabel) |
 | TurtleBot 5 | tb5@tb5 | tb | only OS |
 | TurtleBot 6 | tb6@tb6 | tb | only OS |
 | TurtleBot 7 | tb7@tb7 | tb | only OS |
