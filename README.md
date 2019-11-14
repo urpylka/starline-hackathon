@@ -52,7 +52,7 @@
 | TurtleBot 6 | tb6@tb6 | tb | ready (broken lidar usb cabel) |
 | TurtleBot 7 | tb7@tb7 | tb | ready |
 | TurtleBot 8 | tb8@tb8 | tb | ready |
-| TurtleBot 9 | tb9@tb9 | tb | - |
+| TurtleBot 9 | tb9@tb9 | tb | ready |
 | TurtleBot 10 | tb10@tb10 | tb | - |
 | TurtleBot 11 | tb11@tb11 | tb | - |
 | TurtleBot 12 | tb12@tb12 | tb | - |
