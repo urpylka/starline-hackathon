@@ -31,6 +31,11 @@ sudo usermod -aG docker $USER
 #sudo chmod +x /usr/local/bin/docker-compose
 #docker-compose --version
 
-THIS_SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+KOBUKI_ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 
-sudo bash $THIS_SCRIPT_DIR/udev_rules/create_udev.bash
+sudo bash $KOBUKI_ROOT_DIR/scripts/udev_rules/create_udev.bash
+
+echo " " >> ~/.bashrc
+echo "alias kobuki_docker_build='bash $KOBUKI_ROOT_DIR/docker/build_docker.sh'" >> ~/.bashrc
+echo "alias kobuki_docker_into='bash $KOBUKI_ROOT_DIR/docker/into_docker.sh'" >> ~/.bashrc
+echo "alias kobuki_docker_run='bash $KOBUKI_ROOT_DIR/docker/run_docker.sh'" >> ~/.bashrc
