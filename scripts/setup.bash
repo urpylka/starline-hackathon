@@ -31,4 +31,18 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 docker-compose --version
 
-sudo bash udev_rules/create_udev.bash
+echo "[INFO] Setting up udev rules..."
+
+# RPLidar
+sudo cp udev_rules/20-rplidar.rules /etc/udev/rules.d
+# Kobuki
+sudo cp udev_rules/30-kobuki.rules /etc/udev/rules.d
+# Astra
+sudo cp udev_rules/10-astra.rules /etc/udev/rules.d
+
+echo "[INFO] Restarting udev service..."
+sudo service udev reload
+sudo service udev restart
+
+echo "Finished"
+
