@@ -6,21 +6,21 @@
 
 Для успешного запуска докер-контейнера предварительно требуется установить необходимое ПО и udev-правила для используемого на turtlebot аппаратного обеспечения. Для этого из корня проекта требуется выполнить:
 
-    cd scripts && bash setup.bash
+    bash scripts/setup.bash
 
-После этой операции следует перезайти в систему для корректной работы с докером.
+После этой операции следует перезайти в систему для корректной работы docker. После этого приведенные ниже команды можно использовать из находясь в любой директории.
 
 ### Сборка контейнера
 
-    bash docker/build_docker.sh
+    kobuki_docker_build
 
 ### Запуск контейнера
 
-    bash docker/run_docker.sh
+    kobuki_docker_run
 
 ### Запуск bash в контейнере
 
-    bash docker/into_docker.sh
+    kobuki_docker_into
 
 ### Организация процесса разработки
 
@@ -56,4 +56,4 @@
 | TurtleBot 10 | tb10@tb10 | tb | ready |
 | TurtleBot 11 | tb11@tb11 | tb | ready |
 | TurtleBot 12 | tb12@tb12 | tb | - |
-| TurtleBot 13 | tb13@tb13 | tb | only OS |
+| TurtleBot 13 | tb13@tb13 | tb | ready |
