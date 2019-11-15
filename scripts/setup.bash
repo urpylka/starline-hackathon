@@ -31,4 +31,4 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 docker-compose --version
 
-sudo bash create_udev.bash
+sudo bash udev_rules/create_udev.bash
