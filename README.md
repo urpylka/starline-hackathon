@@ -2,6 +2,8 @@
 
 На роботе turtlebot 2 дополнительно установлены: rgbd-камера Astra Orbbec и лидар RPLidar A2. В данном репозитории содержиться Dockerfile для сборки контейнера на базе Ubuntu16.04 внутри которого доступны драйвера для всего аппаратного обеспечения и ROS kinetic.
 
+![kobuki_view](https://github.com/NickoDema/kobuki/blob/master/docs/pics/kobuki_view.png)
+
 ### Установка требуемого ПО
 
 Для успешного запуска докер-контейнера предварительно требуется установить необходимое ПО и udev-правила для используемого на turtlebot аппаратного обеспечения. Для этого из корня проекта требуется выполнить:
@@ -47,13 +49,13 @@
 | TurtleBot 1 | tb1@tb1 | tb | ready |
 | TurtleBot 2 | tb2@tb2 | tb | ready |
 | TurtleBot 3 | tb3@tb3 | tb | ready |
-| TurtleBot 4 | tb4@tb4 | tb | ready (broken lidar usb cabel) |
+| TurtleBot 4 | tb4@tb4 | tb | ready |
 | TurtleBot 5 | tb5@tb5 | tb | ready |
-| TurtleBot 6 | tb6@tb6 | tb | ready (broken lidar usb cabel) |
+| TurtleBot 6 | tb6@tb6 | tb | ready |
 | TurtleBot 7 | tb7@tb7 | tb | ready |
 | TurtleBot 8 | tb8@tb8 | tb | ready |
 | TurtleBot 9 | tb9@tb9 | tb | ready |
 | TurtleBot 10 | tb10@tb10 | tb | ready |
 | TurtleBot 11 | tb11@tb11 | tb | ready |
-| TurtleBot 12 | tb12@tb12 | tb | - |
+| TurtleBot 12 | tb12@tb12 | tb | ready |
 | TurtleBot 13 | tb13@tb13 | tb | ready |
