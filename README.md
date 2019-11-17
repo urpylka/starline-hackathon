@@ -10,7 +10,7 @@
 
     bash scripts/setup.bash
 
-После этой операции следует перезайти в систему для корректной работы docker. После этого приведенные ниже команды можно использовать из находясь в любой директории.
+После этой операции следует перезайти в систему для корректной работы docker. После этого приведенные ниже команды можно использовать находясь в любой директории.
 
 ### Сборка контейнера
 
@@ -51,9 +51,9 @@
 | TurtleBot 3 | tb3@tb3 | tb | ready |
 | TurtleBot 4 | tb4@tb4 | tb | ready |
 | TurtleBot 5 | tb5@tb5 | tb | ready |
-| TurtleBot 6 | tb6@tb6 | tb | ready |
-| TurtleBot 7 | tb7@tb7 | tb | ready |
-| TurtleBot 8 | tb8@tb8 | tb | ready |
+| TurtleBot 6 | tb6@tb6 | tb | ready (base charging problem) |
+| TurtleBot 7 | tb7@tb7 | tb | ready (base charging problem) |
+| TurtleBot 8 | tb8@tb8 | tb | ready (base charging problem) |
 | TurtleBot 9 | tb9@tb9 | tb | ready |
 | TurtleBot 10 | tb10@tb10 | tb | ready (base charging problem) |
 | TurtleBot 11 | tb11@tb11 | tb | ready |
