@@ -2,7 +2,7 @@
 
 На роботе turtlebot 2 дополнительно установлены: rgbd-камера Astra Orbbec и лидар RPLidar A2. В данном репозитории содержиться Dockerfile для сборки контейнера на базе Ubuntu16.04 внутри которого доступны драйвера для всего аппаратного обеспечения и ROS kinetic.
 
-![kobuki_view](https://github.com/NickoDema/kobuki/blob/master/docs/pics/kobuki_view.png)
+![kobuki_view](docs/pics/kobuki_view.png)
 
 ### Установка требуемого ПО
 
