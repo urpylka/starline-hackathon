@@ -1,5 +1,5 @@
 FROM osrf/ros:kinetic-desktop-full
-MAINTAINER Alexander Karavaev "karavaev.aa@starline.ru"
+MAINTAINER Nikolay Dema "ndema2301@gmail.com"
 
 RUN apt-get update && apt-get install -y \
     apt-utils \

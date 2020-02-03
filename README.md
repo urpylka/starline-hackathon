@@ -42,6 +42,10 @@
     roslaunch tb base.launch
     roslaunch tb astra.launch
 
+В случае проблем с обращением к роботу по hostname для удаленной работы с ROS на роботе (например для визуализации данных с робота в r-viz) можно воспользоваться:
+
+    source scripts/ros_remote_env.bash <robot_ip>
+
 ### Информация о роботах
 
 | TurtleBot # | Hostname | Password| Status |
