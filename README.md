@@ -63,3 +63,7 @@
 | TurtleBot 11 | tb11@tb11 | tb | ready |
 | TurtleBot 12 | tb12@tb12 | tb | ready |
 | TurtleBot 13 | tb13@tb13 | tb | ready |
+
+### Симулятор
+
+![gazebo](docs/pics/turtlebot_gazebo_docker_nvidia.png)
