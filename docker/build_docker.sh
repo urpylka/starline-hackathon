@@ -15,7 +15,7 @@ else
     echo "[!] If you wanna use nvidia gpu, please rebuild with -n or --nvidia argument"
     docker build -t kobuki-sl-hackathon-sim -f $ROOT_DIR/docker/Dockerfile $ROOT_DIR \
                                            --network=host \
-                                           --build-arg from=ubuntu:18.04
+                                           --build-arg from=ubuntu:16.04
 fi
 
 cd $EXEC_PATH
