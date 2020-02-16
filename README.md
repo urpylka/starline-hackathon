@@ -66,4 +66,4 @@
 
 ### Симулятор
 
-![gazebo](docs/pics/turtlebot_gazebo_docker_nvidia.png)
+![gazebo](docs/pics/turtletown.gif)
