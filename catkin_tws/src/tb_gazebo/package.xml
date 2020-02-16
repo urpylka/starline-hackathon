@@ -1,11 +1,10 @@
 <package>
   <name>tb_gazebo</name>
   <version>2.2.3</version>
-  <description>Gazebo launchers and worlds for TurtleBot simulation</description>
+  <description>TurtleTown for StarLine hackathon</description>
   <maintainer email="ndema2301@gmail.com">Nikolay Dema</maintainer>
   <license>Apache License, Version 2.0</license>
   <url type="repository">https://github.com/NickoDema/kobuki</url>
-  <url type="bugtracker">https://github.com/NickoDema/kobuki/issues</url>
   <author email="ndema2301@gmail.com">Nikolay Dema</author>
 
   <buildtool_depend>catkin</buildtool_depend>
@@ -17,4 +16,9 @@
   <run_depend>robot_state_publisher</run_depend>
   <run_depend>turtlebot_description</run_depend>
   <run_depend>xacro</run_depend>
+
+  <export>
+    <gazebo_ros gazebo_model_path="${prefix}/.." />
+  </export>
+
 </package>
