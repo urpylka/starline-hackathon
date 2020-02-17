@@ -18,17 +18,15 @@ RUN echo "deb http://packages.ros.org/ros/ubuntu bionic main" > /etc/apt/sources
     apt-get update && apt-get install -y python-catkin-tools
 
 
-# Create and init catkin tools ws
-ENV  DRIVERS_WS /drivers_tws
+# Create and catkin tools ws
+ENV  DRIVERS_WS /drivers_ws
 ENV  ROS_DISTRO kinetic
 ENV  ROS_INSTALL_PATH "/opt/ros/$ROS_DISTRO/"
 
 RUN echo "source ${ROS_INSTALL_PATH}/setup.bash" >> "/root/.bashrc"
 RUN echo "source ${DRIVERS_WS}/devel/setup.bash" >> "/root/.bashrc"
 
-
-RUN  mkdir -p "${DRIVERS_WS}/src" && cd "${DRIVERS_WS}" && catkin init
-COPY drivers_tws/src ./drivers_tws/src
+COPY ${DRIVERS_WS} ${DRIVERS_WS}
 
 ENV PATH              "$PATH:$ROS_INSTALL_PATH/bin"
 ENV PYTHONPATH        "$ROS_INSTALL_PATH/lib/python2.7/dist-packages"
@@ -47,8 +45,3 @@ RUN apt install -y ros-kinetic-rgbd-launch \
     rosdep install --from-paths ${DRIVERS_WS} --ignore-src --rosdistro=kinetic -y
 
 RUN rm -R ${DRIVERS_WS}
-
-# nvidia-docker hooks
-#LABEL com.nvidia.volumes.needed="nvidia_driver"
-#ENV PATH /usr/local/nvidia/bin:${PATH}
-#ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64:${LD_LIBRARY_PATH}

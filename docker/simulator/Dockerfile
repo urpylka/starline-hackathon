@@ -23,7 +23,7 @@ RUN apt-get update && apt-get install -y \
 ENV OS_DISTRO xenial
 ENV ROS_DISTRO kinetic
 ENV ROS_INSTALL_PATH "/opt/ros/$ROS_DISTRO/"
-ENV CATKIN_WS /catkin_tws
+ENV SIM_WS /simulator_ws
 
 
 
@@ -40,7 +40,7 @@ RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $OS_DISTRO main" > /etc/
     apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654 && \
     apt-get update && apt-get install -y ros-kinetic-desktop gazebo7 && \
     echo "source $ROS_INSTALL_PATH/setup.bash"  >> "/root/.bashrc" && \
-    echo "source ${CATKIN_WS}/devel/setup.bash" >> "/root/.bashrc" && \
+    echo "source ${SIM_WS}/devel/setup.bash" >> "/root/.bashrc" && \
     rosdep init && rosdep update
 
 
@@ -61,7 +61,7 @@ RUN echo "deb http://packages.ros.org/ros/ubuntu $OS_DISTRO main" > /etc/apt/sou
 
 # User WS dependings
 
-COPY catkin_tws ${CATKIN_WS}
-RUN rosdep install --from-paths ${CATKIN_WS} --ignore-src --rosdistro=${ROS_DISTRO} -y
+COPY ${SIM_WS} ${SIM_WS}
+RUN rosdep install --from-paths ${SIM_WS} --ignore-src --rosdistro=${ROS_DISTRO} -y
 
-RUN rm -R ${CATKIN_WS}
+RUN rm -R ${SIM_WS}

@@ -1,9 +1,17 @@
-drivers_tws/src/.catkin_tools
-drivers_tws/build
-drivers_tws/devel
-drivers_tws/logs
+drivers_ws/.catkin_tools
+drivers_ws/src/.catkin_tools
+drivers_ws/build
+drivers_ws/devel
+drivers_ws/logs
 
-catkin_tws/src/.catkin_tools
-catkin_tws/build
-catkin_tws/devel
-catkin_tws/logs
+simulator_ws/.catkin_tools
+simulator_ws/src/.catkin_tools
+simulator_ws/build
+simulator_ws/devel
+simulator_ws/logs
+
+catkin_ws/.catkin_tools
+catkin_ws/src/.catkin_tools
+catkin_ws/build
+catkin_ws/devel
+catkin_ws/logs
