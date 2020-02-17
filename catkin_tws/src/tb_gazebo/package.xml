@@ -1,0 +1,25 @@
+<package>
+  <name>tb_gazebo</name>
+  <version>2.2.3</version>
+  <description>TurtleTown for StarLine hackathon</description>
+  <maintainer email="ndema2301@gmail.com">Nikolay Dema</maintainer>
+  <license>Apache License, Version 2.0</license>
+  <url type="website">https://en.wikipedia.org/wiki/Turtletown,_Tennessee</url>
+  <url type="repository">https://github.com/NickoDema/kobuki</url>
+  <author email="ndema2301@gmail.com">Nikolay Dema</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- <run_depend>yocs_cmd_vel_mux</run_depend> -->
+  <!-- <run_depend>depthimage_to_laserscan</run_depend> -->
+  <run_depend>gazebo_ros</run_depend>
+  <run_depend>tb_gazebo_plugins</run_depend>
+  <run_depend>robot_state_publisher</run_depend>
+  <run_depend>tb_gazebo_description</run_depend>
+  <run_depend>xacro</run_depend>
+
+  <export>
+    <gazebo_ros gazebo_model_path="${prefix}/.." />
+  </export>
+
+</package>

@@ -1,10 +1,8 @@
-drivers_tws/.catkin_tools
 drivers_tws/src/.catkin_tools
 drivers_tws/build
 drivers_tws/devel
 drivers_tws/logs
 
-catkin_tws/.catkin_tools
 catkin_tws/src/.catkin_tools
 catkin_tws/build
 catkin_tws/devel
