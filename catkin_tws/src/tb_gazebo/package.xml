@@ -4,6 +4,7 @@
   <description>TurtleTown for StarLine hackathon</description>
   <maintainer email="ndema2301@gmail.com">Nikolay Dema</maintainer>
   <license>Apache License, Version 2.0</license>
+  <url type="website">https://en.wikipedia.org/wiki/Turtletown,_Tennessee</url>
   <url type="repository">https://github.com/NickoDema/kobuki</url>
   <author email="ndema2301@gmail.com">Nikolay Dema</author>
 
@@ -12,9 +13,9 @@
   <!-- <run_depend>yocs_cmd_vel_mux</run_depend> -->
   <!-- <run_depend>depthimage_to_laserscan</run_depend> -->
   <run_depend>gazebo_ros</run_depend>
-  <run_depend>kobuki_gazebo_plugins</run_depend>
+  <run_depend>tb_gazebo_plugins</run_depend>
   <run_depend>robot_state_publisher</run_depend>
-  <run_depend>turtlebot_description</run_depend>
+  <run_depend>tb_gazebo_description</run_depend>
   <run_depend>xacro</run_depend>
 
   <export>
