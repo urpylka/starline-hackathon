@@ -36,6 +36,6 @@ KOBUKI_ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 sudo bash $KOBUKI_ROOT_DIR/scripts/udev_rules/create_udev.bash
 
 echo " " >> ~/.bashrc
-echo "alias kobuki_docker_build='bash $KOBUKI_ROOT_DIR/docker/build_docker.sh'" >> ~/.bashrc
-echo "alias kobuki_docker_into='bash $KOBUKI_ROOT_DIR/docker/into_docker.sh'" >> ~/.bashrc
-echo "alias kobuki_docker_run='bash $KOBUKI_ROOT_DIR/docker/run_docker.sh'" >> ~/.bashrc
+echo "alias kobuki_docker_build='bash $KOBUKI_ROOT_DIR/docker/kobuki/build_docker.sh'" >> ~/.bashrc
+echo "alias kobuki_docker_into='bash $KOBUKI_ROOT_DIR/docker/kobuki/into_docker.sh'" >> ~/.bashrc
+echo "alias kobuki_docker_run='bash $KOBUKI_ROOT_DIR/docker/kobuki/run_docker.sh'" >> ~/.bashrc

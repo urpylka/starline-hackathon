@@ -12,4 +12,4 @@ sudo docker run -ti --rm \
                 -v $ROOT_DIR/catkin_tws:/catkin_tws \
                 --net=host \
                 --privileged \
-                --name kobuki-base kobuki-sl-hackathon-base
+                --name kobuki kobuki-base-img

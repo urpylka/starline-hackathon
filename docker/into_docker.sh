@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-sudo docker exec -ti kobuki-base bash
+sudo docker exec -ti kobuki bash
