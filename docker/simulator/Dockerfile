@@ -47,7 +47,9 @@ RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $OS_DISTRO main" > /etc/
 
 # Additional ROS packages
 
-RUN apt-get install -y ros-kinetic-teleop-twist-keyboard
+RUN apt-get install -y \
+    ros-kinetic-teleop-twist-keyboard \
+    ros-kinetic-depthimage-to-laserscan
 
 
 
