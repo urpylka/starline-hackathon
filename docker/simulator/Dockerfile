@@ -23,7 +23,7 @@ RUN apt-get update && apt-get install -y \
 
 ENV OS_DISTRO xenial
 ENV ROS_DISTRO kinetic
-ENV ROS_INSTALL_PATH "/opt/ros/$ROS_DISTRO/"
+ENV ROS_INSTALL_PATH "/opt/ros/$ROS_DISTRO"
 ENV SIM_WS /simulator_ws
 
 
