@@ -55,7 +55,9 @@ RUN apt-get install -y \
     ros-kinetic-hector-models \
     ros-kinetic-navigation \
     ros-kinetic-explore-lite \
-    ros-kinetic-gmapping
+    ros-kinetic-gmapping \
+    ros-kinetic-ira-laser-tools \
+    ros-kinetic-pointcloud-to-laserscan
 
 
 # Install catkin tools
