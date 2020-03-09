@@ -15,7 +15,7 @@
   <kobuki/>
   <stack_hexagons parent="base_link"/>
   <sensor_kinect  parent="base_link"/>
-  <hokuyo_utm30lx_gpu name="hokuyo_laser" parent="base_link" ros_topic="/hokuyo_laser" update_rate="30" ray_count="720" min_angle="0" max_angle="360">
+  <hokuyo_utm30lx name="hokuyo_laser" parent="base_link" ros_topic="/hokuyo_laser" update_rate="30" ray_count="720" min_angle="0" max_angle="360">
     <origin xyz="0 0 +0.10" rpy="0 0 0" />
-  </hokuyo_utm30lx_gpu>
+  </hokuyo_utm30lx>
 </robot>
