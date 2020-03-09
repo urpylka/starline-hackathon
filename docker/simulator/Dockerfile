@@ -14,7 +14,8 @@ RUN apt-get update && apt-get install -y \
     curl \
     git \
     mc \
-    vim
+    vim \
+    nano
 
 
 
@@ -52,7 +53,8 @@ RUN apt-get install -y \
     ros-kinetic-depthimage-to-laserscan \
     ros-kinetic-hector-models \
     ros-kinetic-navigation \
-    ros-kinetic-explore-lite
+    ros-kinetic-explore-lite \
+    ros-kinetic-gmapping
 
 
 # Install catkin tools
