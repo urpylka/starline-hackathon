@@ -42,6 +42,7 @@ RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $OS_DISTRO main" > /etc/
     apt-get update && apt-get install -y ros-kinetic-desktop gazebo7 && \
     echo "source $ROS_INSTALL_PATH/setup.bash"  >> "/root/.bashrc" && \
     echo "source ${SIM_WS}/devel/setup.bash" >> "/root/.bashrc" && \
+    echo "source /catkin_ws/devel/setup.bash" >> "/root/.bashrc" && \
     rosdep init && rosdep update
 
 
