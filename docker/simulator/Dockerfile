@@ -89,7 +89,8 @@ RUN apt-get update && \
 
 # Install navigation module
 
-RUN apt-get install -y ros-kinetic-turtlebot-navigation
+RUN apt-get install -y ros-kinetic-turtlebot-navigation \
+    ros-kinetic-teb-local-planner
 
 
 # User WS dependings
