@@ -202,8 +202,8 @@
     <stack_top_pole parent="${parent}" number="1" x_loc= "0.0381" y_loc="-0.1505" z_loc="0.2920"/>
     <stack_top_pole parent="${parent}" number="2" x_loc="-0.0381" y_loc= "0.1505" z_loc="0.2920"/>
     <stack_top_pole parent="${parent}" number="3" x_loc="-0.0381" y_loc="-0.1505" z_loc="0.2920"/>
-    <stack_3d_sensor_pole parent="${parent}" number="0" x_loc="-0.1024" y_loc= "0.098" z_loc="0.2372"/>
-    <stack_3d_sensor_pole parent="${parent}" number="1" x_loc="-0.1024" y_loc="-0.098" z_loc="0.2372"/>
+    <!--<stack_3d_sensor_pole parent="${parent}" number="0" x_loc="0.11" y_loc= "0.098" z_loc="0.2372"/>
+    <stack_3d_sensor_pole parent="${parent}" number="1" x_loc="0.11" y_loc="-0.098" z_loc="0.2372"/>-->
     
     <joint name="plate_top_joint" type="fixed">
       <origin xyz="-0.01364 0.0  0.3966" rpy="0 0 0"/>
