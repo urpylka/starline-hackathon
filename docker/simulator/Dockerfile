@@ -98,3 +98,5 @@ COPY ${SIM_WS} ${SIM_WS}
 RUN rosdep install --from-paths ${SIM_WS} --ignore-src --rosdistro=${ROS_DISTRO} -y
 
 RUN rm -R ${SIM_WS}
+
+ENV TURTLEBOT_3D_SENSOR kinect
