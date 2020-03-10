@@ -1,4 +1,17 @@
 <launch>
+
+    <include file="$(find solution_1)/launch/merge_kinect_hokuyo.launch"/>
+
+    <!-- Run the map server -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find solution_1)/map/map_1.yaml" output="screen" />
+
+    <!--- Run AMCL -->
+    <node pkg="amcl" type="amcl" name="amcl" output="screen">
+        <rosparam file="$(find solution_1)/navigation_parameters/amcl.yaml" command="load" />
+        <remap from="/scan" to="/hokuyo_laser" />
+    </node>
+
+
     <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
         <rosparam file="$(find solution_1)/navigation_parameters/costmap_common_params.yaml" command="load" ns="global_costmap" /> 
         <rosparam file="$(find solution_1)/navigation_parameters/costmap_common_params.yaml" command="load" ns="local_costmap" />
@@ -6,5 +19,8 @@
         <rosparam file="$(find solution_1)/navigation_parameters/global_costmap_params.yaml" command="load" /> 
         <rosparam file="$(find solution_1)/navigation_parameters/base_local_planner_params.yaml" command="load" />
         <remap from="/cmd_vel" to="/mobile_base/commands/velocity" />
+        <param name="base_global_planner" value="global_planner/GlobalPlanner" />
+        <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+        <param name="controller_frequency" value="10.0" />
     </node>
 </launch>
