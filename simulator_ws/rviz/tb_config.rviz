@@ -1,6 +1,6 @@
 Panels:
   - Class: rviz/Displays
-    Help Height: 0
+    Help Height: 70
     Name: Displays
     Property Tree Widget:
       Expanded:
@@ -90,6 +90,7 @@ Visualization Manager:
       Unreliable: false
       Value: true
       Visibility:
+        Axes: true
         DepthCloud: true
         Grid: true
         LaserScan: true
@@ -239,7 +240,7 @@ Visualization Manager:
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: base_footprint
+    Fixed Frame: odom
     Frame Rate: 30
   Name: root
   Tools:
@@ -267,18 +268,18 @@ Visualization Manager:
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0
-        Y: 0
-        Z: 0
+        X: -6.44704199
+        Y: 6.5046854
+        Z: 0.17904444
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.445398152
+      Pitch: 1.56479633
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 1.990399
+      Yaw: 0.187217146
     Saved: ~
 Window Geometry:
   Camera:
