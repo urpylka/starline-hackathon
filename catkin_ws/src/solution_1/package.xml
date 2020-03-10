@@ -4,10 +4,7 @@
   <version>1.0.0</version>
   <description>The solution_1 package</description>
 
-  <!-- One maintainer tag required, multiple allowed, one person per tag -->
-  <!-- Example:  -->
-  <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
-  <author email="goldartt@gmail.com">Arthur Golubtsov</author>
+  <maintainer email="goldartt@gmail.com">Arthur Golubtsov</maintainer>
   <author email="urpylka@gmail.com">Artem Smirnov</author>
 
 
