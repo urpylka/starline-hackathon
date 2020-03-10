@@ -1,6 +1,7 @@
 # Stimulator G
 
-[![Видео работы решения](http://iimg.youtube.com/vi/Bpk09-oP4mI/default.jpg)](http://www.youtube.com/watch?v=Bpk09-oP4mI)
+[![Видео работы решения](http://img.youtube.com/vi/Bpk09-oP4mI/0.jpg)](http://www.youtube.com/watch?v=Bpk09-oP4mI)
+
 
 ## Коротко о процессе разработки
 
