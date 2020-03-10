@@ -1,0 +1,4 @@
+<launch>
+  <include file="$(find solution_1)/launch/kinect_scan.launch"/>
+  <include file="$(find solution_1)/launch/laserscans_merge.launch"/>
+</launch>
