@@ -2,7 +2,7 @@
 
 ## Видео работы решения
 
-[![Видео работы решения](http://img.youtube.com/vi/Bpk09-oP4mI/sddefault.jpg)](http://www.youtube.com/watch?v=Bpk09-oP4mI)
+[![Видео работы решения](http://img.youtube.com/vi/Bpk09-oP4mI/0.jpg)](http://www.youtube.com/watch?v=Bpk09-oP4mI)
 
 Кликабельно ↑↑↑ Youtube
 
