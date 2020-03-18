@@ -15,7 +15,6 @@ if [[ $1 = "--nvidia" ]] || [[ $1 = "-n" ]]
                 -v /dev:/dev \
                 -v $ROOT_DIR/simulator_ws:/simulator_ws \
                 -v $ROOT_DIR/catkin_ws:/catkin_ws \
-                -v $ROOT_DIR/map:/map \
                --net=host \
                --privileged \
                --name kobuki-sim kobuki-sim-img
@@ -31,7 +30,6 @@ else
                 -v /dev:/dev \
                 -v $ROOT_DIR/simulator_ws:/simulator_ws \
                 -v $ROOT_DIR/catkin_ws:/catkin_ws \
-                -v $ROOT_DIR/map:/map \
                --net=host \
                --privileged \
                --name kobuki-sim kobuki-sim-img
