@@ -1,7 +1,7 @@
 all: into
 
 into:
-	./scripts/ocker/simulator/into_docker.sh
+	./scripts/docker/simulator/into_docker.sh
 build:
 	./scripts/docker/simulator/build_docker.sh
 run:
