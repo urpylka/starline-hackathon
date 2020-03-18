@@ -5,7 +5,7 @@ xhost +local:docker || true
 HOST_IP_LIST=(`hostname -I`)  #Get a list of host ip-adresses
 HOST_IP=${HOST_IP_LIST[0]}    #Get the first ip from list: it is wifi ip
 
-ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../.." && pwd )"
+ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../../.." && pwd )"
 
 sudo docker run -ti --rm \
                 --env="DISPLAY" \

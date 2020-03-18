@@ -2,7 +2,7 @@
 
 xhost +local:docker || true
 
-ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../.." && pwd )"
+ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../../.." && pwd )"
 
 if [[ $1 = "--nvidia" ]] || [[ $1 = "-n" ]]
   then
