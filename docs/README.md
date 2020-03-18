@@ -16,3 +16,12 @@
 * http://learn.turtlebot.com/2015/02/01/11/
 * http://wiki.ros.org/navigation/Tutorials/Navigation%20Tuning%20Guide#The_Local_Planner
 * http://wiki.ros.org/costmap_converter использование costmap_convertor на практике позволяет снизить нагрузку на процессор и с большей выгодой подобрать параметры teb_local_planner
+
+## Navigation
+
+Один из скриптов навигации
+
+```bash
+#! /bin/bash
+rostopic pub /move_base_simple/goal geometry_msgs/PoseStamped '{header: {stamp: now, frame_id: "map"}, pose: {position: {x: 0.674, y: 0.119, z: 0.0}, orientation: {w: 1.0}}}'
+```
