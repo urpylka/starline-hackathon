@@ -101,3 +101,5 @@ RUN rosdep install --from-paths ${SIM_WS} --ignore-src --rosdistro=${ROS_DISTRO}
 RUN rm -R ${SIM_WS}
 
 ENV TURTLEBOT_3D_SENSOR kinect
+
+RUN apt install -y ros-kinetic-geometry2
