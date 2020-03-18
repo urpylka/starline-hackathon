@@ -1,5 +1,5 @@
 <launch>
-  <arg name="scan_topic"  default="scan" />
+  <arg name="scan_topic"  default="/scan"/>
   <arg name="base_frame"  default="base_footprint"/>
   <arg name="odom_frame"  default="odom"/>
 
@@ -7,8 +7,8 @@
     <param name="base_frame" value="$(arg base_frame)"/>
     <param name="odom_frame" value="$(arg odom_frame)"/>
     <param name="map_update_interval" value="0.1"/>
-    <!--<param name="maxUrange" value="6.0"/>
-    <param name="maxRange" value="8.0"/>-->
+    <param name="maxUrange" value="6.0"/>
+    <param name="maxRange" value="8.0"/>
     <param name="sigma" value="0.05"/>
     <param name="kernelSize" value="1"/>
     <param name="lstep" value="0.05"/>
@@ -26,7 +26,7 @@
     <param name="angularUpdate" value="0.1"/>
     <param name="temporalUpdate" value="0.1"/>
     <param name="resampleThreshold" value="0.5"/>
-    <param name="particles" value="600"/>
+    <param name="particles" value="100"/>
     <param name="xmin" value="-1.0"/>
     <param name="ymin" value="-1.0"/>
     <param name="xmax" value="1.0"/>

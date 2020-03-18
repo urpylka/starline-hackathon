@@ -1,0 +1,12 @@
+<launch>
+  <!-- r200, kinect, asus_xtion_pro -->
+  <arg name="3d_sensor" default="$(env TURTLEBOT_3D_SENSOR)"/>
+
+  <include file="$(find turtlebot_bringup)/launch/3dsensor.launch">
+    <arg name="rgb_processing" value="false" />
+    <arg name="depth_registration" value="false" />
+    <arg name="depth_processing" value="false" />
+
+    <arg name="scan_topic" value="/kinect_scan" />
+  </include>
+</launch>
