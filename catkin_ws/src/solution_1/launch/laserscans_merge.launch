@@ -2,7 +2,7 @@
     <node pkg="ira_laser_tools" name="laserscan_multi_merger" type="laserscan_multi_merger" output="screen">
         <param name="destination_frame" value="base_link"/>
         <param name="scan_destination_topic" value="/scan"/>
-        <param name="laserscan_topics" value ="/hokuyo_laser /kinect_scan" />
+        <param name="laserscan_topics" value ="/hokuyo_laser /kinect_scan"/>
 
         <param name="angle_min" value="-3.14159265"/>
         <param name="angle_max" value="3.14159265"/>
