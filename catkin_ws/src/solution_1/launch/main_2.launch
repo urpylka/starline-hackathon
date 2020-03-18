@@ -1,15 +1,15 @@
 <launch>
     <!-- Running the gazebo simulation -->
-    <include file="$(find tb_gazebo)/launch/turtletown.launch"/>
+    <include file="$(find tb_gazebo)/launch/turtletown.launch" />
 
     <!-- Running the lasers -->
     <!-- pointcloud_to_laserscan -->
-    <include file="$(find solution_1)/launch/kinect_scan.launch"/>
+    <include file="$(find solution_1)/launch/kinect_scan.launch" />
     <!-- ira_laser_tools -->
-    <include file="$(find solution_1)/launch/laserscans_merge.launch"/>
+    <include file="$(find solution_1)/launch/laserscans_merge.launch" />
 
     <!-- Running the gmapping -->
-    <include file="$(find solution_1)/launch/gmapping.launch"/>
+    <include file="$(find solution_1)/launch/gmapping.launch" />
 
     <!-- Running move_base -->
     <!-- <include file="$(find turtlebot_navigation)/launch/includes/move_base.launch.xml"/> -->
@@ -25,6 +25,6 @@
         <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
         <param name="controller_frequency" value="10.0" />
 
-        <remap from="/cmd_vel" to="/mobile_base/commands/velocity"/>
+        <remap from="/cmd_vel" to="/mobile_base/commands/velocity" />
     </node>
 </launch>
