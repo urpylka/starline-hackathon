@@ -1,32 +1,36 @@
 <launch>
+    <!-- <arg name="solution_dir" default="$(find solution_1)"/> -->
+    <arg name="solution_dir" default="/catkin_ws/src/solution_1"/>
+
+
     <!-- Running the gazebo simulation -->
     <include file="$(find tb_gazebo)/launch/turtletown.launch"/>
 
     <!-- Running the lasers -->
     <!-- <include file="$(find solution_1)/launch/merge_kinect_hokuyo.launch"/> -->
     <!-- pointcloud_to_laserscan -->
-    <include file="$(find solution_1)/launch/kinect_scan.launch" />
+    <include file="$(arg solution_dir)/launch/kinect_scan.launch" />
     <!-- ira_laser_tools -->
-    <include file="$(find solution_1)/launch/laserscans_merge.launch" />
+    <include file="$(arg solution_dir)/launch/laserscans_merge.launch" />
 
     <!-- Running the map_server -->
-    <node name="map_server" pkg="map_server" type="map_server" args="$(find solution_1)/map/map_1.yaml" output="screen" />
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg solution_dir)/map/map_1.yaml" output="screen" />
 
     <!-- Running AMCL -->
     <node pkg="amcl" type="amcl" name="amcl" output="screen">
-        <rosparam file="$(find solution_1)/navigation_parameters/amcl.yaml" command="load" />
+        <rosparam file="$(arg solution_dir)/params/amcl.yaml" command="load" />
         <remap from="/scan" to="/hokuyo_laser" />
     </node>
 
     <!-- Running move_base -->
     <!-- <include file="$(find turtlebot_navigation)/launch/includes/move_base.launch.xml"/> -->
     <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-        <rosparam file="$(find solution_1)/navigation_parameters/costmap_common_params.yaml" command="load" ns="global_costmap" />
-        <rosparam file="$(find solution_1)/navigation_parameters/costmap_common_params.yaml" command="load" ns="local_costmap" />
-        <rosparam file="$(find solution_1)/navigation_parameters/local_costmap_params.yaml" command="load" />
-        <rosparam file="$(find solution_1)/navigation_parameters/global_costmap_params.yaml" command="load" />
+        <rosparam file="$(arg solution_dir)/params/costmap_common_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(arg solution_dir)/params/costmap_common_params.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(arg solution_dir)/params/local_costmap_params.yaml" command="load" />
+        <rosparam file="$(arg solution_dir)/params/global_costmap_params.yaml" command="load" />
 
-        <rosparam file="$(find solution_1)/navigation_parameters/base_local_planner_params.yaml" command="load" />
+        <rosparam file="$(arg solution_dir)/params/base_local_planner_params.yaml" command="load" />
 
         <param name="base_global_planner" value="global_planner/GlobalPlanner" />
         <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
