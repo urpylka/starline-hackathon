@@ -1,8 +1,9 @@
 <launch>
     <!-- Running the gazebo simulation -->
-    <!-- <include file="$(find tb_gazebo)/launch/turtletown.launch"/> -->
+    <include file="$(find tb_gazebo)/launch/turtletown.launch"/>
 
     <!-- Running the lasers -->
+    <!-- <include file="$(find solution_1)/launch/merge_kinect_hokuyo.launch"/> -->
     <!-- pointcloud_to_laserscan -->
     <include file="$(find solution_1)/launch/kinect_scan.launch" />
     <!-- ira_laser_tools -->

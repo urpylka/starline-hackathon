@@ -78,4 +78,4 @@ roslaunch solution_1 move_base.launch
 rviz
 ```
 
-Для быстрой настройки окружения загрузите настройки из файла `/simulator_ws/rviz/tb_config.rviz`
+Для быстрой настройки окружения загрузите настройки из файла `/catkin_ws/src/solution_1/rviz/tb_config.rviz`
