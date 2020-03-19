@@ -2,9 +2,9 @@ TebLocalPlannerROS:
 
     odom_topic: odom
     map_frame: /odom
-        
+
     # Trajectory
-        
+
     acc_lim_theta: 0.5
     acc_lim_x: 0.5
     acc_lim_y: 0.5
