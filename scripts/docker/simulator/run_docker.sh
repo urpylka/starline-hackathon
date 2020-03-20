@@ -17,7 +17,7 @@ if [[ $1 = "--nvidia" ]] || [[ $1 = "-n" ]]
                 -v $ROOT_DIR/catkin_ws:/catkin_ws \
                --net=host \
                --privileged \
-               --name kobuki-sim kobuki-sim-img
+               --name kobuki-sim kobuki-sim-img-n
 
 else
 

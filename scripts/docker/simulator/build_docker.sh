@@ -7,7 +7,7 @@ cd $ROOT_DIR
 
 if [[ $1 = "--nvidia" ]] || [[ $1 = "-n" ]]
   then
-    docker build -t kobuki-sim-img -f $ROOT_DIR/scripts/docker/simulator/Dockerfile $ROOT_DIR \
+    docker build -t kobuki-sim-img-n -f $ROOT_DIR/scripts/docker/simulator/Dockerfile $ROOT_DIR \
                                   --network=host \
                                   --build-arg from=nvidia/opengl:1.1-glvnd-runtime-ubuntu16.04
 
