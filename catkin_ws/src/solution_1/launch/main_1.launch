@@ -4,7 +4,7 @@
 
 
     <!-- Running the gazebo simulation -->
-    <include file="$(find tb_gazebo)/launch/turtletown.launch"/>
+    <!-- <include file="$(find tb_gazebo)/launch/turtletown.launch"/> -->
 
     <!-- Running the lasers -->
     <!-- <include file="$(find solution_1)/launch/merge_kinect_hokuyo.launch"/> -->
