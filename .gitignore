@@ -1,20 +1,12 @@
-drivers_ws/.catkin_tools
-drivers_ws/.catkin_workspace
-drivers_ws/src/.catkin_tools
-drivers_ws/build
-drivers_ws/devel
-drivers_ws/logs
+# Catkin files
+.catkin_tools/
+.catkin_workspace
+build/
+devel/
+logs/
 
-simulator_ws/.catkin_tools
-simulator_ws/.catkin_workspace
-simulator_ws/src/.catkin_tools
-simulator_ws/build
-simulator_ws/devel
-simulator_ws/logs
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
 
-catkin_ws/.catkin_tools
-catkin_ws/.catkin_workspace
-catkin_ws/src/.catkin_tools
-catkin_ws/build
-catkin_ws/devel
-catkin_ws/logs
