@@ -84,9 +84,6 @@ if __name__ == "__main__":
 
     matrix, distortions = get_matrix_and_distortions_ros('camera_info')
 
-    print matrix
-    print distortions
-
     rate = rospy.Rate(_rate)
 
     while not rospy.is_shutdown():
@@ -102,12 +99,3 @@ if __name__ == "__main__":
         prepared_image = prepare_image(last_image_cv2, dyn_params, matrix, distortions)
 
         pub_image(prepared_image, image_pub, header)
-
-    '''
-    matrix, distortions = get_matrix_and_distortions_ros(args.namespace+'/camera_info')
-
-    print matrix
-    print distortions
-
-    image_sub = rospy.Subscriber(args.namespace+'/image_raw', Image, image_callback)
-    '''
