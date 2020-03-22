@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 
+import os
+import tensorflow as tf
 import numpy as np
 import rospy
 import cv_bridge
+from cv_resize import resize
 from sensor_msgs.msg import Image
+
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
 def on_image(msg):
     on_image.last_image = msg
@@ -33,8 +38,11 @@ if __name__ == "__main__":
         if on_image.last_image is None:
             continue
 
+        last_image_cv2 = cv_bridge.imgmsg_to_cv2(on_image.last_image)
+        last_image_cv2_resized = resize(last_image_cv2, (513, 513))
+
         header = on_image.last_image.header
-        semantic = model.infer([cv_bridge.imgmsg_to_cv2(on_image.last_image)])[0]
+        semantic = model.infer([last_image_cv2_resized])[0]
 
         if pub_semantic.get_num_connections() > 0:
             m = cv_bridge.cv2_to_imgmsg(semantic.astype(np.uint8), encoding = 'mono8')
