@@ -10,15 +10,15 @@ map_type: costmap
 always_send_full_costmap: true
 
 obstacle_layer:
- enabled: true
- obstacle_range: 3.0
- raytrace_range: 4.0
- inflation_radius: 0.2
- track_unknown_space: true
- combination_method: 1
+ enabled:               true
+ obstacle_range:        3.0
+ raytrace_range:        4.0
+ inflation_radius:      0.2
+ track_unknown_space:   true
+ combination_method:    1
 
- observation_sources: laser_scan_sensor
- laser_scan_sensor: {data_type: LaserScan, topic: scan, marking: true, clearing: true}
+ observation_sources:   laser_scan_sensor
+ laser_scan_sensor:     {data_type: LaserScan, topic: scan, marking: true, clearing: true}
 
 inflation_layer:
   enabled:              true
@@ -26,9 +26,16 @@ inflation_layer:
   inflation_radius:     0.5  # max. distance from an obstacle at which costs are incurred for planning paths.
 
 static_layer:
-  enabled:              false
-  map_topic:            "/map"
-
-static_layer2:
   enabled:              true
+  map_topic:            "/robot_0/move_base/local_costmap/costmap3"
+  # map_topic:            "/map"
+
+walls_layer:
+  enabled:              false
+  # http://wiki.ros.org/costmap_2d/hydro/staticmap
+  # first_map_only:       false
+  # trinary_costmap:      true
+  # use_maximum:          false
+  # lethal_cost_threshold: 100
+  # unknown_cost_value:   -1
   map_topic:            "/robot_0/move_base/local_costmap/costmap2"
