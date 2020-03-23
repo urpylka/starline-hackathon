@@ -83,3 +83,5 @@ RUN apt-get install -y \
 RUN pip3 install --upgrade pip
 
 RUN pip3 install rospkg catkin_pkg tensorflow==1.15
+
+RUN apt install ros-kinetic-stage-ros
