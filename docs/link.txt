@@ -1,0 +1,15 @@
+https://blog.zhaw.ch/icclab/configuring-the-ros-navigation-stack-on-a-new-robot/
+http://wiki.ros.org/teb_local_planner
+https://github.com/ros-planning/navigation
+https://github.com/ROBOTIS-GIT/turtlebot3_autorace
+http://emanual.robotis.com/docs/en/platform/turtlebot3/autonomous_driving/#ros-1-autonomous-driving
+https://github.com/ROBOTIS-GIT/turtlebot3_autorace_2020/tree/master/turtlebot3_autorace_parking
+https://github.com/Sr4l/virtual_obstacles
+http://wiki.ros.org/costmap_2d/Tutorials/Configuring%20Layered%20Costmaps
+https://github.com/ros-planning/navigation/tree/melodic-devel/map_server
+https://answers.ros.org/question/35844/help-with-navigation-error-transform-from-base_link-to-map/
+https://blog.zhaw.ch/icclab/configuring-the-ros-navigation-stack-on-a-new-robot/
+https://github.com/STAR-Center/fastGPOM/blob/master/gp_occ_mapping/src/scripts/gpmaps.py
+https://github.com/Skydes/Turtlebot-Navigation-Stack/blob/master/doc/presentation/presentation.pdf
+http://wiki.ros.org/costmap_2d/Tutorials/Creating%20a%20New%20Layer
+https://wiki.ros.org/occupancy_grid_utils
