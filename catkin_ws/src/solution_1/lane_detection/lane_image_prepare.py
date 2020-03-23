@@ -4,7 +4,7 @@ import rospy
 from cv_bridge import CvBridge
 from sensor_msgs.msg import Image
 from dynamic_reconfigure.server import Server
-from solution_1.cfg import lane_detector_Config
+from solution_1.cfg import lane_image_prepare_Config
 from camera_undistort import get_matrix_and_distortions_ros, get_undistorted_image
 
 class DynParams:
@@ -72,19 +72,29 @@ def pub_image(cv2_image, publisher, header):
 
 if __name__ == "__main__":
 
-    global matrix, distortions
     rospy.init_node('lane_detector')
-    srv = Server(lane_detector_Config, dyn_param_callback)
+    srv = Server(lane_image_prepare_Config, dyn_param_callback)
 
-    _ns = rospy.get_namespace()
-    _rate = rospy.get_param('~rate', 30.0)
+    ns = rospy.get_namespace()
+    rate_value = rospy.get_param('~rate', 30.0)
 
-    image_sub = rospy.Subscriber('image_raw', Image, image_callback)
-    image_pub = rospy.Publisher('threshold', Image, queue_size=1)
+    camera_topic = rospy.get_param('~camera_topic', '')
 
-    matrix, distortions = get_matrix_and_distortions_ros('camera_info')
+    camera_info_topic_name = rospy.get_param('~camera_info_topic_name', 'camera_info')
+    camera_info_topic = camera_topic+'/'+camera_info_topic_name if camera_topic else camera_info_topic_name
 
-    rate = rospy.Rate(_rate)
+    image_sub_topic_name = rospy.get_param('~image_sub_topic_name', 'image_raw')
+    image_sub_topic = camera_topic+'/'+image_sub_topic_name if camera_topic else image_sub_topic_name
+
+    image_pub_topic_name = rospy.get_param('~image_pub_topic_name', 'prepared_image/lane')
+    image_pub_topic = camera_topic+'/'+image_pub_topic_name if camera_topic else image_pub_topic_name
+
+    image_sub = rospy.Subscriber(image_sub_topic, Image, image_callback)
+    image_pub = rospy.Publisher(image_pub_topic, Image, queue_size=1)
+
+    matrix, distortions = get_matrix_and_distortions_ros(camera_info_topic)
+
+    rate = rospy.Rate(rate_value)
 
     while not rospy.is_shutdown():
         rate.sleep()

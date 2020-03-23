@@ -43,10 +43,13 @@ def get_matrix_and_distortions(camera_info_path):
         return matrix, distortions
 
 def get_matrix_and_distortions_ros(camera_info_topic):
+    ns = rospy.get_namespace()
+    rospy.loginfo('Waiting for {}...'.format(ns+camera_info_topic))
     camera_info = rospy.wait_for_message(camera_info_topic, CameraInfo)
     mtx = camera_info.K
     matrix = np.array([[mtx[0], mtx[1], mtx[2]], [mtx[3], mtx[4], mtx[5]], [mtx[6], mtx[7], mtx[8]]])
     distortions = np.array(camera_info.D)
+    rospy.loginfo('Got matrix and distortions from {}!'.format(ns+camera_info_topic))
     return matrix, distortions
 
 def get_undistorted_image(cv2_image, matrix, distortions, crop_to_roi = False):
@@ -73,9 +76,6 @@ if __name__ == "__main__":
         matrix, distortions = get_matrix_and_distortions(args.file)
     else:
         matrix, distortions = get_matrix_and_distortions_ros(args.namespace+'/camera_info')
-
-    print matrix
-    print distortions
 
     image_sub = rospy.Subscriber(args.namespace+'/image_raw', Image, image_callback)
     image_pub = rospy.Publisher(args.namespace+'/undistorted', Image)
