@@ -74,3 +74,12 @@ RUN echo "deb http://packages.ros.org/ros/ubuntu $OS_DISTRO main" > /etc/apt/sou
 COPY ${SIM_WS} ${SIM_WS}
 RUN rosdep install --from-paths ${SIM_WS} --ignore-src --rosdistro=${ROS_DISTRO} -y
 RUN rm -R ${SIM_WS}
+
+# Additional packages
+
+RUN apt-get install -y \
+    python3-pip python3-yaml
+
+RUN pip3 install --upgrade pip
+
+RUN pip3 install rospkg catkin_pkg tensorflow==1.15
