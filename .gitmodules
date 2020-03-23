@@ -1,0 +1,3 @@
+[submodule "catkin_ws/src/teb_local_planner_tutorials"]
+	path = catkin_ws/src/teb_local_planner_tutorials
+	url = https://github.com/urpylka/teb_local_planner_tutorials.git
