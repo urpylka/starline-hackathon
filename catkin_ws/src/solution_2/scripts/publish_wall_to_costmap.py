@@ -22,7 +22,7 @@ class RvizInterface:
         self.pub_path = rospy.Publisher("/path", Path, queue_size=1, latch=True)
 
         self.map = OccupancyGrid()
-        self.map.header.frame_id = "map"
+        self.map.header.frame_id = "world"
         self.map.info.resolution = cfg.RESOLUTION
         self.map.info.width = int(cfg.MAP_WIDTH / cfg.RESOLUTION)
         self.map.info.height = int(cfg.MAP_HEIGHT / cfg.RESOLUTION)
@@ -55,12 +55,12 @@ class RvizInterface:
             map.append(row)
 
         # Add border
-        for i in range(self.map.info.height):
-            map[i][0] = 100
-            map[i][self.map.info.width - 1] = 100
-        for j in range(self.map.info.width):
-            map[0][j] = 100
-            map[self.map.info.height - 1][j] = 100
+        # for i in range(self.map.info.height):
+        #     map[i][0] = 100
+        #     map[i][self.map.info.width - 1] = 100
+        # for j in range(self.map.info.width):
+        #     map[0][j] = 100
+        #     map[self.map.info.height - 1][j] = 100
 
         # Iterate through the walls, set the pixels accordingly
         for (x, y) in walls:
