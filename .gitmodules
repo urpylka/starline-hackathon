@@ -1,3 +1,6 @@
 [submodule "catkin_ws/src/teb_local_planner_tutorials"]
 	path = catkin_ws/src/teb_local_planner_tutorials
 	url = https://github.com/urpylka/teb_local_planner_tutorials.git
+[submodule "catkin_ws/src/occupancy_grid_utils"]
+	path = catkin_ws/src/occupancy_grid_utils
+	url = git@github.com:urpylka/occupancy_grid_utils.git
