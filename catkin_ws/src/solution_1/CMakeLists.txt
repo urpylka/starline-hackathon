@@ -8,7 +8,6 @@ project(solution_1)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  dynamic_reconfigure
   gmapping
   roscpp
   rospy
@@ -90,9 +89,9 @@ find_package(catkin REQUIRED COMPONENTS
 ##     and list every .cfg file to be processed
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
-generate_dynamic_reconfigure_options(
-  lane_detection/cfg/dyn_lane_image_prepare.cfg
-)
+#generate_dynamic_reconfigure_options(
+#  lane_detection/cfg/dyn_lane_image_prepare.cfg
+#)
 
 ###################################
 ## catkin specific configuration ##
@@ -160,10 +159,10 @@ include_directories(
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
-install(PROGRAMS
-  lane_detection/lane_image_prepare.py
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
+#install(PROGRAMS
+#  lane_detection/lane_image_prepare.py
+#  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+#)
 
 ## Mark executables for installation
 ## See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_executables.html
