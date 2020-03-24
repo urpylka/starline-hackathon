@@ -60,9 +60,9 @@ class WallBuilder:
 if __name__ == "__main__":
     rospy.init_node("test_publish_walls")
     w = WallBuilder()
-    walls = [[(40, 20), (100, 110)]]
+    walls = [[(40, 40), (40, 80)]]
     # walls = [[(20, 0), (40, 40)], [(0, 20), (40, 50)], [(0, 20), (40, 20)], [(10, 20), (100, 110)]]
-    print(w.map)
+    # print(w.map)
 
     try:
         r = rospy.Rate(10) # 10hz

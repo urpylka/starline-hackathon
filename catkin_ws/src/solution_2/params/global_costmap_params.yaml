@@ -12,8 +12,6 @@ global_costmap:
 
   plugins:
     - {name: static_layer,    type: "costmap_2d::StaticLayer"}
-    - {name: walls_layer,     type: "costmap_2d::StaticLayer"}
+    # - {name: walls_layer,     type: "costmap_2d::StaticLayer"}
     - {name: obstacle_layer,  type: "costmap_2d::VoxelLayer"}
-
-    # слишком много помех
-    # - {name: inflation_layer,         type: "costmap_2d::InflationLayer"}
+    - {name: inflation_layer, type: "costmap_2d::InflationLayer"}

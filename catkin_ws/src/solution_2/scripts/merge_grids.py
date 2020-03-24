@@ -8,25 +8,19 @@
 
 import time
 import rospy
+import threading
 from nav_msgs.msg import OccupancyGrid
 
-
-def createGrid(cfg, frame_id="world"):
-    map = OccupancyGrid()
-    map.header.frame_id = frame_id
-    map.info.resolution = cfg['RESOLUTION']
-    map.info.width = int(cfg['MAP_WIDTH'])
-    map.info.height = int(cfg['MAP_HEIGHT'])
-    map.info.origin.position.x = cfg['ORIGIN_X']
-    map.info.origin.position.y = cfg['ORIGIN_Y']
-    map.info.origin.position.z = cfg['ORIGIN_Z']
-    map.data = []
-    return map
+def cleanGrid(g):
+    data = []
+    for i in range(map.info.height * map.info.width):
+        data.append(0)
+    g.data = data
 
 
 def getValue(g, y, x):
     if (y < g.info.height) and (x < g.info.width):
-            return g.data[y*g.info.height + x]
+        return g.data[y*g.info.height + x]
     else:
         return 0
 
@@ -40,7 +34,6 @@ def getShift(g, y, x):
     # return g, y + int(g.info.origin.position.y / g.info.resolution), x + int(g.info.origin.position.x / g.info.resolution)
 
 
-
 def mergeGrids(g, g1, g2):
     g.data = []
     for i in range(g.info.height):
@@ -51,39 +44,56 @@ def mergeGrids(g, g1, g2):
     return g
 
 
-f1 = True
-f2 = True
-
-
 def cb1(map):
     global map1
+    global ts1
     map1 = map
-    global f1
-    f1 = False
-
-    # data = []
-    # for i in range(map.info.height):
-    #     for j in range(map.info.width):
-    #         data.append(0)
-    # map1.data = data
+    ts1 = time.time()
 
 
 def cb2(map):
     global map2
+    global ts2
     map2 = map
-    global f2
-    f2 = False
+    ts2 = time.time()
 
-    # data = []
-    # for i in range(map.info.height):
-    #     for j in range(map.info.width):
-    #         data.append(0)
-    # map2.data = data
+
+def checkForClean():
+    global map1
+    global map2
+    global alive
+    global ts1
+    global ts2
+    global one_upd_m1
+    global one_upd_m2
+
+    while alive:
+        now = time.time()
+        if (now - ts1 > 2) and one_upd_m1:
+            cleanGrid(map1)
+        if (now - ts2 > 2) and one_upd_m2:
+            cleanGrid(map2)
+        time.sleep(2)
 
 
 if __name__ == "__main__":
     rospy.init_node("occupancy_grid_merger")
 
+    global alive
+    global ts1
+    global ts2
+    global map1
+    global map2
+    global one_upd_m1
+    global one_upd_m2
+
+    # If map is updating
+    one_upd_m1 = False
+    one_upd_m2 = True
+
+    alive = True
+    ts1 = 0
+    ts2 = 0
     map1 = OccupancyGrid()
     map2 = OccupancyGrid()
 
@@ -91,7 +101,7 @@ if __name__ == "__main__":
     sub_map_2 = rospy.Subscriber('/robot_0/move_base/local_costmap/costmap2', OccupancyGrid, cb2, queue_size=1)
     merged_map = rospy.Publisher("/robot_0/move_base/local_costmap/costmap3", OccupancyGrid, queue_size=1, latch=True)
 
-    while(f1 and f2):
+    while(ts1 == 0 or ts2 == 0):
         print("Waiting for maps")
         time.sleep(1)
 
@@ -108,15 +118,26 @@ if __name__ == "__main__":
     result_grid_cfg['MAP_WIDTH'] = max(map1.info.width, map2.info.width)
     # result_grid_cfg['RESOLUTION'] = min(map1.info.resolution, map2.info.resolution)
 
-    print(map1.info)
-    print(map2.info)
+    # print(map1.info)
+    # print(map2.info)
 
-    m_map = createGrid(result_grid_cfg, 'map')
+    map = OccupancyGrid()
+    map.header.frame_id = 'map'
+    map.info.resolution = 0.05
+    map.info.width = 120
+    map.info.height = 120
+    map.info.origin.position.x = -3
+    map.info.origin.position.y = -3
+    map.info.origin.position.z = 0
+    map.data = []
 
     try:
+        t = threading.Thread(target=checkForClean, args=())
+        t.start()
+
         r = rospy.Rate(1) # 10hz
         while not rospy.is_shutdown():
-            merged_map.publish(mergeGrids(m_map, map1, map2))
+            merged_map.publish(mergeGrids(map, map1, map2))
             r.sleep()
     except rospy.ROSInterruptException:
-        pass
+        alive = False
