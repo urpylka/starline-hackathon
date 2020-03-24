@@ -75,7 +75,7 @@ COPY ${SIM_WS} ${SIM_WS}
 RUN rosdep install --from-paths ${SIM_WS} --ignore-src --rosdistro=${ROS_DISTRO} -y
 RUN rm -R ${SIM_WS}
 
-# Additional packages
+# Additional python packages
 
 RUN apt-get install -y \
     python3-pip python3-yaml
@@ -84,4 +84,8 @@ RUN pip3 install --upgrade pip
 
 RUN pip3 install rospkg catkin_pkg tensorflow==1.15
 
-RUN apt install ros-kinetic-stage-ros
+# Additional ROS packages
+
+RUN apt-get install -y \
+    ros-kinetic-stage-ros \
+    ros-kinetic-find-object-2d
