@@ -16,3 +16,5 @@ run-n:
 
 build-r:
 	./scripts/docker/kobuki/build_docker.sh
+run-r:
+	./scripts/docker/kobuki/run_docker.sh -n
