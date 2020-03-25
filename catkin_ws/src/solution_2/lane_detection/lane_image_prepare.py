@@ -5,13 +5,13 @@ import rospy
 from cv_bridge import CvBridge
 from sensor_msgs.msg import Image
 from dynamic_reconfigure.server import Server
-from solution_1.cfg import lane_image_prepare_Config
+from solution_2.cfg import lane_image_prepare_Config
 from camera_undistort import get_matrix_and_distortions_ros, get_undistorted_image
 
 class DynParams:
 
     default_dict = {
-        "undistort_image": True,
+        "undistort_image": False,
         "publish_bin": True,
         "publish_bin_flat":True,
         "draw_perspective":True,
@@ -24,6 +24,7 @@ class DynParams:
         "a_thr_method": cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
         "a_thr_blocksize": 11,
         "a_thr_C": 2,
+        "expand_lr": 0,
         "t_top_width": 0.5,
         "t_top_v_pos": 0,
         "t_bottom_width": 1,
@@ -60,6 +61,13 @@ def threshold(cv2_image, params):
         return cv2_image
     return thr_image
 
+def expand(cv2_image, t, b, l, r):
+    result = cv2.copyMakeBorder(cv2_image, t, b, l, r, cv2.BORDER_CONSTANT)
+    return result
+
+def expand_lr(cv2_image, params):
+    return expand(cv2_image, 0, 0, params.expand_lr, params.expand_lr)
+
 def get_points(cv2_image, params):
     (h, w) = (cv2_image.shape[0], cv2_image.shape[1])
     p1 = (w*(1-params.t_top_width)/2, h*params.t_top_v_pos)
@@ -67,6 +75,22 @@ def get_points(cv2_image, params):
     p3 = (w*(1+params.t_bottom_width)/2, h*params.t_bottom_v_pos)
     p4 = (w*(1-params.t_bottom_width)/2, h*params.t_bottom_v_pos)
     return np.array((p1, p2, p3, p4), dtype = "float32")
+
+def binarize_image(cv2_image, params):
+    gray = cv2.cvtColor(cv2_image, cv2.COLOR_RGB2GRAY)
+    blur = cv2.GaussianBlur(gray,(5,5),0)
+    thr = threshold(blur, params)
+    return thr
+
+def draw_trapezoid(cv2_image, params):
+    rect = get_points(cv2_image, params)
+    (tl, tr, br, bl) = tuple(map(tuple, rect))
+    cv2_image_t = cv2_image.copy()
+    cv2_image_t = cv2.line(cv2_image, tl, tr, 127, 2)
+    cv2_image_t = cv2.line(cv2_image, tr, br, 127, 2)
+    cv2_image_t = cv2.line(cv2_image, br, bl, 127, 2)
+    cv2_image_t = cv2.line(cv2_image, bl, tl, 127, 2)
+    return cv2_image_t
 
 def flatten_image(cv2_image, params):
     # obtain a consistent order of the points and unpack them
@@ -102,22 +126,6 @@ def flatten_image(cv2_image, params):
     # return the flattened image and unwarp matrix
     return flat_img, unwarp_matrix
 
-def binarize_image(cv2_image, params):
-    gray = cv2.cvtColor(cv2_image, cv2.COLOR_RGB2GRAY)
-    blur = cv2.GaussianBlur(gray,(5,5),0)
-    thr = threshold(blur, params)
-    return thr
-
-def draw_trapezoid(cv2_image, params):
-    rect = get_points(cv2_image, params)
-    (tl, tr, br, bl) = tuple(map(tuple, rect))
-    cv2_image_t = cv2_image.copy()
-    cv2_image_t = cv2.line(cv2_image, tl, tr, 127, 2)
-    cv2_image_t = cv2.line(cv2_image, tr, br, 127, 2)
-    cv2_image_t = cv2.line(cv2_image, br, bl, 127, 2)
-    cv2_image_t = cv2.line(cv2_image, bl, tl, 127, 2)
-    return cv2_image_t
-
 def pub_image(cv2_image, publisher, header):
     if publisher.get_num_connections() > 0:
         m = cv_bridge.cv2_to_imgmsg(cv2_image)
@@ -136,11 +144,14 @@ if __name__ == "__main__":
 
     camera_topic = rospy.get_param('~camera_topic', '')
 
+    rospy.loginfo("Camera topic: {} {}".format(camera_topic, bool(camera_topic)))
+
     camera_info_topic_name = rospy.get_param('~camera_info_topic_name', 'camera_info')
     camera_info_topic = camera_topic+'/'+camera_info_topic_name if camera_topic else camera_info_topic_name
 
     image_sub_topic_name = rospy.get_param('~image_sub_topic_name', 'image_raw')
     image_sub_topic = camera_topic+'/'+image_sub_topic_name if camera_topic else image_sub_topic_name
+    rospy.loginfo("image_sub_topic: {}".format(image_sub_topic))
 
     bin_pub_topic_name = rospy.get_param('~bin_pub_topic_name', 'prepared_image/bin')
     bin_pub_topic = camera_topic+'/'+bin_pub_topic_name if camera_topic else bin_pub_topic_name
@@ -152,7 +163,8 @@ if __name__ == "__main__":
     bin_pub = rospy.Publisher(bin_pub_topic, Image, queue_size=1)
     bin_flat_pub = rospy.Publisher(bin_flat_pub_topic, Image, queue_size=1)
 
-    matrix, distortions = get_matrix_and_distortions_ros(camera_info_topic)
+    if dyn_params.undistort_image:
+        matrix, distortions = get_matrix_and_distortions_ros(camera_info_topic)
 
     rate = rospy.Rate(rate_value)
 
@@ -160,6 +172,7 @@ if __name__ == "__main__":
         rate.sleep()
 
         if last_image is None:
+            print('No image')
             continue
 
         header = last_image.header
@@ -171,7 +184,8 @@ if __name__ == "__main__":
         if dyn_params.undistort_image:
             cv2_image = get_undistorted_image(last_image_cv2, matrix, distortions)
 
-        bin_image = binarize_image(cv2_image, dyn_params)
+        bin_image_ss = binarize_image(cv2_image, dyn_params)
+        bin_image = expand_lr(bin_image_ss, dyn_params)
 
         if dyn_params.draw_perspective:
             bin_image = draw_trapezoid(bin_image, dyn_params)
