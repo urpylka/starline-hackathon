@@ -82,6 +82,6 @@ RUN pip3 install rospkg catkin_pkg tensorflow==1.15
 # User WS dependings
 
 COPY ${DRIVERS_WS} ${DRIVERS_WS}
-RUN rosdep update && \
+RUN rosdep init && rosdep update && \
     rosdep install --from-paths ${DRIVERS_WS} --ignore-src --rosdistro=kinetic -y
 RUN rm -R ${DRIVERS_WS}
