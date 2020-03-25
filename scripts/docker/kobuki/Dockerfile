@@ -20,7 +20,7 @@ ENV OS_DISTRO xenial
 ENV ROS_DISTRO kinetic
 ENV ROS_INSTALL_PATH "/opt/ros/$ROS_DISTRO"
 ENV CATKIN_WS /home/tb2/stimulator/catkin_ws
-ENV DRIVERS_WS /home/tb2/stimulator/kobuki_ws
+ENV DRIVERS_WS /home/tb2/stimulator/drivers_ws
 
 ENV PATH              "$PATH:$ROS_INSTALL_PATH/bin"
 ENV PYTHONPATH        "$ROS_INSTALL_PATH/lib/python2.7/dist-packages"
