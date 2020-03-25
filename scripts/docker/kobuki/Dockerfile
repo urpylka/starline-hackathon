@@ -1,5 +1,5 @@
 FROM ubuntu:16.04
-MAINTAINER Nikolay Dema "ndema2301@gmail.com"
+MAINTAINER Artem Smirnov "urpylka@gmail.com"
 
 RUN apt-get update && apt-get install -y \
     apt-utils \
@@ -46,14 +46,6 @@ RUN echo "deb http://packages.ros.org/ros/ubuntu $OS_DISTRO main" > /etc/apt/sou
     apt-get update && apt-get install -y python-catkin-tools
 
 
-# User WS dependings
-
-COPY ${DRIVERS_WS} ${DRIVERS_WS}
-RUN rosdep update && \
-    rosdep install --from-paths ${DRIVERS_WS} --ignore-src --rosdistro=kinetic -y
-RUN rm -R ${DRIVERS_WS}
-
-
 # Additional ROS packages
 
 RUN apt install -y \
@@ -68,14 +60,28 @@ RUN apt install -y \
     ros-kinetic-geometry2 \
     ros-kinetic-teb-local-planner \
     ros-kinetic-stage-ros \
-    ros-kinetic-find-object-2d
+    ros-kinetic-find-object-2d \
+    ros-kinetic-rgbd-launch \
+    ros-kinetic-libuvc \
+    ros-kinetic-libuvc-camera \
+    ros-kinetic-libuvc-ros
 
 
 # Additional python packages
 
 RUN apt install -y \
-    python3-pip python3-yaml
+    python3-pip \
+    python3-yaml \
+    python-rosdep
 
 RUN pip3 install --upgrade pip
 
 RUN pip3 install rospkg catkin_pkg tensorflow==1.15
+
+
+# User WS dependings
+
+COPY ${DRIVERS_WS} ${DRIVERS_WS}
+RUN rosdep update && \
+    rosdep install --from-paths ${DRIVERS_WS} --ignore-src --rosdistro=kinetic -y
+RUN rm -R ${DRIVERS_WS}
