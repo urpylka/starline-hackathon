@@ -45,3 +45,32 @@ RUN apt install -y ros-kinetic-rgbd-launch \
     rosdep install --from-paths ${DRIVERS_WS} --ignore-src --rosdistro=kinetic -y
 
 RUN rm -R ${DRIVERS_WS}
+
+# Additional ROS packages
+
+RUN apt-get install -y \
+    ros-kinetic-teleop-twist-keyboard \
+    ros-kinetic-depthimage-to-laserscan \
+    ros-kinetic-hector-models \
+    ros-kinetic-navigation \
+    ros-kinetic-explore-lite \
+    ros-kinetic-gmapping \
+    ros-kinetic-ira-laser-tools \
+    ros-kinetic-pointcloud-to-laserscan \
+    ros-kinetic-geometry2 \
+    ros-kinetic-teb-local-planner
+
+# Additional python packages
+
+RUN apt-get install -y \
+    python3-pip python3-yaml
+
+RUN pip3 install --upgrade pip
+
+RUN pip3 install rospkg catkin_pkg tensorflow==1.15
+
+# Additional ROS packages
+
+RUN apt-get install -y \
+    ros-kinetic-stage-ros \
+    ros-kinetic-find-object-2d
