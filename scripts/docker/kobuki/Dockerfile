@@ -39,11 +39,11 @@ ENV TZ=Europe/Moscow
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 
-# Install catkin tools
+# Install ROS desktop and catkin tools
 
 RUN echo "deb http://packages.ros.org/ros/ubuntu $OS_DISTRO main" > /etc/apt/sources.list.d/ros-latest.list && \
     wget http://packages.ros.org/ros.key -O - | apt-key add - && \
-    apt-get update && apt-get install -y python-catkin-tools
+    apt-get update && apt-get install -y ros-kinetic-desktop python-catkin-tools
 
 
 # Additional ROS packages
