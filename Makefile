@@ -13,3 +13,6 @@ build-n:
 	./scripts/docker/simulator/build_docker.sh -n
 run-n:
 	./scripts/docker/simulator/run_docker.sh -n
+
+build-r:
+	./scripts/docker/kobuki/build_docker.sh
