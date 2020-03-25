@@ -1,0 +1,17 @@
+a_thr_C: 3
+a_thr_blocksize: 15
+a_thr_method: 1
+a_thr_type: 0
+draw_perspective: true
+publish_bin: true
+publish_bin_flat: true
+t_bottom_v_pos: 0.7
+t_bottom_width: 1.0
+t_top_v_pos: 0.56
+t_top_width: 0.3
+thr_function: 0
+thr_max_val: 255
+thr_type: 0
+thr_type_flag: 0
+thr_val: 70
+undistort_image: false

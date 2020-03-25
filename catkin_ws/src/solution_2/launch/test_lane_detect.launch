@@ -1,0 +1,7 @@
+<launch>
+    <node pkg="solution_2" type="lane_image_prepare.py" respawn="true" name="lane_image_prepare" output="screen">
+        <rosparam file="$(find solution_2)/launch/test_lane_image_prepare.yaml" command="load"/>
+        <param name="image_sub_topic_name" value="test_image"/>
+        <param name="camera_topic" value=""/>
+    </node>
+</launch>
