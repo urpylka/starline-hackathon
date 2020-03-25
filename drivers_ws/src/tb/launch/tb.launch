@@ -1,0 +1,8 @@
+<launch>
+    <include file="$(find tb)/launch/base.launch" />
+    <include file="$(find astra_camera)/launch/astra.launch" />
+    <include file="$(find tb)/launch/rplidar.launch" />
+    <!-- static_transform_publisher arguments: x y z yaw pitch roll frame_id child_frame_id -->
+    <node pkg="tf" type="static_transform_publisher" name="laser_link" args="0 0 0.4 3.1415926 0 0 base_link laser 100" />
+    <node pkg="tf" type="static_transform_publisher" name="camera_link" args="-0.11 0 0.3 0 0 0 1 base_link camera_depth_frame 100" />
+</launch>
