@@ -17,7 +17,7 @@ from geometry_msgs.msg import *     # PoseWithCovarianceStamped
 import actionlib
 from actionlib_msgs.msg import *    # Goal ID
 
-from locker_oncoming_traffic import LockerWays
+# from locker_oncoming_traffic import LockerWays
 from moving_stack import MovingStack
 from publish_wall_to_costmap import WallBuilder
 from state_machine import AbstractState, StateMachine
@@ -33,13 +33,13 @@ class INIT(AbstractState):
         # init_pose = Pose(Point(1, 1, 0.000), Quaternion(0, 0, 0, 1)
         # M.S.moving_stack.initAmcl(init_pose)
 
-        crossroads = [
-            {'xy': (3.74, 8.08), 'walls': [[(3.3, 8.1), (3.3, 7.64)], [(3.73, 7.63), (4.16, 7.65)], [(4.15, 8.1), (4.13, 8.5)]]}, #4
-            {'xy': (6.8, 6.06), 'walls': [[(6.32, 8.1), (6.32, 7.65)]]}, #6
-            {'xy': (1.66, 8.07), 'walls': [[(2.14, 8.1), (2.14, 8.5)]]}  #5
-        ]
-
-        M.S.locker_ways = LockerWays(M.S.moving_stack, "/maps/crossroads", crossroads)
+        # crossroads = [
+        #     {'xy': (3.7, 6.05), 'walls': [[(3.7, 6.55), (3.28, 6.55)]]}, #block to #4
+        #     {'xy': (3.74, 8.08), 'walls': [[(3.3, 8.1), (3.3, 7.64)], [(3.73, 7.63), (4.16, 7.65)], [(4.15, 8.1), (4.13, 8.5)]]}, #4
+        #     {'xy': (6.8, 6.06), 'walls': [[(6.32, 8.1), (6.32, 7.65)]]}, #6
+        #     {'xy': (1.66, 8.07), 'walls': [[(2.14, 8.1), (2.14, 8.5)]]}  #5
+        # ]
+        # M.S.locker_ways = LockerWays(M.S.moving_stack, "/maps/crossroads", crossroads)
 
         M.S.target_zero_point = Pose(Point(7.76, 4.05, 0.000), Quaternion(0.000, 0.000, 0.000, 1.000))
         M.S.target_first_point = Pose(Point(7.95, 5.4, 0.000), Quaternion(0.000, 0.000, 0.000, 1.000))
