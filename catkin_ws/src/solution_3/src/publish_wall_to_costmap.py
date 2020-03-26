@@ -67,7 +67,7 @@ class WallBuilder:
 
 if __name__ == "__main__":
     rospy.init_node("test_publish_walls")
-    w = WallBuilder("/robot_0/move_base/local_costmap/costmap2")
+    w = WallBuilder("/maps/walls")
     walls = [[(40, 40), (40, 80)]]
     # walls = [[(20, 0), (40, 40)], [(0, 20), (40, 50)], [(0, 20), (40, 20)], [(10, 20), (100, 110)]]
     # print(w.map)

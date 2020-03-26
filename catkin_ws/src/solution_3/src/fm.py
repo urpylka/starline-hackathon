@@ -73,7 +73,7 @@ class GOTO_0(AbstractState):
                 rospy.loginfo("GOTO_0: Semaphore has detected!")
 
                 M.S.moving_stack.cancelGoal()
-                r = rospy.Rate(10)
+                r = rospy.Rate(1)
                 while M.S.detect_objects.getStateSemaphore() == SemaphoreState.RED:
                     r.sleep()
                 M.S.moving_stack.asyncGoTo(M.S.target_zero_point)
