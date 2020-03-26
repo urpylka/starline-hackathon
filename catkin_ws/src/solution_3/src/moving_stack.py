@@ -43,6 +43,7 @@ class MovingStack():
         p.pose = _pose
         pub.publish(p)
 
+
     def resetOdometry(self):
         """
         https://answers.ros.org/question/203088/reset-turtlebot-odometry-in-a-python-script/
