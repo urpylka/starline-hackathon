@@ -41,6 +41,11 @@ class WallBuilder:
 
         for [(x1, y1), (x2, y2)] in walls:
 
+            x1 = x1 / self.map.info.resolution
+            x2 = x2 / self.map.info.resolution
+            y1 = y1 / self.map.info.resolution
+            y2 = y2 / self.map.info.resolution
+
             # https://ru.wikipedia.org/wiki/%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC_%D0%91%D1%80%D0%B5%D0%B7%D0%B5%D0%BD%D1%85%D1%8D%D0%BC%D0%B0
 
             for x in range(int(x1), int(x2)):
