@@ -28,7 +28,7 @@ class INIT(AbstractState):
             {'xy': (2, 4), 'walls': [[(20, 0), (40, 40)], [(20, 0), (40, 40)]]}
         ]
 
-        M.S.locker_ways = LockerWays(M.S.moving_stack, "/crossroads", crossroads)
+        M.S.locker_ways = LockerWays(M.S.moving_stack, "/maps/crossroads", crossroads)
 
         M.S.target_zero_point = Pose(Point(1, 1, 0.000), Quaternion(0.000, 0.000, 0.000, 1.000)
         M.S.target_first_point = Pose(Point(1, 10, 0.000), Quaternion(0.000, 0.000, 0.000, 1.000)

@@ -1,0 +1,50 @@
+<launch>
+    <!-- Running the base -->
+    <include file="$(arg tb)/launch/tb.launch" />
+
+    <!-- Running the map_server for amcl -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find solution_2)/maps/map1_r.yaml" output="screen">
+        <remap from="/map" to="/maps/map_amcl" />
+    </node>
+
+    <!-- Running the map_server for move_base -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find solution_2)/maps/map1_markup_all.yaml" output="screen">
+        <remap from="/map" to="/maps/map_mb" />
+    </node>
+
+    <!-- Running the merger -->
+    <node name="Merger" pkg="solution_2" type="merge_grids.py" output="screen">
+        <remap from="/merger/source_map_1" to="/maps/map_mb" />
+        <remap from="/merger/source_map_2" to="/maps/crossroads" />
+        <remap from="/merger/target_map" to="/maps/map_merged" />
+
+        <param name="merger/source_map_1/updating" value="False" />
+        <param name="merger/source_map_2/updating" value="True" />
+    </node>
+
+    <!-- Running AMCL -->
+    <node pkg="amcl" type="amcl" name="amcl" output="screen">
+        <rosparam file="$(find solution_2)/params/amcl.yaml" command="load" />
+        <remap from="/map" to="/maps/map_amcl" />
+    </node>
+
+    <!-- Running move_base -->
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+        <rosparam file="$(find solution_2)/params_urpylka/costmap_common_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find solution_2)/params_urpylka/costmap_common_params.yaml" command="load" ns="local_costmap" />
+
+        <rosparam file="$(find solution_2)/params_urpylka/local_costmap_params.yaml" command="load" />
+        <rosparam file="$(find solution_2)/params_urpylka/global_costmap_params.yaml" command="load" />
+        <rosparam file="$(find solution_2)/params_urpylka/teb_local_planner_params.yaml" command="load" />
+
+        <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+        <param name="controller_frequency" value="5.0" />
+        <param name="controller_patience" value="15.0" />
+
+        <remap from="/map" to="/maps/map_merged" />
+    </node>
+    <!-- Running the finite machine -->
+    <node name="solution_3" pkg="solution_3" type="map_server" args="$(find solution_2)/maps/map1_r.yaml" output="screen" />
+
+
+</launch>

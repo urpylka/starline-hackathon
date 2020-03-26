@@ -12,6 +12,9 @@ import threading
 from nav_msgs.msg import OccupancyGrid
 
 def cleanGrid(g):
+    if g is None:
+        return
+
     data = []
     for i in range(map.info.height * map.info.width):
         data.append(0)
@@ -19,6 +22,8 @@ def cleanGrid(g):
 
 
 def getValue(g, y, x):
+    if g is None:
+        return 0
     if (y < g.info.height) and (x < g.info.width):
         return g.data[y*g.info.height + x]
     else:
@@ -88,8 +93,8 @@ if __name__ == "__main__":
     global one_upd_m2
 
     # If map is updating
-    one_upd_m1 = False
-    one_upd_m2 = True
+    one_upd_m1 = rospy.get_param("~merger/source_map_1/updating", False)
+    one_upd_m2 = rospy.get_param("~merger/source_map_2/updating", True)
 
     alive = True
     ts1 = 0
@@ -97,12 +102,13 @@ if __name__ == "__main__":
     map1 = OccupancyGrid()
     map2 = OccupancyGrid()
 
-    sub_map_1 = rospy.Subscriber('/map', OccupancyGrid, cb1, queue_size=1)
-    sub_map_2 = rospy.Subscriber('/robot_0/move_base/local_costmap/costmap2', OccupancyGrid, cb2, queue_size=1)
-    merged_map = rospy.Publisher("/robot_0/move_base/local_costmap/costmap3", OccupancyGrid, queue_size=1, latch=True)
+    sub_map_1 = rospy.Subscriber("/merger/source_map_1", OccupancyGrid, cb1, queue_size=1)
+    sub_map_2 = rospy.Subscriber("/merger/source_map_2", OccupancyGrid, cb2, queue_size=1)
+    merged_map = rospy.Publisher("/merger/target_map", OccupancyGrid, queue_size=1, latch=True)
 
-    while(ts1 == 0 or ts2 == 0):
-        print("Waiting for maps")
+    # while(ts1 == 0 or ts2 == 0):
+    while(ts1 == 0):
+        print("Waiting for /merger/source_map_1")
         time.sleep(1)
 
     result_grid_cfg = {
@@ -135,7 +141,7 @@ if __name__ == "__main__":
         t = threading.Thread(target=checkForClean, args=())
         t.start()
 
-        r = rospy.Rate(1) # 10hz
+        r = rospy.Rate(1) # 1hz
         while not rospy.is_shutdown():
             merged_map.publish(mergeGrids(map, map1, map2))
             r.sleep()
