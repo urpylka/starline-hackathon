@@ -253,9 +253,9 @@ class DetectObjects(object):
         params.filterByConvexity = True
         params.minConvexity = 0.6
 
-        det=cv2.SimpleBlobDetector_create(params)
-        keypts=det.Detect(mask)
-        frame=cv2.drawKeypoints(self.cv_image,keypts,np.array([]),(0,255,255),cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+        det = cv2.SimpleBlobDetector_create(params)
+        keypts = det.detect(mask)
+        frame = cv2.drawKeypoints(self.cv_image,keypts,np.array([]),(0,255,255),cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
         col1 = 180
         col2 = 270
