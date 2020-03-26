@@ -16,7 +16,15 @@ class INIT(AbstractState):
     def run(self, M):
         rospy.loginfo("INIT: Robot's initializating...")
         M.S.moving_stack = MovingStack()
-        M.S.locker_ways = LockerWays()
+
+        crossroads = [
+            {'xy': (1, 1), 'walls': [[(20, 0), (40, 40)], [(20, 0), (40, 40)]]},
+            {'xy': (2, 4), 'walls': [[(20, 0), (40, 40)], [(20, 0), (40, 40)]]}
+        ]
+
+        M.S.locker_ways = LockerWays(M.S.moving_stack, "/crossroads", crossroads)
+
+        # Change state
         M.new_state(IDLE(M))
 
     def command(self, array_command):

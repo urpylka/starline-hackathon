@@ -7,7 +7,13 @@
 # Author:       Artem Smirnov @urpylka
 # Description:  Moving stack
 
-from move_base_msgs.msg import * # MoveBaseActionGoal MoveBaseGoal
+import rospy
+from move_base_msgs.msg import *    # MoveBaseActionGoal MoveBaseGoal
+
+from std_msgs.msg import *          # Header
+from geometry_msgs.msg import *     # PoseWithCovarianceStamped
+import actionlib
+from actionlib_msgs.msg import *    # Goal ID
 
 class MovingStack():
 
