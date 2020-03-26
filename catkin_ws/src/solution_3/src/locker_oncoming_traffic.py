@@ -44,31 +44,23 @@ class LockerWays():
 
 
     def checker(self, moving_stack):
-
         checker_rate = rospy.Rate(1)
 
-        entered = False
-
         while self.alive:
-
             xy = self.getXy(moving_stack)
             rospy.loginfo("Locker crossroads: " + str(xy))
 
             for crossroad in self.crossroads:
-                distance = getDistance(xy, crossroad['xy'])
-
                 if not entered and (getDistance(xy, crossroad['xy']) < self.error_income):
                     rospy.loginfo("Locker crossroads: Lock the crossroad: " + str(crossroad['xy']))
-                    entered = True
 
-                if entered and (getDistance(xy, crossroad['xy']) > self.error_outcome):
+                    while getDistance(xy, crossroad['xy']) < self.error_outcome:
+                        self.w.publishMap(crossroad['walls'])
+                        rospy.loginfo("Locker crossroads: Distance: " + str(getDistance(xy, crossroad['xy'])))
+                        xy = self.getXy(moving_stack)
+                        checker_rate.sleep()
+
                     rospy.loginfo("Locker crossroads: Unlock the crossroad: " + str(crossroad['xy']))
-                    entered = False
-
-                if entered:
-                    self.w.publishMap(crossroad['walls'])
-                    rospy.loginfo("Locker crossroads: Distance: " + str(getDistance(xy, crossroad['xy'])))
-
             checker_rate.sleep()
 
 
