@@ -10,7 +10,7 @@
 import rospy
 from move_base_msgs.msg import *    # MoveBaseActionGoal MoveBaseGoal
 
-from std_msgs.msg import *          # Header
+from std_msgs.msg import *          # Header, Empty
 from geometry_msgs.msg import *     # PoseWithCovarianceStamped
 import actionlib
 from actionlib_msgs.msg import *    # Goal ID
@@ -24,6 +24,8 @@ class MovingStack():
         # Stop robot when catched Ctrl-C or failure
         rospy.on_shutdown(self.cancelGoal)
 
+        self.resetOdometry()
+
         rospy.Subscriber('/amcl_pose', PoseWithCovarianceStamped, lambda data: self.cur_pose = data.pose.pose)
 
         # move_base API
@@ -31,6 +33,16 @@ class MovingStack():
         rospy.loginfo("Moving stack: Wait for the action server to come up")
         # Allow up to 5 seconds for the action server to come up
         self.move_base.wait_for_server(rospy.Duration(5))
+
+
+    def resetOdometry(self):
+        # set up the odometry reset publisher
+        reset_odom = rospy.Publisher('/mobile_base/commands/reset_odometry', Empty, queue_size=10)
+
+        # reset odometry (these messages take a few iterations to get through)
+        timer = time()
+        while time() - timer < 0.25:
+            reset_odom.publish(Empty())
 
 
     def cancelGoal(self):
