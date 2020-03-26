@@ -43,11 +43,11 @@ class WallBuilder:
 
             # https://ru.wikipedia.org/wiki/%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC_%D0%91%D1%80%D0%B5%D0%B7%D0%B5%D0%BD%D1%85%D1%8D%D0%BC%D0%B0
 
-            for x in range(x1, x2):
+            for x in range(int(x1), int(x2)):
                 y = int((y2 - y1) * (x - x1) / (x2 - x1) + y1)
                 map[x][y] = 100
 
-            for y in range(y1, y2):
+            for y in range(int(y1), int(y2)):
                 x = int((y - y1) * (x2 - x1) / (y2 - y1) + x1)
                 map[x][y] = 100
 
