@@ -24,8 +24,8 @@ def getDistance((x1, y1), (x2, y2)):
 class LockerWays():
 
     alive = True
-    error_income = 0.8      # Lock the crossroad when distance to center will be less than 1.5
-    error_outcome = 1.5     # Unlock the crossroad when distance to center will be more than error_outcome
+    error_income = 0.5      # Lock the crossroad when distance to center will be less than 1.5
+    error_outcome = 1     # Unlock the crossroad when distance to center will be more than error_outcome
 
     def __init__(self, _moving_stack, _topic, _crossroads = []):
         self.w = WallBuilder(_topic)
