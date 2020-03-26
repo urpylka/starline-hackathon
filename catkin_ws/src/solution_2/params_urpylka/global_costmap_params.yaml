@@ -5,13 +5,13 @@ global_costmap:
   update_frequency:     1.0
   publish_frequency:    0.5
 
-  static_map:           false
-  rolling_window:       true
+  static_map:           true
+  rolling_window:       false
 
   transform_tolerance:  0.5
 
   plugins:
     - {name: static_layer,    type: "costmap_2d::StaticLayer"}
     # - {name: walls_layer,     type: "costmap_2d::StaticLayer"}
-    - {name: obstacle_layer,  type: "costmap_2d::VoxelLayer"}
+    # - {name: obstacle_layer,  type: "costmap_2d::VoxelLayer"}
     - {name: inflation_layer, type: "costmap_2d::InflationLayer"}

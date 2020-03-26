@@ -8,9 +8,9 @@ local_costmap:
   static_map: false
   rolling_window: true
 
-  width: 22
-  height: 22
-  resolution: 0.05
+  width: 3
+  height: 3
+  resolution: 0.0502257
   transform_tolerance: 0.5
 
   plugins:
