@@ -1,0 +1,9 @@
+<launch>
+    <!-- Running the map_server -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find solution_2)/maps/map1_r.yaml" output="screen" />
+
+    <!-- Running AMCL -->
+    <node pkg="amcl" type="amcl" name="amcl" output="screen">
+        <rosparam file="$(find solution_2)/params/amcl.yaml" command="load" />
+    </node>
+</launch>
