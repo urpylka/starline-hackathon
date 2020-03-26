@@ -62,4 +62,6 @@
 
         <remap from="/map" to="/maps/map_merged" />
     </node>
+
+    <node name="finite_stimulator" pkg="solution_3" type="fm.py" output="screen" />
 </launch>
