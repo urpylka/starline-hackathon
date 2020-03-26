@@ -28,14 +28,18 @@ class INIT(AbstractState):
         # M.S.moving_stack.initAmcl(init_pose)
 
         crossroads = [
-            {'xy': (44, 11, 'walls': [[(20, 0), (40, 40)], [(20, 0), (40, 40)]]},
-            {'xy': (2, 4), 'walls': [[(20, 0), (40, 40)], [(20, 0), (40, 40)]]}
+            {'xy': (6.8, 6.06), 'walls': [[(20, 0), (40, 40)], [(20, 0), (40, 40)]]}, #1
+            {'xy': (6.8, 6.06), 'walls': [[(20, 0), (40, 40)], [(20, 0), (40, 40)]]}, #2
+            {'xy': (6.8, 6.06), 'walls': [[(20, 0), (40, 40)], [(20, 0), (40, 40)]]}, #3
+            {'xy': (3.74, 8.04, 'walls': [[(20, 0), (40, 40)], [(20, 0), (40, 40)]]}, #4
+            {'xy': (6.8, 6.06), 'walls': [[(20, 0), (40, 40)], [(20, 0), (40, 40)]]}, #5
+            {'xy': (6.8, 6.06), 'walls': [[(20, 0), (40, 40)], [(20, 0), (40, 40)]]}  #6
         ]
 
         M.S.locker_ways = LockerWays(M.S.moving_stack, "/maps/crossroads", crossroads)
 
-        M.S.target_zero_point = Pose(Point(1, 1, 0.000), Quaternion(0.000, 0.000, 0.000, 1.000)
-        M.S.target_first_point = Pose(Point(1, 10, 0.000), Quaternion(0.000, 0.000, 0.000, 1.000)
+        M.S.target_zero_point = Pose(Point(7.76, 4.05, 0.000), Quaternion(0.000, 0.000, 0.000, 1.000)
+        M.S.target_first_point = Pose(Point(5, 5.4, 0.000), Quaternion(0.000, 0.000, 0.000, 1.000)
 
         M.S.detect_objects = DetectObjects()
 
