@@ -23,6 +23,7 @@ class SemaphoreState(Enum):
 
 
 class DetectObjects(object):
+    # https://github.com/ROBOTIS-GIT/turtlebot3_autorace_2020/blob/master/turtlebot3_autorace_traffic_light/turtlebot3_autorace_traffic_light_detect/nodes/detect_traffic_light
 
     def __init__(self):
         # Stop robot when catched Ctrl-C or failure
@@ -65,15 +66,15 @@ class DetectObjects(object):
         ###############
 
     def DetectedStopSign(self):
-        return True # or False
+        return False
 
 
     def DetectedSemaphore(self):
-        return True # or False
+        return False
 
 
     def getStateSemaphore(self):
-        return SemaphoreState.RED
+        return SemaphoreState.GREEN
 
 
     def fnFindTrafficLight(self):
