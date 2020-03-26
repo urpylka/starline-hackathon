@@ -18,7 +18,7 @@ from publish_wall_to_costmap import WallBuilder
 def getDistance((x1, y1), (x2, y2)):
     dx = x2 - x1
     dy = y2 - y1
-    return math.sqrt(pow(dx, 2) + pow(dy, 2))
+    return math.sqrt(dx**2 + dy**2)
 
 
 class LockerWays():
@@ -53,7 +53,7 @@ class LockerWays():
             for crossroad in self.crossroads:
                 if getDistance(xy, crossroad['xy']) < self.error_income:
                     rospy.loginfo("Locker crossroads: Lock the crossroad: " + str(crossroad['xy']))
-                    while getDistance(xy, crossroad['xy']) > self.error_outcome:
+                    while getDistance(xy, crossroad['xy']) < self.error_outcome:
                         self.w.publishMap(crossroad['walls'])
                         publication_rate.sleep()
                     rospy.loginfo("Locker crossroads: Unlock the crossroad: " + str(crossroad['xy']))
