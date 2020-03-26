@@ -9,7 +9,6 @@
 
 import rospy
 from move_base_msgs.msg import *    # MoveBaseActionGoal MoveBaseGoal
-
 from std_msgs.msg import *          # Header, Empty
 from geometry_msgs.msg import *     # PoseWithCovarianceStamped
 import actionlib

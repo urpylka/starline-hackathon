@@ -11,6 +11,12 @@ import time
 import rospy
 import threading
 
+from move_base_msgs.msg import *    # MoveBaseActionGoal MoveBaseGoal
+from std_msgs.msg import *          # Header, Empty
+from geometry_msgs.msg import *     # PoseWithCovarianceStamped
+import actionlib
+from actionlib_msgs.msg import *    # Goal ID
+
 from locker_oncoming_traffic import LockerWays
 from moving_stack import MovingStack
 from publish_wall_to_costmap import WallBuilder
