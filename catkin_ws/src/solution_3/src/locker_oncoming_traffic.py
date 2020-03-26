@@ -32,7 +32,7 @@ class LockerWays():
         # Stop robot when catched Ctrl-C or failure
         rospy.on_shutdown(self.stopLocker)
 
-        t = threading.Thread(target=self.checker, args=(_moving_stack))
+        t = threading.Thread(target=self.checker, args=(_moving_stack,))
         t.start()
 
 
