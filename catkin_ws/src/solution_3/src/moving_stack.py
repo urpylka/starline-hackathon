@@ -24,7 +24,7 @@ class MovingStack():
         # Stop robot when catched Ctrl-C or failure
         rospy.on_shutdown(self.cancelGoal)
 
-        rospy.Subscriber('/amcl_pose', PoseWithCovarianceStamped, updatePose)
+        rospy.Subscriber('/amcl_pose', PoseWithCovarianceStamped, self.updatePose)
 
         # move_base API
         self.move_base = actionlib.SimpleActionClient("move_base", MoveBaseAction)
