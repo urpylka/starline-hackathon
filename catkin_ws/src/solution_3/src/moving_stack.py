@@ -67,7 +67,7 @@ class MovingStack():
         rospy.sleep(1)
 
 
-    def getPose(self, data):
+    def getPose(self):
         return self.cur_pose
 
 
