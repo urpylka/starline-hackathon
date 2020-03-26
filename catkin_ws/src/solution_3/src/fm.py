@@ -23,6 +23,10 @@ class INIT(AbstractState):
         rospy.loginfo("INIT: Robot's initializating...")
         M.S.moving_stack = MovingStack()
 
+        M.S.moving_stack.resetOdometry()
+        init_pose = Pose(Point(1, 1, 0.000), Quaternion(0, 0, 0, 1)
+        M.S.moving_stack.initAmcl(init_pose)
+
         crossroads = [
             {'xy': (44, 11, 'walls': [[(20, 0), (40, 40)], [(20, 0), (40, 40)]]},
             {'xy': (2, 4), 'walls': [[(20, 0), (40, 40)], [(20, 0), (40, 40)]]}

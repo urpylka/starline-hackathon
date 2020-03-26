@@ -24,8 +24,6 @@ class MovingStack():
         # Stop robot when catched Ctrl-C or failure
         rospy.on_shutdown(self.cancelGoal)
 
-        self.resetOdometry()
-
         rospy.Subscriber('/amcl_pose', PoseWithCovarianceStamped, lambda data: self.cur_pose = data.pose.pose)
 
         # move_base API
@@ -35,7 +33,21 @@ class MovingStack():
         self.move_base.wait_for_server(rospy.Duration(5))
 
 
+    def initAmcl(self, _pose):
+        """
+        https://answers.ros.org/question/263835/amcl-and-odometry/
+        """
+        # latch - если сообщение было опубликовано до запуска ноды, то оно не будет получено
+        pub = rospy.Publisher("/initialpose", PoseWithCovarianceStamped)
+        p = PoseWithCovarianceStamped()
+        p.pose = _pose
+        pub.publish(p)
+
     def resetOdometry(self):
+        """
+        https://answers.ros.org/question/203088/reset-turtlebot-odometry-in-a-python-script/
+        """
+
         # set up the odometry reset publisher
         reset_odom = rospy.Publisher('/mobile_base/commands/reset_odometry', Empty, queue_size=10)
 
