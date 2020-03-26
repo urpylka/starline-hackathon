@@ -12,8 +12,9 @@ from nav_msgs.msg import OccupancyGrid
 
 
 class WallBuilder:
-    def __init__(self):
-        self.pub_map = rospy.Publisher("/robot_0/move_base/local_costmap/costmap2", OccupancyGrid, queue_size=1, latch=True)
+
+    def __init__(self, pub_topic):
+        self.pub_map = rospy.Publisher(pub_topic, OccupancyGrid, queue_size=1, latch=True)
 
         self.map = OccupancyGrid()
         self.map.header.frame_id = "map"
@@ -24,8 +25,10 @@ class WallBuilder:
         self.map.info.origin.position.y = -3
         self.map.info.origin.position.z = 0
 
-    # Contruct and publish the map message (Occupancy Grid)
     def publishMap(self, walls):
+        """
+        Contruct and publish the map message (Occupancy Grid)
+        """
         # Initialize 2D map with zeros
         map = []
         for i in range(self.map.info.height):
@@ -59,7 +62,7 @@ class WallBuilder:
 
 if __name__ == "__main__":
     rospy.init_node("test_publish_walls")
-    w = WallBuilder()
+    w = WallBuilder("/robot_0/move_base/local_costmap/costmap2")
     walls = [[(40, 40), (40, 80)]]
     # walls = [[(20, 0), (40, 40)], [(0, 20), (40, 50)], [(0, 20), (40, 20)], [(10, 20), (100, 110)]]
     # print(w.map)

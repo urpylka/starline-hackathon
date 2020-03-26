@@ -16,6 +16,7 @@ class INIT(AbstractState):
     def run(self, M):
         rospy.loginfo("INIT: Robot's initializating...")
         M.S.moving_stack = MovingStack()
+        M.S.locker_ways = LockerWays()
         M.new_state(IDLE(M))
 
     def command(self, array_command):
@@ -98,9 +99,6 @@ if __name__ == "__main__":
     fm = StateMachine(INIT)
 
     try:
-        # t = threading.Thread(target=checkForClean, args=())
-        # t.start()
-
         r = rospy.Rate(10) # 10hz
         while not rospy.is_shutdown():
             # merged_map.publish(mergeGrids(map, map1, map2))
