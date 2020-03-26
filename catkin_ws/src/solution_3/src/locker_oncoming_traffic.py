@@ -50,9 +50,11 @@ class LockerWays():
 
             for crossroad in self.crossroads:
                 if getDistance(xy, crossroad['xy']) < self.error_income:
+                    rospy.loginfo("Locker crossroads: Lock the crossroad")
                     while getDistance(xy, crossroad['xy']) > self.error_outcome:
                         self.w.publishMap(crossroad['walls'])
                         publication_rate.sleep()
+                    rospy.loginfo("Locker crossroads: Unlock the crossroad")
 
             checker_rate.sleep()
 
