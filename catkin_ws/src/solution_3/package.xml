@@ -29,6 +29,7 @@
   <depend>dynamic_reconfigure</depend>
   <depend>teb_local_planner_tutorials</depend>
   <depend>rviz</depend>
+  <depend>find_object_2d</depend>
 
   <export>
     <!-- Other tools can request additional information be placed here -->

@@ -10,6 +10,7 @@ project(solution_3)
 find_package(catkin REQUIRED COMPONENTS
   dynamic_reconfigure
   gmapping
+  find_object_2d
   roscpp
   rospy
   std_msgs
@@ -91,7 +92,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
 generate_dynamic_reconfigure_options(
-#  lane_detection/cfg/dyn_lane_image_prepare.cfg
+  src/detect_objects_node/cfg/dyn_detect.cfg
 )
 
 ###################################
@@ -161,7 +162,7 @@ include_directories(
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
 install(PROGRAMS
-#  lane_detection/lane_image_prepare.py
+  detect_objects_node/detect_objects_node.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
