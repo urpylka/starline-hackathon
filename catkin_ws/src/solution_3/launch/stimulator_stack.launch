@@ -1,6 +1,6 @@
 <launch>
     <!-- Running the base -->
-    <include file="$(arg tb)/launch/tb.launch" />
+    <include file="$(find tb)/launch/tb.launch" />
 
     <!-- Running the map_server for amcl -->
     <node name="map_server" pkg="map_server" type="map_server" args="$(find solution_2)/maps/map1_r.yaml" output="screen">
