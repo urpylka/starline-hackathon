@@ -11,6 +11,11 @@ import time
 import rospy
 import threading
 
+from locker_oncoming_traffic import LockerWays
+from moving_stack import MovingStack
+from publish_wall_to_costmap import WallBuilder
+from state_machine import AbstractState, StateMachine
+
 class INIT(AbstractState):
 
     def run(self, M):
@@ -18,11 +23,14 @@ class INIT(AbstractState):
         M.S.moving_stack = MovingStack()
 
         crossroads = [
-            {'xy': (1, 1), 'walls': [[(20, 0), (40, 40)], [(20, 0), (40, 40)]]},
+            {'xy': (44, 11, 'walls': [[(20, 0), (40, 40)], [(20, 0), (40, 40)]]},
             {'xy': (2, 4), 'walls': [[(20, 0), (40, 40)], [(20, 0), (40, 40)]]}
         ]
 
         M.S.locker_ways = LockerWays(M.S.moving_stack, "/crossroads", crossroads)
+
+        M.S.target_zero_point = Pose(Point(1, 1, 0.000), Quaternion(0.000, 0.000, 0.000, 1.000)
+        M.S.target_first_point = Pose(Point(1, 10, 0.000), Quaternion(0.000, 0.000, 0.000, 1.000)
 
         # Change state
         M.new_state(IDLE(M))
@@ -56,19 +64,40 @@ class IDLE(AbstractState):
             pass
 
 
-class GOTO(AbstractState):
+class GOTO_1(AbstractState):
 
     def run(self, M):
-        success = M.S.moving_stack.goTo(my_poses[cur_pose])
-        if success:
-            rospy.loginfo("GOTO: Hooray, reached the desired pose")
-        else:
-            rospy.loginfo("GOTO: The base failed to reach the desired pose")
+        M.S.moving_stack.asyncGoTo(M.S.target_first_point)
+
+        r = rospy.Rate(10)
+        while not M.S.moving_stack.getState():
+            r.sleep()
+            if M.S.stop_sign_checker.getState():
+                M.new_state(GOTO_0(M))
+            if M.S.semaphore_checker.getState():
+                M.new_state(GOTO_0(M))
+
+
+        rospy.loginfo("GOTO_1: Another one cycle done!")
+        M.new_state(GOTO_0(M))
+
+    def command(self, array_command):
+        rospy.loginfo("GOTO_1: Can't execute the command: " + array_command[0])
+
+
+class GOTO_0(AbstractState):
+
+    def run(self, M):
+        M.S.moving_stack.asyncGoTo(M.S.target_zero_point)
+
+        r = rospy.Rate(10)
+        while not M.S.moving_stack.getState():
+            r.sleep()
 
         M.new_state(IDLE(M))
 
     def command(self, array_command):
-        rospy.loginfo("GOTO: Can't execute the command: " + array_command[0])
+        rospy.loginfo("GOTO_0: Can't execute the command: " + array_command[0])
 
 
 class WAIT_SEMAPHORE(AbstractState):

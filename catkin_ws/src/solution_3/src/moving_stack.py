@@ -20,7 +20,6 @@ class MovingStack():
     cur_pose = None
 
     def __init__(self):
-        self.goal_sent = False
 
         # Stop robot when catched Ctrl-C or failure
         rospy.on_shutdown(self.cancelGoal)
@@ -55,7 +54,28 @@ class MovingStack():
         goto(pose)
         """
 
-        self.goal_sent = True
+        # Create goal
+        goal = MoveBaseGoal()
+        goal.target_pose.header.frame_id = 'map'
+        goal.target_pose.header.stamp = rospy.Time.now()
+        goal.target_pose.pose = _pose
+
+        # Send the goal and start moving
+        self.move_base.send_goal(goal, done_cb= self.done_cb)
+
+        # Allow 1 minute to get there (Blocking function)
+        timeout = self.move_base.wait_for_result(rospy.Duration(60))
+        state = self.move_base.get_state()
+
+        if timeout and getState():
+            return True
+        else:
+            self.goal_sent = False
+            self.move_base.cancel_goal()
+            return False
+
+
+    def asyncGoTo(self, _pose):
 
         # Create goal
         goal = MoveBaseGoal()
@@ -64,17 +84,10 @@ class MovingStack():
         goal.target_pose.pose = _pose
 
         # Send the goal and start moving
+        # https://github.com/auviitkgp/kraken_3.0/blob/indigo-devel/mission_planner_stack/mission_planner/src/marker.py
+        # self.ipClient.send_goal(goal,done_cb=self.done_cb, feedback_cb=self.feedback_cb)
         self.move_base.send_goal(goal)
 
-        # Allow 1 minute to get there (Blocking function)
-        timeout = self.move_base.wait_for_result(rospy.Duration(60))
-        state = self.move_base.get_state()
 
-        if timeout and state == GoalStatus.SUCCEEDED:
-            self.goal_sent = False
-            # We made it!
-            return True
-        else:
-            self.goal_sent = False
-            self.move_base.cancel_goal()
-            return False
+    def getState(self):
+        return self.move_base.get_state() == GoalStatus.SUCCEEDED
