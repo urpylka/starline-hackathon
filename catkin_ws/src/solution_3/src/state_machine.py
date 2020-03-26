@@ -7,6 +7,7 @@
 # Author:       Artem Smirnov @urpylka
 # Description:  Abstract classes for building the state machine
 
+import threading
 
 class AbstractState(object):
 
