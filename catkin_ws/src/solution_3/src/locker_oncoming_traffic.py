@@ -8,6 +8,7 @@
 # Description:  Locker of oncoming traffic on crossroads
 
 import rospy
+import threading
 import math
 from publish_wall_to_costmap import WallBuilder
 
