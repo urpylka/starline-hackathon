@@ -46,7 +46,7 @@ class LockerWays():
 
             for crossroad in self.crossroads:
                 if getDistance(xy, crossroad['xy']) < self.error_income:
-                    while getDistance(xy, crossroad['xy'] > self.error_outcome)
+                    while getDistance(xy, crossroad['xy']) > self.error_outcome)
                         self.w.publishMap(crossroad['walls'])
                         publication_rate.sleep()
 
