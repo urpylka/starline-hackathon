@@ -108,3 +108,4 @@ class GOTO_1(AbstractState):
 if __name__ == "__main__":
     rospy.init_node("finite_stimulator")
     fm = StateMachine(INIT)
+    rospy.spin()
