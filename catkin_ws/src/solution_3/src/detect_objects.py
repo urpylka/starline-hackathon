@@ -65,11 +65,11 @@ class DetectObjects(object):
 
         ###############
 
-    def DetectedStopSign(self):
+    def detectedStopSign(self):
         return False
 
 
-    def DetectedSemaphore(self):
+    def detectedSemaphore(self):
         return False
 
 
