@@ -60,21 +60,21 @@
 
     <!-- Running the merger -->
     <node name="Merger" pkg="solution_2" type="merge_grids.py" output="screen">
+        <param name="merger/source_map_1/updating" value="False" />
+        <param name="merger/source_map_2/updating" value="True" />
+
         <remap from="/merger/source_map_1" to="/maps/map_mb" />
         <remap from="/merger/source_map_2" to="/maps/crossroads" />
         <remap from="/merger/target_map" to="/maps/map_merged" />
-
-        <param name="merger/source_map_1/updating" value="False" />
-        <param name="merger/source_map_2/updating" value="True" />
     </node>
 
     <!-- Running AMCL -->
     <node pkg="amcl" type="amcl" name="amcl" output="screen">
         <rosparam file="$(find solution_2)/params_urpylka/amcl.yaml" command="load" />
 
-        <param name="initial_pose_x" value="$(arg initial_pose_x)"/>
-        <param name="initial_pose_y" value="$(arg initial_pose_y)"/>
-        <param name="initial_pose_yaw" value="$(arg initial_pose_yaw)"/>
+        <param name="initial_pose_x" value="$(arg initial_pose_x)" />
+        <param name="initial_pose_y" value="$(arg initial_pose_y)" />
+        <param name="initial_pose_yaw" value="$(arg initial_pose_yaw)" />
 
         <remap from="/map" to="/maps/map_amcl" />
     </node>
@@ -100,7 +100,6 @@
         <param name="controller_frequency" value="10.0" />
 
         <remap from="/cmd_vel" to="/mobile_base/commands/velocity" />
-
         <remap from="/map" to="/maps/map_merged" />
     </node>
 
