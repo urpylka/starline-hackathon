@@ -10,6 +10,13 @@
 class DetectObjects(object):
 
     def __init__(self):
-
         # Stop robot when catched Ctrl-C or failure
         rospy.on_shutdown(self.cancelGoal)
+
+
+    def detectedStopSign(self):
+        return True # or False
+
+
+    def detectedSemaphore(self):
+        return True # or False
