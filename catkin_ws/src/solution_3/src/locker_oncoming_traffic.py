@@ -38,6 +38,11 @@ class LockerWays():
         t.start()
 
 
+    def getXy(self, moving_stack):
+        pose = moving_stack.getPose()
+        return (pose.position.x, pose.position.y)
+
+
     def checker(self, moving_stack):
 
         checker_rate = rospy.Rate(1) # 10hz
@@ -45,8 +50,7 @@ class LockerWays():
 
         while self.alive:
 
-            pose = moving_stack.getPose()
-            xy = (pose.position.x, pose.position.y)
+            xy = getXy(moving_stack)
             rospy.loginfo("Locker crossroads: " + str(xy))
 
 
@@ -55,7 +59,8 @@ class LockerWays():
                     rospy.loginfo("Locker crossroads: Lock the crossroad: " + str(crossroad['xy']))
                     while getDistance(xy, crossroad['xy']) < self.error_outcome:
                         self.w.publishMap(crossroad['walls'])
-                        rospy.loginfo("Locker crossroads: Distance" + str(getDistance(xy, crossroad['xy'])))
+                        xy = getXy(moving_stack)
+                        rospy.loginfo("Locker crossroads: Distance: " + str(getDistance(xy, crossroad['xy'])))
                         publication_rate.sleep()
                     rospy.loginfo("Locker crossroads: Unlock the crossroad: " + str(crossroad['xy']))
 
