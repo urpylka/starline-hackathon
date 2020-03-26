@@ -1,8 +1,8 @@
 <launch>
     <arg name="gui" default="false"/>
     <arg name="image_topic" default="/camera/rgb/image_raw"/>
-    <arg name="objects_path" default="$(find solution_2)/object_detection/objects"/>
-    <arg name="settings_path" default="$(find solution_2)/object_detection/objects/settings.ini"/>
+    <arg name="objects_path" default="$(find solution_2)/object_detection/objects_2"/>
+    <arg name="settings_path" default="$(find solution_2)/object_detection/settings.ini"/>
 
 	<!-- Nodes -->
 	<node name="find_object_2d" pkg="find_object_2d" type="find_object_2d" output="screen">

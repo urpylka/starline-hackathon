@@ -18,11 +18,11 @@ class WallBuilder:
 
         self.map = OccupancyGrid()
         self.map.header.frame_id = "map"
-        self.map.info.resolution = 0.05
+        self.map.info.resolution = 0.0502257
         self.map.info.width = 220
         self.map.info.height = 220
-        self.map.info.origin.position.x = -1.5
-        self.map.info.origin.position.y = -5.5
+        self.map.info.origin.position.x = 0.0
+        self.map.info.origin.position.y = 0.0
         self.map.info.origin.position.z = 0
 
     def publishMap(self, walls):

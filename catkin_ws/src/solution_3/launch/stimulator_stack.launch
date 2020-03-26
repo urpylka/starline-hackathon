@@ -1,4 +1,9 @@
 <launch>
+
+    <arg name="initial_pose_x" default="1.8"/>
+    <arg name="initial_pose_y" default="5.0"/>
+    <arg name="initial_pose_yaw" default="0.0"/>
+
     <!-- Running the base -->
     <include file="$(find tb)/launch/tb.launch" />
 
@@ -27,8 +32,12 @@
     <!-- Running AMCL -->
     <node pkg="amcl" type="amcl" name="amcl" output="screen">
         <rosparam file="$(find solution_2)/params_urpylka/amcl.yaml" command="load" />
+
+        <param name="initial_pose_x" value="$(arg initial_pose_x)"/>
+        <param name="initial_pose_y" value="$(arg initial_pose_y)"/>
+        <param name="initial_pose_yaw" value="$(arg initial_pose_yaw)"/>
+
         <remap from="/map" to="/maps/map_amcl" />
-        <!-- <remap from="/scan" to="/scan"/> -->
     </node>
 
     <!-- Running move_base -->

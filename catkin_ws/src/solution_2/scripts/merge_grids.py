@@ -111,29 +111,16 @@ if __name__ == "__main__":
         print("Waiting for /merger/source_map_1")
         time.sleep(1)
 
-    result_grid_cfg = {
-        'MAP_WIDTH': 12,
-        'MAP_HEIGHT': 12,
-        'RESOLUTION': 0.05,
-        'ORIGIN_X': -3,
-        'ORIGIN_Y': -3,
-        'ORIGIN_Z': 0
-    }
-
-    result_grid_cfg['MAP_HEIGHT'] = max(map1.info.height, map2.info.height)
-    result_grid_cfg['MAP_WIDTH'] = max(map1.info.width, map2.info.width)
-    # result_grid_cfg['RESOLUTION'] = min(map1.info.resolution, map2.info.resolution)
-
     # print(map1.info)
     # print(map2.info)
 
     map = OccupancyGrid()
     map.header.frame_id = 'map'
-    map.info.resolution = 0.05
+    map.info.resolution = 0.0502257
     map.info.width = 220
     map.info.height = 220
-    map.info.origin.position.x = -1.5
-    map.info.origin.position.y = -5.5
+    map.info.origin.position.x = 0.0
+    map.info.origin.position.y = 0.0
     map.info.origin.position.z = 0
     map.data = []
 
