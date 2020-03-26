@@ -2,6 +2,8 @@
     <!-- Running the base -->
     <include file="$(find tb)/launch/tb.launch" />
 
+    <node pkg="tf" type="static_transform_publisher" name="my_link" args="-1.5 -5.5 0 0 0 0 map base_link 100" />
+
     <!-- Running the map_server for amcl -->
     <node name="map_server_amcl" pkg="map_server" type="map_server" args="$(find solution_2)/maps/map1_r.yaml" output="screen">
         <remap from="/map" to="/maps/map_amcl" />
