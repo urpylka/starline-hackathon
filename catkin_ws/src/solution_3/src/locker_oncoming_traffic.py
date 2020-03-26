@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding: utf8 -*-
 
 # Title:        The locker of oncoming traffic on crossroads for turtleworl at StarLine competition

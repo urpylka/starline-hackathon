@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding: utf8 -*-
 
 # Title:        The finite state machine for StarLine competition

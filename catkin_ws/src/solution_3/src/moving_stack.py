@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding: utf8 -*-
 
 # Title:        The moving stack for state machine at StarLine competition
