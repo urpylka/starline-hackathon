@@ -43,8 +43,4 @@
 
         <remap from="/map" to="/maps/map_merged" />
     </node>
-    <!-- Running the finite machine -->
-    <node name="solution_3" pkg="solution_3" type="map_server" args="$(find solution_2)/maps/map1_r.yaml" output="screen" />
-
-
 </launch>
