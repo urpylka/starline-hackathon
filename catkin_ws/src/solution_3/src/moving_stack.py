@@ -34,7 +34,7 @@ class MovingStack():
 
 
     def updatePose(self, data):
-        self.cur_pose = data.pose.
+        self.cur_pose = data.pose.pose
 
 
     def initAmcl(self, _pose):
