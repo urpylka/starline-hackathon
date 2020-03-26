@@ -78,6 +78,7 @@ RUN pip3 install --upgrade pip
 
 RUN pip3 install rospkg catkin_pkg tensorflow==1.15
 
+RUN apt insatll nano
 
 # User WS dependings
 
