@@ -19,21 +19,17 @@ class AbstractState(object):
         t.daemon = True
         t.start()
 
-
     def run(self, _sm):
         raise NotImplementedError()
 
-
     def command(self, array_command):
         raise NotImplementedError()
-
 
     def __repr__(self):
         """
         Leverages the __str__ method to describe the State.
         """
         return self.__str__()
-
 
     def __str__(self):
         """
@@ -52,7 +48,7 @@ class StateMachine(object):
     S = ObjectStorage()
 
     def __init__(self, _init_state):
-        self.new_state(_init_state)
+        self.state = _init_state(self)
 
     def new_state(self, _state):
         self.state = _state

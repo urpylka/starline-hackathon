@@ -15,6 +15,7 @@ from locker_oncoming_traffic import LockerWays
 from moving_stack import MovingStack
 from publish_wall_to_costmap import WallBuilder
 from state_machine import AbstractState, StateMachine
+from detect_objects import SemaphoreState, DetectObjects
 
 class INIT(AbstractState):
 
@@ -32,57 +33,13 @@ class INIT(AbstractState):
         M.S.target_zero_point = Pose(Point(1, 1, 0.000), Quaternion(0.000, 0.000, 0.000, 1.000)
         M.S.target_first_point = Pose(Point(1, 10, 0.000), Quaternion(0.000, 0.000, 0.000, 1.000)
 
-        # Change state
-        M.new_state(IDLE(M))
+        M.S.detect_objects = DetectObjects()
+
+        rospy.loginfo("INIT: State has changed to GOTO_1.")
+        M.new_state(GOTO_1(M))
 
     def command(self, array_command):
         rospy.loginfo("INIT: It cannot been executed: " + array_command[0])
-
-
-class IDLE(AbstractState):
-
-    def run(self, M):
-        while True:
-            if not self.stop_state:
-                time.sleep(1)
-            else:
-                M.new_state(GOTO(M))
-                break
-
-    def command(self, array_command):
-        rospy.loginfo("IDLE: Command: " + array_command[0])
-        command = array_command[0]
-
-        if command == 'status':
-            pass
-        elif command == 'go':
-            self.stop_state = True
-        elif command == 'save':
-            pass
-        else:
-            # Incorrect command
-            pass
-
-
-class GOTO_1(AbstractState):
-
-    def run(self, M):
-        M.S.moving_stack.asyncGoTo(M.S.target_first_point)
-
-        r = rospy.Rate(10)
-        while not M.S.moving_stack.getState():
-            r.sleep()
-            if M.S.stop_sign_checker.getState():
-                M.new_state(GOTO_0(M))
-            if M.S.semaphore_checker.getState():
-                M.new_state(GOTO_0(M))
-
-
-        rospy.loginfo("GOTO_1: Another one cycle done!")
-        M.new_state(GOTO_0(M))
-
-    def command(self, array_command):
-        rospy.loginfo("GOTO_1: Can't execute the command: " + array_command[0])
 
 
 class GOTO_0(AbstractState):
@@ -94,52 +51,55 @@ class GOTO_0(AbstractState):
         while not M.S.moving_stack.getState():
             r.sleep()
 
-        M.new_state(IDLE(M))
+            if M.S.detect_objects.detectedStopSign():
+                rospy.loginfo("GOTO_0: Stop sign has detected!")
 
-    def command(self, array_command):
-        rospy.loginfo("GOTO_0: Can't execute the command: " + array_command[0])
+                M.S.moving_stack.cancelGoal()
+                rospy.sleep(1.5)
+                M.S.moving_stack.asyncGoTo(M.S.target_zero_point)
+
+            if M.S.detect_objects.detectedSemaphore():
+                rospy.loginfo("GOTO_0: Semaphore has detected!")
+
+                M.S.moving_stack.cancelGoal()
+                r = rospy.Rate(10)
+                while M.S.detect_objects.getStateSemaphore() == SemaphoreState.RED:
+                    r.sleep()
+                M.S.moving_stack.asyncGoTo(M.S.target_zero_point)
+
+        rospy.loginfo("GOTO_0: Another one cycle has done!")
+        M.new_state(GOTO_1(M))
 
 
-class WAIT_SEMAPHORE(AbstractState):
+class GOTO_1(AbstractState):
 
     def run(self, M):
-        success = navigator.goto(my_poses[cur_pose])
-        if success:
-            rospy.loginfo("GOTO: Hooray, reached the desired pose")
-        else:
-            rospy.loginfo("GOTO: The base failed to reach the desired pose")
+        M.S.moving_stack.asyncGoTo(M.S.target_first_point)
 
-        M.new_state(IDLE(M))
+        r = rospy.Rate(10)
+        while not M.S.moving_stack.getState():
+            r.sleep()
 
-    def command(self, array_command):
-        rospy.loginfo("GOTO: Can't execute the command: " + array_command[0])
+            if M.S.detect_objects.detectedStopSign():
+                rospy.loginfo("GOTO_1: Stop sign has detected!")
 
+                M.S.moving_stack.cancelGoal()
+                rospy.sleep(1.5)
+                M.S.moving_stack.asyncGoTo(M.S.target_first_point)
 
-class WAIT_SIGN_STOP(AbstractState):
+            if M.S.detect_objects.detectedSemaphore():
+                rospy.loginfo("GOTO_1: Semaphore has detected!")
 
-    def run(self, M):
-        success = MovingStack.goTo(my_poses[cur_pose])
-        if success:
-            rospy.loginfo("GOTO: Hooray, reached the desired pose")
-        else:
-            rospy.loginfo("GOTO: The base failed to reach the desired pose")
+                M.S.moving_stack.cancelGoal()
+                r = rospy.Rate(10)
+                while M.S.detect_objects.getStateSemaphore() == SemaphoreState.RED:
+                    r.sleep()
+                M.S.moving_stack.asyncGoTo(M.S.target_first_point)
 
-        M.new_state(IDLE(M))
-
-    def command(self, array_command):
-        rospy.loginfo("GOTO: Can't execute the command: " + array_command[0])
+        rospy.loginfo("GOTO_1: The first point has done!")
+        M.new_state(GOTO_0(M))
 
 
 if __name__ == "__main__":
     rospy.init_node("finite_stimulator")
-
     fm = StateMachine(INIT)
-
-    try:
-        r = rospy.Rate(10) # 10hz
-        while not rospy.is_shutdown():
-            # merged_map.publish(mergeGrids(map, map1, map2))
-            r.sleep()
-    except rospy.ROSInterruptException:
-        pass
-        # alive = False
