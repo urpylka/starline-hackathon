@@ -3,12 +3,12 @@
     <include file="$(find tb)/launch/tb.launch" />
 
     <!-- Running the map_server for amcl -->
-    <node name="map_server" pkg="map_server" type="map_server" args="$(find solution_2)/maps/map1_r.yaml" output="screen">
+    <node name="map_server_amcl" pkg="map_server" type="map_server" args="$(find solution_2)/maps/map1_r.yaml" output="screen">
         <remap from="/map" to="/maps/map_amcl" />
     </node>
 
     <!-- Running the map_server for move_base -->
-    <node name="map_server" pkg="map_server" type="map_server" args="$(find solution_2)/maps/map1_markup_all.yaml" output="screen">
+    <node name="map_server_mb" pkg="map_server" type="map_server" args="$(find solution_2)/maps/map1_markup_all.yaml" output="screen">
         <remap from="/map" to="/maps/map_mb" />
     </node>
 
