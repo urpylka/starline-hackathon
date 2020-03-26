@@ -10,6 +10,7 @@
 import math
 from publish_wall_to_costmap import WallBuilder
 
+
 def getDistance((x1, y1), (x2, y2)):
     dx = x2 - x1
     dy = y2 - y1
@@ -22,8 +23,8 @@ class LockerWays():
     error = 1.5
 
     crossroads = [
-        {(1, 1), [{(20, 0), (40, 40)}, {(20, 0), (40, 40)}]},
-        {(2, 4), [{(20, 0), (40, 40)}, {(20, 0), (40, 40)}]}
+        {'xy': (1, 1), 'walls': [[(20, 0), (40, 40)], [(20, 0), (40, 40)]]},
+        {'xy': (2, 4), 'walls': [[(20, 0), (40, 40)], [(20, 0), (40, 40)]]}
     ]
 
     def __init__(self, _moving_stack):
@@ -36,9 +37,9 @@ class LockerWays():
             r = rospy.Rate(10) # 10hz
             pose = moving_stack.getPose()
 
-            for crossroad in seld.crossroads:
-                getError(crossroad[1]) < self.error:
-                    w.publishMap(crossroad[2])
+            for crossroad in self.crossroads:
+                getError(crossroad['xy']) < self.error:
+                    w.publishMap(crossroad['walls'])
                     r.sleep()
 
 
