@@ -24,13 +24,17 @@ class MovingStack():
         # Stop robot when catched Ctrl-C or failure
         rospy.on_shutdown(self.cancelGoal)
 
-        rospy.Subscriber('/amcl_pose', PoseWithCovarianceStamped, lambda data: self.cur_pose = data.pose.pose)
+        rospy.Subscriber('/amcl_pose', PoseWithCovarianceStamped, updatePose)
 
         # move_base API
         self.move_base = actionlib.SimpleActionClient("move_base", MoveBaseAction)
         rospy.loginfo("Moving stack: Wait for the action server to come up")
         # Allow up to 5 seconds for the action server to come up
         self.move_base.wait_for_server(rospy.Duration(5))
+
+
+    def updatePose(self, data):
+        self.cur_pose = data.pose.
 
 
     def initAmcl(self, _pose):
