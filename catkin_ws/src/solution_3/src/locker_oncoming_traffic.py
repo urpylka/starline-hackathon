@@ -55,11 +55,11 @@ class LockerWays():
             rospy.loginfo("Locker crossroads: " + str(xy))
 
             for crossroad in self.crossroads:
-                if getDistance(xy, crossroad['xy']) < self.error_income and not entered:
+                if not entered and (getDistance(xy, crossroad['xy']) < self.error_income):
                     rospy.loginfo("Locker crossroads: Lock the crossroad: " + str(crossroad['xy']))
                     entered = True
 
-                if getDistance(xy, crossroad['xy']) > self.error_outcome and entered:
+                if entered and (getDistance(xy, crossroad['xy']) > self.error_outcome):
                     rospy.loginfo("Locker crossroads: Unlock the crossroad: " + str(crossroad['xy']))
                     entered = False
 
