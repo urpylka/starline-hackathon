@@ -26,6 +26,7 @@
     <node pkg="amcl" type="amcl" name="amcl" output="screen">
         <rosparam file="$(find solution_2)/params_urpylka/amcl.yaml" command="load" />
         <remap from="/map" to="/maps/map_amcl" />
+        <remap from="/scan" to="/scan"/>
     </node>
 
     <!-- Running move_base -->
