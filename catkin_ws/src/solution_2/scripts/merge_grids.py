@@ -130,10 +130,10 @@ if __name__ == "__main__":
     map = OccupancyGrid()
     map.header.frame_id = 'map'
     map.info.resolution = 0.05
-    map.info.width = 120
-    map.info.height = 120
-    map.info.origin.position.x = -3
-    map.info.origin.position.y = -3
+    map.info.width = 220
+    map.info.height = 220
+    map.info.origin.position.x = -1.5
+    map.info.origin.position.y = -5.5
     map.info.origin.position.z = 0
     map.data = []
 
