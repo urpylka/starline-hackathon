@@ -7,6 +7,7 @@
 # Author:       Artem Smirnov @urpylka
 # Description:  Locker of oncoming traffic on crossroads
 
+import rospy
 import math
 from publish_wall_to_costmap import WallBuilder
 

@@ -63,8 +63,7 @@ class MovingStack():
 
 
     def cancelGoal(self):
-        if self.goal_sent:
-            self.move_base.cancel_goal()
+        self.move_base.cancel_goal()
         rospy.loginfo("Moving stack: Robot has stopped")
         rospy.sleep(1)
 
