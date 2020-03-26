@@ -35,8 +35,8 @@ class INIT(AbstractState):
 
         M.S.locker_ways = LockerWays(M.S.moving_stack, "/maps/crossroads", crossroads)
 
-        M.S.target_zero_point = Pose(Point(7.76, 4.05, 0.000), Quaternion(0.000, 0.000, 0.000, 1.000)
-        M.S.target_first_point = Pose(Point(7.95, 5.4, 0.000), Quaternion(0.000, 0.000, 0.000, 1.000)
+        M.S.target_zero_point = Pose(Point(7.76, 4.05, 0.000), Quaternion(0.000, 0.000, 0.000, 1.000))
+        M.S.target_first_point = Pose(Point(7.95, 5.4, 0.000), Quaternion(0.000, 0.000, 0.000, 1.000))
 
         M.S.detect_objects = DetectObjects()
 
