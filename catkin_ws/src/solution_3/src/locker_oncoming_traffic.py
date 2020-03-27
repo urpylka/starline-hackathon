@@ -59,6 +59,8 @@ class LockerWays():
                         rospy.loginfo("Locker crossroads: Distance: " + str(getDistance(xy, crossroad['xy'])))
                         xy = self.getXy(moving_stack)
                         checker_rate.sleep()
+                        if not self.alive:
+                            return
 
                     rospy.loginfo("Locker crossroads: Unlock the crossroad: " + str(crossroad['xy']))
             checker_rate.sleep()
@@ -75,6 +77,7 @@ if __name__ == "__main__":
     rospy.init_node("locker_crossroads")
 
     crossroads = [
+        {'xy': (1.82, 5.18), 'walls': [[(7.3, 4.5), (8.24, 4.5)]]}, #debug point
         {'xy': (7.95, 5.4), 'walls': [[(7.3, 4.5), (8.24, 4.5)]]}, #start point
         {'xy': (3.7, 6.05), 'walls': [[(3.7, 6.55), (3.28, 6.55)]]}, #block to #4
         {'xy': (3.74, 8.08), 'walls': [[(3.3, 8.1), (3.3, 7.64)], [(3.73, 7.63), (4.16, 7.65)], [(4.15, 8.1), (4.13, 8.5)]]}, #4

@@ -10,6 +10,14 @@
 import rospy
 from nav_msgs.msg import OccupancyGrid
 
+def cleanGrid(_map):
+    if _map is None:
+        return
+
+    data = []
+    for i in range(_map.info.height * _map.info.width):
+        data.append(0)
+    g_map.data = data
 
 class WallBuilder:
 
@@ -24,6 +32,10 @@ class WallBuilder:
         self.map.info.origin.position.x = 0.0
         self.map.info.origin.position.y = 0.0
         self.map.info.origin.position.z = 0
+        cleanGrid(self.map)
+
+        self.pub_map.publish(self.map)
+
 
     def publishMap(self, walls):
         """
@@ -45,6 +57,8 @@ class WallBuilder:
             x2 = int(x2 / self.map.info.resolution)
             y1 = int(y1 / self.map.info.resolution)
             y2 = int(y2 / self.map.info.resolution)
+
+            rospy.loginfo("x1: {}, y1: {}, x2: {}, y2: {}", str(x1), str(y1), str(x2), str(y2))
 
             # https://ru.wikipedia.org/wiki/%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC_%D0%91%D1%80%D0%B5%D0%B7%D0%B5%D0%BD%D1%85%D1%8D%D0%BC%D0%B0
 
