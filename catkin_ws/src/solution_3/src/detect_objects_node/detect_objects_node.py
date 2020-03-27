@@ -21,6 +21,12 @@ class DynParams:
 
     default_dict = {
         "detect_tl":False,
+        "c_quality":23,
+        "c_min_R":10,
+        "c_max_R":100,
+        "c_min_dist":5,
+        "mask_iter":5,
+        "mask_ks":3,
         "light_area":0.1,
         "stop_area":0.1,
         "red_area":0.2,
@@ -86,7 +92,7 @@ def detect_objects(event):
     detected_objects = select_objects(last_objects.objects.data)
     roi, mask = get_red_mask(detected_objects, last_image_cv2, dyn_params)
     debug_image = draw_frames(detected_objects, last_image_cv2)
-    detected_red = detect_red(mask, detected_objects, debug_image, dyn_params)
+    detected_red = detect_red(mask, detected_objects, debug_image)
 
     debug_message = cv_bridge.cv2_to_imgmsg(debug_image, "bgr8")
     mask_message = cv_bridge.cv2_to_imgmsg(mask, "mono8")
@@ -144,6 +150,7 @@ def detect_light_service(request):
         responce.success = detected_red
         if detected_objects:
             if detected_objects['stop']:
+                responce.success = False
                 responce.message = "Stop sign detected"
         responce.message = "Detected red light: {}".format(responce.success)
         return responce
@@ -234,10 +241,11 @@ def get_mask(object_detected, cv2_image, hl, hh, sl, sh, ll, lh):
 
     # Bitwise-AND mask and original image
     res = cv2.bitwise_and(cv2_image, cv2_image, mask = mask)
-    mask = cv2.bitwise_not(mask)
 
-    kernel = np.zeros((5,5),np.uint8)
-    mask = cv2.dilate(mask,kernel,iterations = 1)
+    kernel = np.ones((dyn_params.mask_ks,dyn_params.mask_ks),np.uint8)
+    mask = cv2.dilate(mask,kernel,iterations = dyn_params.mask_iter)
+
+    mask = cv2.bitwise_not(mask)
 
     return res, mask
 
@@ -247,27 +255,44 @@ def get_red_mask(objects, cv2_image, params):
     return get_mask(objects['traffic_light'], cv2_image,
                     params.red_h_l, params.red_h_h, params.red_s_l, params.red_s_h, params.red_l_l, params.red_l_h,)
 
-def detect_red(mask, objects, cv2_image, params):
-    global last_image_area
+def detect_red(mask, objects, cv2_image):
+    global last_image_area, dyn_params
+
+    if dyn_params.detect_tl and not object_detected:
+        return False
+
     mask = cv2.bitwise_not(mask)
-    if params.detect_tl:
+
+    if dyn_params.detect_tl:
         x,y,w,h=get_frame(objects['traffic_light'])
         if mask is not None and w*h > area_dict['traffic_light']*last_image_area:
             im2,contours,hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-            if len(contours) != 0:
-                # find the biggest countour (c) by the area
-                c = max(contours, key = cv2.contourArea)
-                if cv2.contourArea(c) > params.red_area*w*h:
-                    cv2.drawContours(cv2_image, [c], -1, (0,255,0) , 2, offset=(x,y))
-                    return True
+            threshold = dyn_params.red_area*w*h
+        else:
+            return False
     else:
         im2,contours,hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-        if len(contours) != 0:
-            # find the biggest countour (c) by the area
-            c = max(contours, key = cv2.contourArea)
-            if cv2.contourArea(c) > params.red_area*last_image_area:
-                cv2.drawContours(cv2_image, [c], -1, (0,255,0) , 2)
-                return True
+        threshold = dyn_params.red_area*last_image_area
+
+    thresh = cv2.adaptiveThreshold(mask,255,cv2.ADAPTIVE_THRESH_MEAN_C,cv2.THRESH_BINARY_INV,11,2)
+    thresh_message = cv_bridge.cv2_to_imgmsg(thresh, "mono8")
+    thresh_message.header.stamp = rospy.Time.now()
+    thresh_pub.publish(thresh_message)
+
+    circles = cv2.HoughCircles(thresh, cv2.HOUGH_GRADIENT, 1, dyn_params.c_min_dist, param1 = 100,
+                                param2 = dyn_params.c_quality, minRadius = dyn_params.c_min_R, maxRadius = dyn_params.c_max_R)
+    # ensure at least some circles were found
+    if circles is not None:
+        print ('circles detected!')
+        # convert the (x, y) coordinates and radius of the circles to integers
+        circles = np.round(circles[0, :]).astype("int")
+        # loop over the (x, y) coordinates and radius of the circles
+        for (x, y, r) in circles:
+            # draw the circle in the output image, then draw a rectangle
+            # corresponding to the center of the circle
+            cv2.circle(cv2_image, (x, y), r, (0, 255, 0), 4)
+            cv2.rectangle(cv2_image, (x - 5, y - 5), (x + 5, y + 5), (0, 128, 255), -1)
+        return True
 
     return False
 
@@ -292,6 +317,7 @@ if __name__ == "__main__":
     objects_sub = rospy.Subscriber(objects_topic, ObjectsStamped, objects_callback)
     debug_pub = rospy.Publisher(debug_topic, Image, queue_size=1)
     mask_pub = rospy.Publisher(mask_topic, Image, queue_size=1)
+    thresh_pub = rospy.Publisher('thresh', Image, queue_size=1)
 
     rospy.Service('detected_stop', Trigger, detect_stop_service)
     rospy.Service('detected_redlight', Trigger, detect_light_service)
