@@ -110,7 +110,7 @@ class GOTO_0(AbstractState):
                 self.M.S.moving_stack.cancelGoal()
                 rospy.sleep(1.5)
                 self.M.S.moving_stack.asyncGoTo(self.M.S.target_zero_point)
-                rospy.sleep(2) # time for going away
+                rospy.sleep(10) # time for going away
 
             if self.M.S.detect_objects.detectedSemaphoreRed():
                 rospy.loginfo(str(self) + ": Semaphore detected!")
@@ -121,7 +121,7 @@ class GOTO_0(AbstractState):
                     self.tryToGotoIdle()
 
                 self.M.S.moving_stack.asyncGoTo(self.M.S.target_zero_point)
-                rospy.sleep(2) # time for going away
+                rospy.sleep(10) # time for going away
 
         rospy.loginfo(str(self) + ": Another one cycle has done!")
         self.M.S.stop_state = True
@@ -151,7 +151,7 @@ class GOTO_1(GOTO_0):
                 self.M.S.moving_stack.cancelGoal()
                 rospy.sleep(1.5)
                 self.M.S.moving_stack.asyncGoTo(self.M.S.target_first_point)
-                rospy.sleep(2) # time for going away
+                rospy.sleep(10) # time for going away
 
             if self.M.S.detect_objects.detectedSemaphoreRed():
                 rospy.loginfo(str(self) + ": Semaphore has detected!")
@@ -162,7 +162,7 @@ class GOTO_1(GOTO_0):
                     self.tryToGotoIdle()
 
                 self.M.S.moving_stack.asyncGoTo(self.M.S.target_first_point)
-                rospy.sleep(2) # time for going away
+                rospy.sleep(10) # time for going away
 
         rospy.loginfo(str(self) + ": The first point has done!")
         self.M.new_state(GOTO_0(self.M))
