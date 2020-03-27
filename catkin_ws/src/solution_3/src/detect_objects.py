@@ -25,8 +25,8 @@ class DetectObjects(object):
         result = False
         try:
             result = detected_stop().success
-        except rospy.ServiceException:
-            result = False
+        except Exception:
+            pass
         return result
 
 
