@@ -11,16 +11,16 @@ import threading
 
 class AbstractState(object):
 
-    stop_state = False
-
-    def __init__(self, _sm):
+    def __init__(self, _M):
         print("Processing current state: " + str(self))
 
-        t = threading.Thread(target=self.run, args=(_sm,))
+        self.M = _M
+
+        t = threading.Thread(target=self.run, args=())
         t.daemon = True
         t.start()
 
-    def run(self, _sm):
+    def run(self):
         raise NotImplementedError()
 
     def command(self, array_command):
@@ -54,6 +54,6 @@ class StateMachine(object):
     def new_state(self, _state):
         self.state = _state
 
-    def new_command(self, command):
-        array = command.split(' ')
+    def command(self, _command):
+        array = _command.split(' ')
         self.state.command(array)

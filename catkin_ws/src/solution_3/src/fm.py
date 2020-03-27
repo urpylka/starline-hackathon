@@ -24,14 +24,10 @@ from state_machine import AbstractState, StateMachine
 from detect_objects import SemaphoreState, DetectObjects
 
 class INIT(AbstractState):
+    def run(self):
+        rospy.loginfo(str(self) + ": Robot's initializating...")
 
-    def run(self, M):
-        rospy.loginfo("INIT: Robot's initializating...")
-        M.S.moving_stack = MovingStack()
-
-        # M.S.moving_stack.resetOdometry()
-        # init_pose = Pose(Point(1, 1, 0.000), Quaternion(0, 0, 0, 1)
-        # M.S.moving_stack.initAmcl(init_pose)
+        self.M.S.moving_stack = MovingStack()
 
         # crossroads = [
         #     {'xy': (3.7, 6.05), 'walls': [[(3.7, 6.55), (3.28, 6.55)]]}, #block to #4
@@ -41,74 +37,116 @@ class INIT(AbstractState):
         # ]
         # M.S.locker_ways = LockerWays(M.S.moving_stack, "/maps/crossroads", crossroads)
 
-        M.S.target_zero_point = Pose(Point(7.76, 4.05, 0.000), Quaternion(0.000, 0.000, 0.000, 1.000))
-        M.S.target_first_point = Pose(Point(7.95, 5.4, 0.000), Quaternion(0.000, 0.000, 0.000, 1.000))
+        self.M.S.target_zero_point = Pose(Point(7.76, 4.05, 0.000), Quaternion(0.000, 0.000, 0.000, 1.000))
+        self.M.S.target_first_point = Pose(Point(7.95, 5.4, 0.000), Quaternion(0.000, 0.000, 0.000, 1.000))
 
-        M.S.detect_objects = DetectObjects()
+        self.M.S.detect_objects = DetectObjects()
 
-        rospy.loginfo("INIT: State has changed to GOTO_1.")
-        M.new_state(GOTO_1(M))
+        rospy.loginfo(str(self) + ": The state is changing to IDLE.")
+        self.M.new_state(IDLE(self.M))
 
-    def command(self, array_command):
-        rospy.loginfo("INIT: It cannot been executed: " + array_command[0])
+    def command(self, com):
+        rospy.loginfo(str(self) + ": Command {} is not supported.", com[0])
+
+
+class IDLE(AbstractState):
+    def run(self):
+        self.M.S.stop_state = False
+        while not self.M.S.stop_state:
+            rospy.sleep(1)
+
+        rospy.loginfo(str(self) + ": State has changed to GOTO_1.")
+        self.M.new_state(GOTO_1(self.M))
+
+    def command(self, com):
+        if com[0] == 'goto':
+            self.M.S.stop_state = True
+        elif com[0] == 'reset_odometry':
+            self.M.S.moving_stack.resetOdometry()
+        elif com[0] == 'init_pose':
+            init_pose = Pose(Point(int(com[1]), int(com[2]), 0.000), Quaternion(0, 0, 0, 1)
+            self.M.S.moving_stack.initAmcl(init_pose)
+        else:
+            rospy.loginfo(str(self) + ": Command {} is not supported.", com[0])
 
 
 class GOTO_0(AbstractState):
 
-    def run(self, M):
-        M.S.moving_stack.asyncGoTo(M.S.target_zero_point)
+    def tryToGotoIdle(self):
+        if self.M.S.stop_state:
+            self.M.S.moving_stack.cancelGoal()
+            rospy.loginfo(str(self) + ": It goes to state IDLE!")
+            self.M.new_state(IDLE(self.M))
 
-        r = rospy.Rate(10)
-        while not M.S.moving_stack.getState():
+    def run(self):
+        self.M.S.stop_state = False
+        self.M.S.moving_stack.asyncGoTo(self.M.S.target_zero_point)
+
+        r = rospy.Rate(3)
+        while not self.M.S.moving_stack.getState():
             r.sleep()
+            self.tryToGotoIdle()
 
-            if M.S.detect_objects.detectedStopSign():
-                rospy.loginfo("GOTO_0: Stop sign has detected!")
+            if self.M.S.detect_objects.detectedStopSign():
+                rospy.loginfo(str(self) + ": Stop sign has detected!")
 
-                M.S.moving_stack.cancelGoal()
+                self.M.S.moving_stack.cancelGoal()
                 rospy.sleep(1.5)
-                M.S.moving_stack.asyncGoTo(M.S.target_zero_point)
+                self.M.S.moving_stack.asyncGoTo(self.M.S.target_zero_point)
+                rospy.sleep(1) # time for going away
 
-            if M.S.detect_objects.detectedSemaphore():
-                rospy.loginfo("GOTO_0: Semaphore has detected!")
+            if self.M.S.detect_objects.detectedSemaphore():
+                rospy.loginfo(str(self) + ": Semaphore has detected!")
+                self.M.S.moving_stack.cancelGoal()
 
-                M.S.moving_stack.cancelGoal()
-                r = rospy.Rate(1)
-                while M.S.detect_objects.getStateSemaphore() == SemaphoreState.RED:
+                while self.M.S.detect_objects.getStateSemaphore() == SemaphoreState.RED:
                     r.sleep()
-                M.S.moving_stack.asyncGoTo(M.S.target_zero_point)
+                    self.tryToGotoIdle()
 
-        rospy.loginfo("GOTO_0: Another one cycle has done!")
-        M.new_state(GOTO_1(M))
+                self.M.S.moving_stack.asyncGoTo(self.M.S.target_zero_point)
+                rospy.sleep(1) # time for going away
+
+        rospy.loginfo(str(self) + ": Another one cycle has done!")
+        self.M.new_state(GOTO_1(self.M))
+
+    def command(self, com):
+        if com[0] == 'idle':
+            self.M.S.stop_state = True
+        else:
+            rospy.loginfo(str(self) + ": Command {} is not supported.", com[0])
 
 
-class GOTO_1(AbstractState):
+class GOTO_1(GOTO_0):
 
-    def run(self, M):
-        M.S.moving_stack.asyncGoTo(M.S.target_first_point)
+    def run(self):
+        self.M.S.moving_stack.asyncGoTo(self.M.S.target_first_point)
 
-        r = rospy.Rate(10)
-        while not M.S.moving_stack.getState():
+        r = rospy.Rate(3)
+        while not self.M.S.moving_stack.getState():
             r.sleep()
+            self.tryToGotoIdle()
 
-            if M.S.detect_objects.detectedStopSign():
-                rospy.loginfo("GOTO_1: Stop sign has detected!")
+            if self.M.S.detect_objects.detectedStopSign():
+                rospy.loginfo(str(self) + ": Stop sign has detected!")
 
-                M.S.moving_stack.cancelGoal()
+                self.M.S.moving_stack.cancelGoal()
                 rospy.sleep(1.5)
-                M.S.moving_stack.asyncGoTo(M.S.target_first_point)
+                self.M.S.moving_stack.asyncGoTo(self.M.S.target_first_point)
+                rospy.sleep(1) # time for going away
 
-            if M.S.detect_objects.detectedSemaphore():
-                rospy.loginfo("GOTO_1: Semaphore has detected!")
+            if self.M.S.detect_objects.detectedSemaphore():
+                rospy.loginfo(str(self) + ": Semaphore has detected!")
+                self.M.S.moving_stack.cancelGoal()
 
-                M.S.moving_stack.cancelGoal()
-                r = rospy.Rate(10)
-                while M.S.detect_objects.getStateSemaphore() == SemaphoreState.RED:
+                while self.M.S.detect_objects.getStateSemaphore() == SemaphoreState.RED:
                     r.sleep()
-                M.S.moving_stack.asyncGoTo(M.S.target_first_point)
+                    self.tryToGotoIdle()
 
-        rospy.loginfo("GOTO_1: The first point has done!")
-        M.new_state(GOTO_0(M))
+                self.M.S.moving_stack.asyncGoTo(self.M.S.target_first_point)
+                rospy.sleep(1) # time for going away
+
+        rospy.loginfo(str(self) + ": The first point has done!")
+        self.M.new_state(GOTO_0(self.M))
 
 
 if __name__ == "__main__":
