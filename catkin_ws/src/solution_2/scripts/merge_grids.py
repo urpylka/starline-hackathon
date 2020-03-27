@@ -151,7 +151,8 @@ if __name__ == "__main__":
 
         r = rospy.Rate(10) # 1hz
         while not rospy.is_shutdown():
-            merged_map.publish(mergeGrids(map, map1, map2, map3))
+            maps = [map1, map2, map3]
+            merged_map.publish(mergeGrids(map, maps))
             r.sleep()
     except rospy.ROSInterruptException:
         alive = False
