@@ -133,19 +133,20 @@ def detect_stop_service(request):
 def detect_light_service(request):
     global detected_objects, last_image_area, detected_red
     responce = TriggerResponse()
-    if detected_objects['traffic_light']:
-        x,y,w,h = get_frame(detected_objects['traffic_light'])
-        light_area = w*h
-        if light_area > dyn_params.light_area*last_image_area:
-            if detected_red:
-                responce.success = True
-                responce.message = "Traffic red light detected!"
+    if detected_objects:
+        if detected_objects['traffic_light']:
+            x,y,w,h = get_frame(detected_objects['traffic_light'])
+            light_area = w*h
+            if light_area > dyn_params.light_area*last_image_area:
+                if detected_red:
+                    responce.success = True
+                    responce.message = "Traffic red light detected!"
+                else:
+                    responce.success = False
+                    responce.message = "Traffic light detected, but not red!"
             else:
                 responce.success = False
-                responce.message = "Traffic light detected, but not red!"
-        else:
-            responce.success = False
-            responce.message = "Traffic light detected, but small!"
+                responce.message = "Traffic light detected, but small!"
     else:
         responce.success = False
         responce.message = "Traffic light is not detected!"
