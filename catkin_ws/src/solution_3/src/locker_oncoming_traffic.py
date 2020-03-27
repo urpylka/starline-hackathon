@@ -48,7 +48,7 @@ class LockerWays():
 
         while self.alive:
             xy = self.getXy(moving_stack)
-            rospy.loginfo("Locker crossroads: " + str(xy))
+            # rospy.loginfo("Locker crossroads: " + str(xy))
 
             for crossroad in self.crossroads:
                 if getDistance(xy, crossroad['xy']) < self.error_income:
