@@ -111,7 +111,7 @@ if __name__ == "__main__":
     # If map is updating
     one_upd_m1 = rospy.get_param("~merger/source_map_1/updating", False)
     one_upd_m2 = rospy.get_param("~merger/source_map_2/updating", True)
-    one_upd_m2 = rospy.get_param("~merger/source_map_3/updating", True)
+    one_upd_m3 = rospy.get_param("~merger/source_map_3/updating", True)
 
 
     alive = True
