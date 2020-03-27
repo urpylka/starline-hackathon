@@ -17,7 +17,7 @@ TebLocalPlannerROS:
     enable_multithreading: true
     exact_arc_length: false
     feasibility_check_no_poses: 5
-    force_reinit_new_goal_dist: 1.0
+    force_reinit_new_goal_dist: 0.5
     free_goal_vel: false
     global_plan_overwrite_orientation: true
     global_plan_viapoint_sep: -0.1
