@@ -89,18 +89,18 @@ class GOTO_0(AbstractState):
             self.tryToGotoIdle()
 
             if self.M.S.detect_objects.detectedStopSign():
-                rospy.loginfo(str(self) + ": Stop sign has detected!")
+                rospy.loginfo(str(self) + ": Stop sign detected!")
 
                 self.M.S.moving_stack.cancelGoal()
                 rospy.sleep(1.5)
                 self.M.S.moving_stack.asyncGoTo(self.M.S.target_zero_point)
                 rospy.sleep(1) # time for going away
 
-            if self.M.S.detect_objects.detectedSemaphore():
-                rospy.loginfo(str(self) + ": Semaphore has detected!")
+            if self.M.S.detect_objects.detectedSemaphoreRed():
+                rospy.loginfo(str(self) + ": Semaphore detected!")
                 self.M.S.moving_stack.cancelGoal()
 
-                while self.M.S.detect_objects.getStateSemaphore() == SemaphoreState.RED:
+                while self.M.S.detect_objects.detectedSemaphoreRed()
                     r.sleep()
                     self.tryToGotoIdle()
 
@@ -135,11 +135,11 @@ class GOTO_1(GOTO_0):
                 self.M.S.moving_stack.asyncGoTo(self.M.S.target_first_point)
                 rospy.sleep(1) # time for going away
 
-            if self.M.S.detect_objects.detectedSemaphore():
+            if self.M.S.detect_objects.detectedSemaphoreRed():
                 rospy.loginfo(str(self) + ": Semaphore has detected!")
                 self.M.S.moving_stack.cancelGoal()
 
-                while self.M.S.detect_objects.getStateSemaphore() == SemaphoreState.RED:
+                while self.M.S.detect_objects.detectedSemaphoreRed()
                     r.sleep()
                     self.tryToGotoIdle()
 
