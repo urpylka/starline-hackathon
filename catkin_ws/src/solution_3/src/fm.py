@@ -29,14 +29,8 @@ class INIT(AbstractState):
         rospy.loginfo(str(self) + ": Robot's initializating...")
 
         self.M.S.moving_stack = MovingStack()
-
-        # crossroads = [
-        #     {'xy': (3.7, 6.05), 'walls': [[(3.7, 6.55), (3.28, 6.55)]]}, #block to #4
-        #     {'xy': (3.74, 8.08), 'walls': [[(3.3, 8.1), (3.3, 7.64)], [(3.73, 7.63), (4.16, 7.65)], [(4.15, 8.1), (4.13, 8.5)]]}, #4
-        #     {'xy': (6.8, 6.06), 'walls': [[(6.32, 8.1), (6.32, 7.65)]]}, #6
-        #     {'xy': (1.66, 8.07), 'walls': [[(2.14, 8.1), (2.14, 8.5)]]}  #5
-        # ]
-        # M.S.locker_ways = LockerWays(M.S.moving_stack, "/maps/crossroads", crossroads)
+        self.M.S.WB = WallBuilder("/maps/start_wall")
+        self.M.S.start_wall = [(7.3, 4.5), (8.24, 4.5)]]
 
         self.M.S.target_zero_point = Pose(Point(7.76, 4.05, 0.000), Quaternion(0.000, 0.000, 0.000, 1.000))
         self.M.S.target_first_point = Pose(Point(7.95, 5.4, 0.000), Quaternion(0.000, 0.000, 0.000, 1.000))
@@ -79,8 +73,22 @@ class GOTO_0(AbstractState):
             rospy.loginfo(str(self) + ": It goes to state IDLE!")
             self.M.new_state(IDLE(self.M))
 
+    def makeWall(self):
+        try:
+            r = rospy.Rate(10) # 10hz
+            while not self.stop_state:
+                self.M.S.WB.publishMap(self.M.S.start_wall)
+                r.sleep()
+        except rospy.ROSInterruptException:
+            pass
+
     def run(self):
+
         self.M.S.stop_state = False
+
+        t = threading.Thread(target=self.makeWall, args=(,))
+        t.start()
+
         self.M.S.moving_stack.asyncGoTo(self.M.S.target_zero_point)
 
         r = rospy.Rate(3)
@@ -120,6 +128,9 @@ class GOTO_0(AbstractState):
 class GOTO_1(GOTO_0):
 
     def run(self):
+
+        self.
+
         self.M.S.moving_stack.asyncGoTo(self.M.S.target_first_point)
 
         r = rospy.Rate(3)

@@ -39,13 +39,14 @@ def getShift(g, y, x):
     # return g, y + int(g.info.origin.position.y / g.info.resolution), x + int(g.info.origin.position.x / g.info.resolution)
 
 
-def mergeGrids(g, g1, g2):
+def mergeGrids(g, grids):
     g.data = []
     for i in range(g.info.height):
         for j in range(g.info.width):
-            v_g1 = getValue(*getShiftOff(g1, i, j))
-            v_g2 = getValue(*getShiftOff(g2, i, j))
-            g.data.append(max(v_g1, v_g2))
+            max_v = 0
+            for grid in grids:
+                max_v = max(max_v, getValue(*getShiftOff(grid, i, j))
+            g.data.append(max_v)
     return g
 
 
@@ -63,21 +64,33 @@ def cb2(map):
     ts2 = time.time()
 
 
+def cb3(map):
+    global map3
+    global ts3
+    map3 = map
+    ts3 = time.time()
+
+
 def checkForClean():
     global map1
     global map2
+    global map3
     global alive
     global ts1
     global ts2
+    global ts3
     global one_upd_m1
     global one_upd_m2
+    global one_upd_m3
 
     while alive:
         now = time.time()
-        if (now - ts1 > 2) and one_upd_m1:
+        if (now - ts1 > 1) and one_upd_m1:
             cleanGrid(map1)
-        if (now - ts2 > 2) and one_upd_m2:
+        if (now - ts2 > 1) and one_upd_m2:
             cleanGrid(map2)
+        if (now - ts3 > 1) and one_upd_m3:
+            cleanGrid(map3)
         time.sleep(0.1)
 
 
@@ -87,23 +100,31 @@ if __name__ == "__main__":
     global alive
     global ts1
     global ts2
+    global ts3
     global map1
     global map2
+    global map3
     global one_upd_m1
     global one_upd_m2
+    global one_upd_m3
 
     # If map is updating
     one_upd_m1 = rospy.get_param("~merger/source_map_1/updating", False)
     one_upd_m2 = rospy.get_param("~merger/source_map_2/updating", True)
+    one_upd_m2 = rospy.get_param("~merger/source_map_3/updating", True)
+
 
     alive = True
     ts1 = 0
     ts2 = 0
+    ts3 = 0
     map1 = OccupancyGrid()
     map2 = OccupancyGrid()
+    map3 = OccupancyGrid()
 
     sub_map_1 = rospy.Subscriber("/merger/source_map_1", OccupancyGrid, cb1, queue_size=1)
     sub_map_2 = rospy.Subscriber("/merger/source_map_2", OccupancyGrid, cb2, queue_size=1)
+    sub_map_3 = rospy.Subscriber("/merger/source_map_3", OccupancyGrid, cb3, queue_size=1)
     merged_map = rospy.Publisher("/merger/target_map", OccupancyGrid, queue_size=1, latch=True)
 
     # while(ts1 == 0 or ts2 == 0):
@@ -130,7 +151,7 @@ if __name__ == "__main__":
 
         r = rospy.Rate(10) # 1hz
         while not rospy.is_shutdown():
-            merged_map.publish(mergeGrids(map, map1, map2))
+            merged_map.publish(mergeGrids(map, map1, map2, map3))
             r.sleep()
     except rospy.ROSInterruptException:
         alive = False

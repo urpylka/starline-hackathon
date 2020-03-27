@@ -62,9 +62,11 @@
     <node name="Merger" pkg="solution_2" type="merge_grids.py" output="screen">
         <param name="merger/source_map_1/updating" value="False" />
         <param name="merger/source_map_2/updating" value="True" />
+        <param name="merger/source_map_3/updating" value="True" />
 
         <remap from="/merger/source_map_1" to="/maps/map_mb" />
         <remap from="/merger/source_map_2" to="/maps/crossroads" />
+        <remap from="/merger/source_map_2" to="/maps/start_wall" />
         <remap from="/merger/target_map" to="/maps/map_merged" />
     </node>
 
