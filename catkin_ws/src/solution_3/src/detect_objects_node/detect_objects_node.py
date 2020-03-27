@@ -20,6 +20,7 @@ from solution_3.cfg import dyn_detect_Config
 class DynParams:
 
     default_dict = {
+        "detect_tl":False,
         "light_area":0.1,
         "stop_area":0.1,
         "red_area":0.2,
@@ -63,18 +64,21 @@ def dyn_param_callback(config, level):
     return config
 
 def detect_objects(event):
-    global cv_bridge, last_objects, last_image, last_image_cv2, last_image_area, detected_objects, roi, detected_red
+    global cv_bridge, last_objects, last_image, dyn_params, last_image_cv2, last_image_area, detected_objects, roi, detected_red
+    if last_image is None:
+        rospy.loginfo('No image msg')
+        return
+
     if last_objects is None:
         rospy.loginfo('No objects msg')
+        debug_pub.publish(last_image)
         return
 
     if not last_objects.objects.data:
         rospy.loginfo('No objects')
-        return
-
-    if last_image is None:
-        rospy.loginfo('No image msg')
-        return
+        if dyn_params.detect_tl:
+            debug_pub.publish(last_image)
+            return
 
     last_image_cv2 = cv_bridge.imgmsg_to_cv2(last_image)
     last_image_area = last_image_cv2.shape[0]*last_image_cv2.shape[1]
@@ -84,11 +88,14 @@ def detect_objects(event):
     debug_image = draw_frames(detected_objects, last_image_cv2)
     detected_red = detect_red(mask, detected_objects, debug_image, dyn_params)
 
-    image_message = cv_bridge.cv2_to_imgmsg(debug_image, "bgr8")
+    debug_message = cv_bridge.cv2_to_imgmsg(debug_image, "bgr8")
+    mask_message = cv_bridge.cv2_to_imgmsg(mask, "mono8")
     #image_message = cv_bridge.cv2_to_imgmsg(debug_image, "mono8")
 
-    image_message.header.stamp = rospy.Time.now()
-    debug_pub.publish(image_message)
+    debug_message.header.stamp = rospy.Time.now()
+    mask_message.header.stamp = rospy.Time.now()
+    debug_pub.publish(debug_message)
+    mask_pub.publish(mask_message)
 
 def select_objects(objects_array, sort_by = 'max_area'):
     objects = {}
@@ -131,8 +138,15 @@ def detect_stop_service(request):
     return responce
 
 def detect_light_service(request):
-    global detected_objects, last_image_area, detected_red
+    global detected_objects, last_image_area, detected_red, dyn_params
     responce = TriggerResponse()
+    if not dyn_params.detect_tl:
+        responce.success = detected_red
+        if detected_objects:
+            if detected_objects['stop']:
+                responce.message = "Stop sign detected"
+        responce.message = "Detected red light: {}".format(responce.success)
+        return responce
     if detected_objects:
         if detected_objects['traffic_light']:
             x,y,w,h = get_frame(detected_objects['traffic_light'])
@@ -196,27 +210,37 @@ def draw_frames(objects, cv2_image):
     return result
 
 def get_mask(object_detected, cv2_image, hl, hh, sl, sh, ll, lh):
-    if object_detected:
+    global dyn_params
+    if dyn_params.detect_tl and not object_detected:
+        return cv2_image, None
+
+    if not dyn_params.detect_tl:
+        # Convert BGR to HSV
+        hsv = cv2.cvtColor(cv2_image, cv2.COLOR_BGR2HSV)
+
+    elif object_detected:
         image = cv2_image.copy()
         x, y, w, h = get_frame(object_detected)
         cropped = image[y:y+h, x:x+w]
         # Convert BGR to HSV
         hsv = cv2.cvtColor(cropped, cv2.COLOR_BGR2HSV)
 
-        # define range of red color in HSV
-        lower_red = np.array([hl, sl, ll])
-        upper_red = np.array([hh, sh, lh])
+    # define range of red color in HSV
+    lower_red = np.array([hl, sl, ll])
+    upper_red = np.array([hh, sh, lh])
 
-        # Threshold the HSV image to get only red colors
-        mask = cv2.inRange(hsv, lower_red, upper_red)
+    # Threshold the HSV image to get only red colors
+    mask = cv2.inRange(hsv, lower_red, upper_red)
 
-        # Bitwise-AND mask and original image
-        res = cv2.bitwise_and(cropped, cropped, mask = mask)
-        mask = cv2.bitwise_not(mask)
+    # Bitwise-AND mask and original image
+    res = cv2.bitwise_and(cv2_image, cv2_image, mask = mask)
+    mask = cv2.bitwise_not(mask)
 
-        return res, mask
-    else:
-        return cv2_image, None
+    kernel = np.zeros((5,5),np.uint8)
+    mask = cv2.dilate(mask,kernel,iterations = 1)
+
+    return res, mask
+
 
 
 def get_red_mask(objects, cv2_image, params):
@@ -225,16 +249,26 @@ def get_red_mask(objects, cv2_image, params):
 
 def detect_red(mask, objects, cv2_image, params):
     global last_image_area
-    x,y,w,h=get_frame(objects['traffic_light'])
-    if mask is not None and w*h > area_dict['traffic_light']*last_image_area:
-        mask = cv2.bitwise_not(mask)
+    mask = cv2.bitwise_not(mask)
+    if params.detect_tl:
+        x,y,w,h=get_frame(objects['traffic_light'])
+        if mask is not None and w*h > area_dict['traffic_light']*last_image_area:
+            im2,contours,hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+            if len(contours) != 0:
+                # find the biggest countour (c) by the area
+                c = max(contours, key = cv2.contourArea)
+                if cv2.contourArea(c) > params.red_area*w*h:
+                    cv2.drawContours(cv2_image, [c], -1, (0,255,0) , 2, offset=(x,y))
+                    return True
+    else:
         im2,contours,hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
         if len(contours) != 0:
             # find the biggest countour (c) by the area
             c = max(contours, key = cv2.contourArea)
-            if cv2.contourArea(c) > params.red_area*w*h:
-                cv2.drawContours(cv2_image, [c], -1, (0,255,0) , 2, offset=(x,y))
+            if cv2.contourArea(c) > params.red_area*last_image_area:
+                cv2.drawContours(cv2_image, [c], -1, (0,255,0) , 2)
                 return True
+
     return False
 
 
@@ -248,12 +282,16 @@ if __name__ == "__main__":
     debug_topic = rospy.get_param('~debug_topic', 'image_debug')
     rospy.loginfo("debug_topic: {}".format(debug_topic))
 
+    mask_topic = rospy.get_param('~mask_topic', 'image_mask')
+    rospy.loginfo("debug_topic: {}".format(mask_topic))
+
     objects_topic = rospy.get_param('~objects_topic', 'objectsStamped')
     rospy.loginfo("objects_topic: {}".format(objects_topic))
 
     image_sub = rospy.Subscriber(image_sub_topic, Image, image_callback)
     objects_sub = rospy.Subscriber(objects_topic, ObjectsStamped, objects_callback)
     debug_pub = rospy.Publisher(debug_topic, Image, queue_size=1)
+    mask_pub = rospy.Publisher(mask_topic, Image, queue_size=1)
 
     rospy.Service('detected_stop', Trigger, detect_stop_service)
     rospy.Service('detected_redlight', Trigger, detect_light_service)

@@ -1,12 +1,22 @@
 <launch>
     <!-- <node pkg="libuvc_camera" type="camera_node" respawn="true" name="logitech_camera" output="screen"/> -->
 
-    <node pkg="solution_2" type="test_image_publisher.py" respawn="true" name="test_image_publisher" output="screen"/>
+    <!-- <node pkg="solution_2" type="test_image_publisher.py" respawn="true" name="test_image_publisher" output="screen"/> -->
 
-    <include file="$(find solution_2)/launch/test_find_object_2d.launch" />
+    <arg name="gui" default="true"/>
+    <arg name="image_topic" default="cv_camera/image_raw"/>
+    <arg name="objects_path" default="$(find solution_3)/objects"/>
+    <arg name="settings_path" default="$(find solution_3)/objects/settings.ini"/>
+
+	<node name="find_object_2d" pkg="find_object_2d" type="find_object_2d" output="screen">
+		<remap from="image" to="$(arg image_topic)"/>
+		<param name="gui" value="$(arg gui)" type="bool"/>
+		<param name="objects_path" value="$(arg objects_path)" type="str"/>
+		<param name="settings_path" value="$(arg settings_path)" type="str"/>
+	</node>
 
     <node pkg="solution_3" type="detect_objects_node.py" name="detect_objects_node" output="screen">
         <rosparam file="$(find solution_3)/launch/detect_objects.yaml" command="load"/>
+        <param name="image_topic" value="$(arg image_topic)"/>
     </node>
-
 </launch>
