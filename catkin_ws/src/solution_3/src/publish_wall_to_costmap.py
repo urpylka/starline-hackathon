@@ -17,7 +17,7 @@ def cleanGrid(_map):
     data = []
     for i in range(_map.info.height * _map.info.width):
         data.append(0)
-    g_map.data = data
+    _map.data = data
 
 class WallBuilder:
 
