@@ -78,7 +78,7 @@ def checkForClean():
             cleanGrid(map1)
         if (now - ts2 > 2) and one_upd_m2:
             cleanGrid(map2)
-        time.sleep(2)
+        time.sleep(0.8)
 
 
 if __name__ == "__main__":
