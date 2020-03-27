@@ -75,13 +75,15 @@ class GOTO_0(AbstractState):
 
     def makeWall(self):
         try:
+            rospy.loginfo(str(self) + ": Made the start wall!")
             r = rospy.Rate(2) # 10hz
             while not self.M.S.stop_state:
-                rospy.loginfo(str(self) + ": Make the start wall!")
                 self.M.S.WB.publishMap(self.M.S.start_wall)
                 r.sleep()
         except rospy.ROSInterruptException:
             pass
+        rospy.loginfo(str(self) + ": Removed the start wall!")
+
 
     def run(self):
         self.M.S.stop_state = False
