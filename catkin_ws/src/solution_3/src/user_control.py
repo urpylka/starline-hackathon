@@ -8,6 +8,7 @@
 # Description:  Manager of the state machine
 
 import os
+import rospy
 # import telepot
 # from telepot.loop import MessageLoop
 from std_srvs.srv import Trigger, TriggerResponse
