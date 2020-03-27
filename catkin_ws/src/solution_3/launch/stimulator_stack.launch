@@ -72,7 +72,7 @@
 
     <!-- Running AMCL -->
     <node pkg="amcl" type="amcl" name="amcl" output="screen">
-        <rosparam file="$(find solution_2)/params_urpylka/amcl.yaml" command="load" />
+        <rosparam file="$(find solution_3)/params_urpylka/amcl.yaml" command="load" />
 
         <param name="initial_pose_x" value="$(arg initial_pose_x)" />
         <param name="initial_pose_y" value="$(arg initial_pose_y)" />
