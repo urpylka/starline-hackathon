@@ -26,8 +26,8 @@ class DetectObjects(object):
         return detected_stop().success
 
     def detectedSemaphoreRed(self):
-        # return False
-        return detected_redlight().success
+        return False
+        # return detected_redlight().success
 
 if __name__ == "__main__":
     d = DetectObjects()
