@@ -42,12 +42,12 @@ class WallBuilder:
         Contruct and publish the map message (Occupancy Grid)
         """
         # Initialize 2D map with zeros
-        map = []
+        g = []
         for i in range(self.map.info.height):
             row = []
             for j in range(self.map.info.width):
                 row.append(0)
-            map.append(row)
+            g.append(row)
 
         # Iterate through the lines, set the pixels accordingly
 
@@ -65,18 +65,19 @@ class WallBuilder:
 
             for x in range(x1, x2):
                 y = int((y2 - y1) * (x - x1) / (x2 - x1) + y1)
-                map[x][y] = 100
+                g[x][y] = 100
 
             for y in range(y1, y2):
                 x = int((y - y1) * (x2 - x1) / (y2 - y1) + x1)
-                map[x][y] = 100
+                g[x][y] = 100
 
         self.map.data = []
 
         # Flatten map to self.map.data in a row-major order, publish
-        for i in range(len(map)):
-            for j in range(len(map[0])):
-                self.map.data.append(map[j][i])
+        for i in range(len(g)):
+            for j in range(len(g[0])):
+                self.map.data.append(g[j][i])
+
         self.pub_map.publish(self.map)
 
 
