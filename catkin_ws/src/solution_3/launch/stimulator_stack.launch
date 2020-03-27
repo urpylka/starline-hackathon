@@ -59,7 +59,7 @@
     </node>
 
     <!-- Running the merger -->
-    <node name="Merger" pkg="solution_2" type="merge_grids.py" output="screen">
+    <node name="Merger" pkg="solution_3" type="merge_grids.py" output="screen">
         <param name="merger/source_map_1/updating" value="False" />
         <param name="merger/source_map_2/updating" value="True" />
         <param name="merger/source_map_3/updating" value="True" />
@@ -95,7 +95,7 @@
         <rosparam file="$(find solution_1)/params/local_costmap_params.yaml" command="load" />
         <rosparam file="$(find solution_1)/params/global_costmap_params.yaml" command="load" /> -->
 
-        <rosparam file="$(find solution_1)/params/base_local_planner_params.yaml" command="load" />
+        <rosparam file="$(find solution_3)/params_urpylka/base_local_planner_params.yaml" command="load" />
 
         <param name="base_global_planner" value="global_planner/GlobalPlanner" />
         <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
