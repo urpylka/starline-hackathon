@@ -80,6 +80,8 @@ RUN pip3 install rospkg catkin_pkg tensorflow==1.15
 
 RUN apt insatll nano
 
+RUN pip install aiohttp telepot
+
 # User WS dependings
 
 COPY ${DRIVERS_WS} ${DRIVERS_WS}
