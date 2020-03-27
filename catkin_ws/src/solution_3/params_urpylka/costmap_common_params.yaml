@@ -11,8 +11,8 @@ always_send_full_costmap: true
 
 obstacle_layer:
   enabled:               true
-  obstacle_range:        3.0
-  raytrace_range:        4.0
+  obstacle_range:        2.0
+  raytrace_range:        2.0
   inflation_radius:      0.06
   track_unknown_space:   true
   combination_method:    1
