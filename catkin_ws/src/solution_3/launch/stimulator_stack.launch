@@ -66,7 +66,7 @@
 
         <remap from="/merger/source_map_1" to="/maps/map_mb" />
         <remap from="/merger/source_map_2" to="/maps/crossroads" />
-        <remap from="/merger/source_map_2" to="/maps/start_wall" />
+        <remap from="/merger/source_map_3" to="/maps/start_wall" />
         <remap from="/merger/target_map" to="/maps/map_merged" />
     </node>
 
