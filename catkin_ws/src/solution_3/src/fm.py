@@ -85,7 +85,7 @@ class GOTO_0(AbstractState):
     def run(self):
         self.M.S.stop_state = False
 
-        t = threading.Thread(target=self.makeWall, args=(,))
+        t = threading.Thread(target=self.makeWall, args=())
         t.start()
 
         self.M.S.moving_stack.asyncGoTo(self.M.S.target_zero_point)
