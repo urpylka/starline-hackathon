@@ -21,7 +21,7 @@ from actionlib_msgs.msg import *    # Goal ID
 from moving_stack import MovingStack
 from publish_wall_to_costmap import WallBuilder
 from state_machine import AbstractState, StateMachine
-from detect_objects import SemaphoreState, DetectObjects
+from detect_objects import DetectObjects
 from user_control import UserControl
 
 class INIT(AbstractState):
