@@ -13,7 +13,7 @@
 		<param name="settings_path" value="$(arg settings_path)" type="str"/>
 	</node>
 
-    <node pkg="solution_3" type="detect_objects_node.py" name="detect_objects_node" output="screen">
+    <node pkg="solution_3" type="detect_objects_node.py" name="detect_objects_node">
         <rosparam file="$(find solution_3)/launch/detect_objects.yaml" command="load"/>
         <param name="image_topic" value="$(arg image_topic)"/>
     </node>
