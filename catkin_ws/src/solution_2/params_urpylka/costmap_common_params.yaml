@@ -1,8 +1,8 @@
 
 #---standard pioneer footprint---
 #---(in meters)---
-robot_radius: 0.05
-footprint_padding: 0.05
+robot_radius: 0.04
+footprint_padding: 0.04
 
 transform_tolerance: 0.2
 map_type: costmap
@@ -23,7 +23,7 @@ obstacle_layer:
 inflation_layer:
   enabled:              true
   cost_scaling_factor:  10.0  # exponential rate at which the obstacle cost drops off (default: 10)
-  inflation_radius:     0.08  # max. distance from an obstacle at which costs are incurred for planning paths.
+  inflation_radius:     0.06  # max. distance from an obstacle at which costs are incurred for planning paths.
 
 static_layer:
   enabled:              true
