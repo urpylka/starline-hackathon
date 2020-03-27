@@ -83,7 +83,6 @@ class GOTO_0(AbstractState):
             pass
 
     def run(self):
-
         self.M.S.stop_state = False
 
         t = threading.Thread(target=self.makeWall, args=(,))
@@ -116,6 +115,7 @@ class GOTO_0(AbstractState):
                 rospy.sleep(1) # time for going away
 
         rospy.loginfo(str(self) + ": Another one cycle has done!")
+        self.M.S.stop_state = True
         self.M.new_state(GOTO_1(self.M))
 
     def command(self, com):
@@ -128,9 +128,7 @@ class GOTO_0(AbstractState):
 class GOTO_1(GOTO_0):
 
     def run(self):
-
-        self.
-
+        self.M.S.stop_state = False
         self.M.S.moving_stack.asyncGoTo(self.M.S.target_first_point)
 
         r = rospy.Rate(3)
