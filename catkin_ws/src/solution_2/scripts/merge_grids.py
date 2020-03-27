@@ -78,7 +78,7 @@ def checkForClean():
             cleanGrid(map1)
         if (now - ts2 > 2) and one_upd_m2:
             cleanGrid(map2)
-        time.sleep(0.8)
+        time.sleep(0.1)
 
 
 if __name__ == "__main__":
@@ -128,7 +128,7 @@ if __name__ == "__main__":
         t = threading.Thread(target=checkForClean, args=())
         t.start()
 
-        r = rospy.Rate(1) # 1hz
+        r = rospy.Rate(10) # 1hz
         while not rospy.is_shutdown():
             merged_map.publish(mergeGrids(map, map1, map2))
             r.sleep()
