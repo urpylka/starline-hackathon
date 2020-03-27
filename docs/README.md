@@ -69,6 +69,14 @@
 * https://github.com.cnpmjs.org/stonier/cost_map
 * https://roboticsknowledgebase.com/wiki/state-estimation/ros-cost-maps/
 
+* https://blog.zhaw.ch/icclab/configuring-the-ros-navigation-stack-on-a-new-robot/
+* https://roboticsknowledgebase.com/wiki/state-estimation/ros-cost-maps/
+* http://wiki.ros.org/navigation/Tutorials/RobotSetup
+* https://github.com/Sr4l/virtual_obstacles
+* https://github.com/ooleksyuk/CarND-Capstone/blob/master/ros/src/tl_detector/tl_detector.py
+* http://docs.voltbro.ru/starting-ros/messaging/rabota-s-service.html
+* https://pythonworld.ru/osnovy/dekoratory.html
+
 ## Navigation
 
 Один из скриптов навигации:
