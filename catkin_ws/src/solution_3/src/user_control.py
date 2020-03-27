@@ -68,7 +68,7 @@ class UserControl(object):
         self.M.command("goto")
         return TriggerResponse(
             success = True,
-            message = "The \"goto\" command has sent to the state machine."
+            message = "The 'goto' command has sent to the state machine."
             )
 
 
@@ -76,7 +76,7 @@ class UserControl(object):
         self.M.command("idle")
         return TriggerResponse(
             success = True,
-            message = "The \"idle\" command has sent to the state machine."
+            message = "The 'idle' command has sent to the state machine."
             )
 
 
