@@ -88,14 +88,14 @@
 
         <rosparam file="$(find solution_3)/params_urpylka/local_costmap_params.yaml" command="load" />
         <rosparam file="$(find solution_3)/params_urpylka/global_costmap_params.yaml" command="load" />
-        <!-- <rosparam file="$(find solution_3)/params_urpylka/teb_local_planner_params.yaml" command="load" /> -->
+        <rosparam file="$(find solution_3)/params_urpylka/teb_local_planner_params.yaml" command="load" />
 
         <!-- <rosparam file="$(find solution_1)/params/costmap_common_params.yaml" command="load" ns="global_costmap" />
         <rosparam file="$(find solution_1)/params/costmap_common_params.yaml" command="load" ns="local_costmap" />
         <rosparam file="$(find solution_1)/params/local_costmap_params.yaml" command="load" />
         <rosparam file="$(find solution_1)/params/global_costmap_params.yaml" command="load" /> -->
 
-        <rosparam file="$(find solution_3)/params_urpylka/base_local_planner_params.yaml" command="load" />
+        <!-- <rosparam file="$(find solution_3)/params_urpylka/base_local_planner_params.yaml" command="load" /> -->
 
         <param name="base_global_planner" value="global_planner/GlobalPlanner" />
         <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
