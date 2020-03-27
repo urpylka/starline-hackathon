@@ -5,6 +5,8 @@
 
     <include file="$(find solution_2)/launch/test_find_object_2d.launch" />
 
-    <node pkg="solution_3" type="detect_objects_node.py" name="detect_objects_node" output="screen"/>
+    <node pkg="solution_3" type="detect_objects_node.py" name="detect_objects_node" output="screen">
+        <rosparam file="$(find solution_3)/launch/detect_objects.yaml" command="load"/>
+    </node>
 
 </launch>

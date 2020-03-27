@@ -7,11 +7,11 @@ from sensor_msgs.msg import Image
 import rospkg
 
 rospack = rospkg.RosPack()
-image_path = rospack.get_path('solution_2') + '/lane_detection/'
+image_path = rospack.get_path('solution_2') + '/dataset/astra/'
 
 bridge = CvBridge()
 
-test_image = cv2.imread(image_path+"test_image.png")
+test_image = cv2.imread(image_path+"stop2.png")
 image_message = bridge.cv2_to_imgmsg(test_image, "bgr8")
 
 def pub_image(event):
