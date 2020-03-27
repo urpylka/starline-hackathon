@@ -70,7 +70,7 @@ TebLocalPlannerROS:
     weight_dynamic_obstacle: 10.0
     weight_dynamic_obstacle_inflation: 0.1
     weight_inflation: 0.1
-    weight_kinematics_forward_drive: 1000.0
+    weight_kinematics_forward_drive: 1.0
     weight_kinematics_nh: 1000.0
     weight_kinematics_turning_radius: 1.0
     weight_max_vel_theta: 1.0
