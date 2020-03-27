@@ -31,8 +31,13 @@ class DetectObjects(object):
 
 
     def detectedSemaphoreRed(self):
-        return False
-        # return detected_redlight().success
+        result = False
+        try:
+            result = detected_redlight().success
+        except Exception:
+            pass
+        return result
+
 
 if __name__ == "__main__":
     d = DetectObjects()
