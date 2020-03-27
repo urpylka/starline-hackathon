@@ -45,7 +45,7 @@ def mergeGrids(g, grids):
         for j in range(g.info.width):
             max_v = 0
             for grid in grids:
-                max_v = max(max_v, getValue(*getShiftOff(grid, i, j))
+                max_v = max(max_v, getValue(*getShiftOff(grid, i, j)))
             g.data.append(max_v)
     return g
 
