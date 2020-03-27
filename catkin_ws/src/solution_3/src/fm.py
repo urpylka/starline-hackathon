@@ -48,6 +48,12 @@ class IDLE(AbstractState):
     def run(self):
         self.M.S.stop_state = False
         while not self.M.S.stop_state:
+
+            if self.M.S.detect_objects.detectedStopSign():
+                rospy.loginfo(str(self) + ": Stop sign detected!")
+            if self.M.S.detect_objects.detectedSemaphoreRed():
+                rospy.loginfo(str(self) + ": Semaphore detected!")
+
             rospy.sleep(1)
 
         rospy.loginfo(str(self) + ": State has changed to GOTO_1.")
