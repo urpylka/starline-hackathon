@@ -64,7 +64,7 @@ class UserControl(object):
                     self.tbot.sendMessage(chat_id, "You haven't the permission to send commans to the state machine.")
 
 
-    def cbFmStart(self, request):
+    def cbFmGoto(self, request):
         self.M.command("goto")
         return TriggerResponse(
             success = True,
@@ -72,7 +72,7 @@ class UserControl(object):
             )
 
 
-    def cbFmStop(self, request):
+    def cbFmIdle(self, request):
         self.M.command("idle")
         return TriggerResponse(
             success = True,

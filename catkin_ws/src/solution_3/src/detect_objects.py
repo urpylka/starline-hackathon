@@ -22,10 +22,12 @@ detected_redlight = rospy.ServiceProxy('/detected_redlight', Trigger)
 class DetectObjects(object):
 
     def detectedStopSign(self):
-        return detected_stop().success
+        return False
+        # return detected_stop().success
 
     def detectedSemaphoreRed(self):
-        return detected_redlight().success
+        return False
+        # return detected_redlight().success
 
 if __name__ == "__main__":
     d = DetectObjects()
