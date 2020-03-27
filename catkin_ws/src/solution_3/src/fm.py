@@ -65,7 +65,7 @@ class IDLE(AbstractState):
         elif com[0] == 'reset_odometry':
             self.M.S.moving_stack.resetOdometry()
         elif com[0] == 'init_pose':
-            init_pose = Pose(Point(int(com[1]), int(com[2]), 0.000), Quaternion(0, 0, 0, 1)
+            init_pose = Pose(Point(int(com[1]), int(com[2]), 0.000), Quaternion(0, 0, 0, 1))
             self.M.S.moving_stack.initAmcl(init_pose)
         else:
             rospy.loginfo(str(self) + ": Command {} is not supported.", com[0])
