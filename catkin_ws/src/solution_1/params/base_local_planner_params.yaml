@@ -31,7 +31,7 @@ TebLocalPlannerROS:
     max_global_plan_lookahead_dist: 3.0
     max_number_classes: 4
     max_vel_theta: 1.0
-    max_vel_x: 1.0
+    max_vel_x: 0.7
     max_vel_x_backwards: 0.2
     max_vel_y: 0.0
     min_obstacle_dist: 0.1
@@ -70,7 +70,7 @@ TebLocalPlannerROS:
     weight_dynamic_obstacle: 10.0
     weight_dynamic_obstacle_inflation: 0.1
     weight_inflation: 0.1
-    weight_kinematics_forward_drive: 1.0
+    weight_kinematics_forward_drive: 1000.0
     weight_kinematics_nh: 1000.0
     weight_kinematics_turning_radius: 1.0
     weight_max_vel_theta: 1.0
