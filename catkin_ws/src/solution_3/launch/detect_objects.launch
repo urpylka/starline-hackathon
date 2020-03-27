@@ -2,7 +2,7 @@
     <node pkg="libuvc_camera" type="camera_node" respawn="false" name="logitech_camera" output="screen"/>
 
     <arg name="gui" default="false"/>
-    <arg name="image_topic" default="logitech/image_raw"/>
+    <arg name="image_topic" default="/image_raw"/>
     <arg name="objects_path" default="$(find solution_3)/objects"/>
     <arg name="settings_path" default="$(find solution_3)/objects/settings.ini"/>
 
