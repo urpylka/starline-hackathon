@@ -100,7 +100,7 @@ class GOTO_0(AbstractState):
                 rospy.loginfo(str(self) + ": Semaphore detected!")
                 self.M.S.moving_stack.cancelGoal()
 
-                while self.M.S.detect_objects.detectedSemaphoreRed()
+                while self.M.S.detect_objects.detectedSemaphoreRed():
                     r.sleep()
                     self.tryToGotoIdle()
 
@@ -139,7 +139,7 @@ class GOTO_1(GOTO_0):
                 rospy.loginfo(str(self) + ": Semaphore has detected!")
                 self.M.S.moving_stack.cancelGoal()
 
-                while self.M.S.detect_objects.detectedSemaphoreRed()
+                while self.M.S.detect_objects.detectedSemaphoreRed():
                     r.sleep()
                     self.tryToGotoIdle()
 
