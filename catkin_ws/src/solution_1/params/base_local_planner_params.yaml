@@ -1,7 +1,7 @@
 TebLocalPlannerROS:
 
     odom_topic: /odom
-    map_frame: odom
+    map_frame: /map
 
     # Trajectory
 
@@ -13,7 +13,7 @@ TebLocalPlannerROS:
     costmap_obstacles_behind_robot_dist: 1.0
     dt_hysteresis: 0.1
     dt_ref: 0.3
-    dynamic_obstacle_inflation_dist: 0.3
+    dynamic_obstacle_inflation_dist: 0.1
     enable_multithreading: true
     exact_arc_length: false
     feasibility_check_no_poses: 5
@@ -32,9 +32,9 @@ TebLocalPlannerROS:
     max_number_classes: 4
     max_vel_theta: 1.0
     max_vel_x: 1.0
-    max_vel_x_backwards: 0.3
-    max_vel_y: 0.5
-    min_obstacle_dist: 0.15
+    max_vel_x_backwards: 0.2
+    max_vel_y: 0.0
+    min_obstacle_dist: 0.2
     min_turning_radius: 0.0
     no_inner_iterations: 5
     no_outer_iterations: 4
