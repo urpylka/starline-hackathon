@@ -1,7 +1,9 @@
 <launch>
 
-    <arg name="initial_pose_x" default="1.8"/>
-    <arg name="initial_pose_y" default="5.0"/>
+    <!-- <arg name="initial_pose_x" default="1.8"/>
+    <arg name="initial_pose_y" default="5.0"/> -->
+    <arg name="initial_pose_x" default="7.7"/>
+    <arg name="initial_pose_y" default="4.2"/>
     <arg name="initial_pose_yaw" default="0"/>
 
     <!-- Running the base -->
