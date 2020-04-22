@@ -1,5 +1,7 @@
 # Turtle Express
 
+ROS node for delivery w TurtleBot2
+
 Turtlebot API
 
 * http://learn.turtlebot.com/2015/02/03/11/
