@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 
-# Title:        Turtlebot Navigation Stack
-# File:         rviz_interface.py
-# Date:         2017-02-13
-# Author:       Preben Jensen Hoel and Paul-Edouard Sarlin
-# Description:  Publishes the map and path as standard ROS messages to be
-#               displayed in Rviz.
+# Title:        WallBuilder
+# File:         publish_wall_to_costmap.py
+# Date:         2020-03-22
+# Author:       Artem Smirnov @urpylka
+# Description:  It publish lines from input array to the map
 
 import rospy
 from nav_msgs.msg import OccupancyGrid
